@@ -1,0 +1,744 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ─── Users ───────────────────────────────────────────────────────────────────
+
+model User {
+  id        String     @id @default(cuid())
+  clerkId   String     @unique
+  name      String?
+  username  String?    @unique
+  email     String     @unique
+  password  String? // Only used for Admin authentication
+  image     String?
+  role      Role       @default(USER)
+  status    UserStatus @default(ACTIVE)
+  bio       String?
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  settings      UserSettings?
+  ratings       Rating[]
+  comments      Comment[]
+  bookmarks     Bookmark[]
+  mangaLikes    MangaLike[]
+  commentLikes  CommentLike[]
+  history       ReadingHistory[]
+  notifications Notification[]
+  reports       Report[]
+  reviews       Review[]
+  auditLogs     AuditLog[]
+  playlists     Playlist[]
+
+  @@index([clerkId])
+  @@index([email])
+  @@index([username])
+  @@index([role])
+  @@index([status])
+  @@index([createdAt])
+  @@map("users")
+}
+
+model UserSettings {
+  id                 String      @id @default(cuid())
+  userId             String      @unique
+  theme              String      @default("dark")
+  language           String      @default("en")
+  readingMode        ReadingMode @default(VERTICAL)
+  readingDirection   String      @default("ltr")
+  autoBookmark       Boolean     @default(true)
+  emailNewChapter    Boolean     @default(true)
+  emailReplies       Boolean     @default(true)
+  emailAnnouncements Boolean     @default(true)
+  showNSFW           Boolean     @default(false)
+  updatedAt          DateTime    @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("user_settings")
+}
+
+// ─── Playlists ─────────────────────────────────────────────────────────────────
+
+model Playlist {
+  id          String   @id @default(cuid())
+  userId      String
+  name        String
+  description String?
+  isPublic    Boolean  @default(true)
+  coverImage  String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user  User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items PlaylistItem[]
+
+  @@index([userId])
+  @@index([isPublic])
+  @@map("playlists")
+}
+
+model PlaylistItem {
+  id         String   @id @default(cuid())
+  playlistId String
+  mangaId    String
+  addedAt    DateTime @default(now())
+  sortOrder  Int      @default(0)
+
+  playlist Playlist @relation(fields: [playlistId], references: [id], onDelete: Cascade)
+  manga    Manga    @relation(fields: [mangaId], references: [id], onDelete: Cascade)
+
+  @@unique([playlistId, mangaId])
+  @@map("playlist_items")
+}
+
+// ─── Manga ────────────────────────────────────────────────────────────────────
+
+model Manga {
+  id                String      @id @default(cuid())
+  title             String
+  alternativeTitles String?
+  slug              String      @unique
+  synopsis          String?
+  coverImage        String
+  bannerImage       String?
+  status            MangaStatus @default(ONGOING)
+  releaseYear       Int?
+  language          String      @default("Japanese")
+  demographic       String?
+  ageRating         String?
+  views             Int         @default(0)
+  bookmarkCount     Int         @default(0)
+  likeCount         Int         @default(0)
+  commentCount      Int         @default(0)
+  reviewCount       Int         @default(0)
+  averageRating     Float       @default(0)
+  ratingCount       Int         @default(0)
+  isFeatured        Boolean     @default(false)
+  isTrending        Boolean     @default(false)
+  isCompleted       Boolean     @default(false)
+  isDraft           Boolean     @default(true)
+  seoTitle          String?
+  seoDescription    String?
+  seoKeywords       String?
+  publishedAt       DateTime?
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+
+  genres        GenreManga[]
+  tags          TagManga[]
+  themes        ThemeManga[]
+  authors       AuthorManga[]
+  artists       ArtistManga[]
+  publishers    PublisherManga[]
+  chapters      Chapter[]
+  comments      Comment[]
+  ratings       Rating[]
+  bookmarks     Bookmark[]
+  mangaLikes    MangaLike[]
+  history       ReadingHistory[]
+  related       RelatedManga[]   @relation("MangaRelation")
+  relatedTo     RelatedManga[]   @relation("MangaRelationTo")
+  notifications Notification[]
+  reports       Report[]
+  reviews       Review[]
+  playlistItems PlaylistItem[]
+
+  @@index([slug])
+  @@index([status])
+  @@index([views])
+  @@index([bookmarkCount])
+  @@index([likeCount])
+  @@index([averageRating])
+  @@index([isFeatured])
+  @@index([isTrending])
+  @@index([isDraft])
+  @@index([publishedAt])
+  @@index([createdAt])
+  @@map("manga")
+}
+
+// ─── Taxonomy ─────────────────────────────────────────────────────────────────
+
+model Genre {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  slug        String   @unique
+  description String?
+  createdAt   DateTime @default(now())
+
+  manga GenreManga[]
+
+  @@map("genres")
+}
+
+model GenreManga {
+  id      String @id @default(cuid())
+  mangaId String
+  genreId String
+  manga   Manga  @relation(fields: [mangaId], references: [id], onDelete: Cascade)
+  genre   Genre  @relation(fields: [genreId], references: [id], onDelete: Cascade)
+
+  @@unique([mangaId, genreId])
+  @@index([genreId])
+  @@map("genre_manga")
+}
+
+model Tag {
+  id   String @id @default(cuid())
+  name String @unique
+  slug String @unique
+
+  manga TagManga[]
+
+  @@map("tags")
+}
+
+model TagManga {
+  id      String @id @default(cuid())
+  mangaId String
+  tagId   String
+  manga   Manga  @relation(fields: [mangaId], references: [id], onDelete: Cascade)
+  tag     Tag    @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@unique([mangaId, tagId])
+  @@index([tagId])
+  @@map("tag_manga")
+}
+
+model Theme {
+  id   String @id @default(cuid())
+  name String @unique
+  slug String @unique
+
+  manga ThemeManga[]
+
+  @@map("themes")
+}
+
+model ThemeManga {
+  id      String @id @default(cuid())
+  mangaId String
+  themeId String
+  manga   Manga  @relation(fields: [mangaId], references: [id], onDelete: Cascade)
+  theme   Theme  @relation(fields: [themeId], references: [id], onDelete: Cascade)
+
+  @@unique([mangaId, themeId])
+  @@index([themeId])
+  @@map("theme_manga")
+}
+
+// ─── People & Publishers ──────────────────────────────────────────────────────
+
+model Author {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  slug      String   @unique
+  bio       String?
+  image     String?
+  createdAt DateTime @default(now())
+
+  manga AuthorManga[]
+
+  @@map("authors")
+}
+
+model AuthorManga {
+  id       String @id @default(cuid())
+  mangaId  String
+  authorId String
+  manga    Manga  @relation(fields: [mangaId], references: [id], onDelete: Cascade)
+  author   Author @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  @@unique([mangaId, authorId])
+  @@map("author_manga")
+}
+
+model Artist {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  slug      String   @unique
+  bio       String?
+  image     String?
+  createdAt DateTime @default(now())
+
+  manga ArtistManga[]
+
+  @@map("artists")
+}
+
+model ArtistManga {
+  id       String @id @default(cuid())
+  mangaId  String
+  artistId String
+  manga    Manga  @relation(fields: [mangaId], references: [id], onDelete: Cascade)
+  artist   Artist @relation(fields: [artistId], references: [id], onDelete: Cascade)
+
+  @@unique([mangaId, artistId])
+  @@map("artist_manga")
+}
+
+model Publisher {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  slug      String   @unique
+  website   String?
+  createdAt DateTime @default(now())
+
+  manga PublisherManga[]
+
+  @@map("publishers")
+}
+
+model PublisherManga {
+  id          String    @id @default(cuid())
+  mangaId     String
+  publisherId String
+  manga       Manga     @relation(fields: [mangaId], references: [id], onDelete: Cascade)
+  publisher   Publisher @relation(fields: [publisherId], references: [id], onDelete: Cascade)
+
+  @@unique([mangaId, publisherId])
+  @@map("publisher_manga")
+}
+
+// ─── Chapters ─────────────────────────────────────────────────────────────────
+
+model Chapter {
+  id             String    @id @default(cuid())
+  mangaId        String
+  chapterNumber  Float
+  title          String?
+  volume         Int?
+  pages          Int       @default(0)
+  images         String[]
+  views          Int       @default(0)
+  isPublished    Boolean   @default(false)
+  isDraft        Boolean   @default(true)
+  scheduledAt    DateTime?
+  seoTitle       String?
+  seoDescription String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  publishedAt    DateTime?
+
+  manga    Manga            @relation(fields: [mangaId], references: [id], onDelete: Cascade)
+  comments Comment[]
+  history  ReadingHistory[]
+
+  @@unique([mangaId, chapterNumber])
+  @@index([isPublished])
+  @@index([isDraft])
+  @@index([publishedAt])
+  @@index([chapterNumber])
+  @@map("chapters")
+}
+
+// ─── Community ────────────────────────────────────────────────────────────────
+
+model Comment {
+  id         String    @id @default(cuid())
+  content    String
+  mangaId    String
+  chapterId  String?
+  userId     String
+  parentId   String?
+  isSpoiler  Boolean   @default(false)
+  isApproved Boolean   @default(true)
+  isHidden   Boolean   @default(false)
+  editedAt   DateTime?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  manga   Manga         @relation(fields: [mangaId], references: [id], onDelete: Cascade)
+  chapter Chapter?      @relation(fields: [chapterId], references: [id], onDelete: SetNull)
+  user    User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  parent  Comment?      @relation("CommentReplies", fields: [parentId], references: [id], onDelete: Cascade)
+  replies Comment[]     @relation("CommentReplies")
+  likes   CommentLike[]
+  reports Report[]
+
+  @@index([mangaId])
+  @@index([chapterId])
+  @@index([userId])
+  @@index([parentId])
+  @@index([isApproved])
+  @@index([isHidden])
+  @@index([createdAt])
+  @@map("comments")
+}
+
+model Review {
+  id           String   @id @default(cuid())
+  mangaId      String
+  userId       String
+  rating       Int
+  title        String?
+  body         String
+  helpfulVotes Int      @default(0)
+  isApproved   Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  manga   Manga    @relation(fields: [mangaId], references: [id], onDelete: Cascade)
+  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  reports Report[]
+
+  @@unique([mangaId, userId])
+  @@index([userId])
+  @@index([rating])
+  @@index([helpfulVotes])
+  @@index([createdAt])
+  @@map("reviews")
+}
+
+model Rating {
+  id        String   @id @default(cuid())
+  rating    Int
+  mangaId   String
+  userId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  manga Manga @relation(fields: [mangaId], references: [id], onDelete: Cascade)
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([mangaId, userId])
+  @@map("ratings")
+}
+
+// ─── Likes (split by target type) ────────────────────────────────────────────
+
+model MangaLike {
+  id        String   @id @default(cuid())
+  mangaId   String
+  userId    String
+  createdAt DateTime @default(now())
+
+  manga Manga @relation(fields: [mangaId], references: [id], onDelete: Cascade)
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([mangaId, userId])
+  @@map("manga_likes")
+}
+
+model CommentLike {
+  id        String   @id @default(cuid())
+  commentId String
+  userId    String
+  createdAt DateTime @default(now())
+
+  comment Comment @relation(fields: [commentId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([commentId, userId])
+  @@map("comment_likes")
+}
+
+// ─── User Lists ───────────────────────────────────────────────────────────────
+
+model Bookmark {
+  id        String         @id @default(cuid())
+  mangaId   String
+  userId    String
+  status    BookmarkStatus @default(WANT_TO_READ)
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+
+  manga Manga @relation(fields: [mangaId], references: [id], onDelete: Cascade)
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([mangaId, userId])
+  @@index([userId])
+  @@index([status])
+  @@map("bookmarks")
+}
+
+model ReadingHistory {
+  id               String   @id @default(cuid())
+  mangaId          String
+  chapterId        String
+  userId           String
+  pageNumber       Int      @default(0)
+  readingMode      String   @default("vertical")
+  readingDirection String   @default("ltr")
+  zoomLevel        Float    @default(1)
+  brightness       Float    @default(1)
+  isCompleted      Boolean  @default(false)
+  lastReadAt       DateTime @default(now())
+  createdAt        DateTime @default(now())
+
+  manga   Manga   @relation(fields: [mangaId], references: [id], onDelete: Cascade)
+  chapter Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([mangaId, chapterId, userId])
+  @@index([userId, lastReadAt])
+  @@index([userId])
+  @@index([mangaId])
+  @@map("reading_history")
+}
+
+// ─── Notifications ────────────────────────────────────────────────────────────
+
+model Notification {
+  id        String           @id @default(cuid())
+  userId    String
+  type      NotificationType
+  title     String
+  message   String
+  link      String?
+  isRead    Boolean          @default(false)
+  mangaId   String?
+  chapterId String?
+  createdAt DateTime         @default(now())
+
+  user  User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  manga Manga? @relation(fields: [mangaId], references: [id], onDelete: Cascade)
+
+  @@index([userId, isRead])
+  @@index([userId])
+  @@index([createdAt])
+  @@map("notifications")
+}
+
+// ─── Moderation ───────────────────────────────────────────────────────────────
+
+model Report {
+  id        String       @id @default(cuid())
+  userId    String
+  type      ReportType
+  reason    String
+  details   String?
+  status    ReportStatus @default(PENDING)
+  mangaId   String?
+  commentId String?
+  reviewId  String?
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+
+  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  manga   Manga?   @relation(fields: [mangaId], references: [id], onDelete: Cascade)
+  comment Comment? @relation(fields: [commentId], references: [id], onDelete: Cascade)
+  review  Review?  @relation(fields: [reviewId], references: [id], onDelete: Cascade)
+
+  @@index([status])
+  @@index([type])
+  @@index([createdAt])
+  @@map("reports")
+}
+
+// ─── Related Manga ────────────────────────────────────────────────────────────
+
+model RelatedManga {
+  id           String @id @default(cuid())
+  mangaId      String
+  relatedId    String
+  relationType String @default("related")
+  manga        Manga  @relation("MangaRelation", fields: [mangaId], references: [id], onDelete: Cascade)
+  relatedManga Manga  @relation("MangaRelationTo", fields: [relatedId], references: [id], onDelete: Cascade)
+
+  @@unique([mangaId, relatedId])
+  @@map("related_manga")
+}
+
+// ─── Advertisements ───────────────────────────────────────────────────────────
+
+model Advertisement {
+  id          String     @id @default(cuid())
+  name        String
+  type        AdType
+  position    AdPosition
+  content     String
+  imageUrl    String?
+  linkUrl     String?
+  isActive    Boolean    @default(true)
+  isDraft     Boolean    @default(false)
+  priority    Int        @default(0)
+  impressions Int        @default(0)
+  clicks      Int        @default(0)
+  startDate   DateTime?
+  endDate     DateTime?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  @@index([isActive])
+  @@index([position])
+  @@index([startDate])
+  @@index([endDate])
+  @@map("advertisements")
+}
+
+// ─── Site Content ─────────────────────────────────────────────────────────────
+
+model SiteSettings {
+  id          String   @id @default(cuid())
+  key         String   @unique
+  value       String
+  type        String   @default("text")
+  description String?
+  updatedAt   DateTime @updatedAt
+
+  @@map("site_settings")
+}
+
+model Announcement {
+  id        String    @id @default(cuid())
+  title     String
+  content   String
+  type      String    @default("info")
+  isActive  Boolean   @default(true)
+  startsAt  DateTime?
+  endsAt    DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@index([isActive])
+  @@index([startsAt])
+  @@map("announcements")
+}
+
+// ─── Analytics ────────────────────────────────────────────────────────────────
+
+model PageView {
+  id        String   @id @default(cuid())
+  path      String
+  referrer  String?
+  userAgent String?
+  sessionId String?
+  userId    String?
+  country   String?
+  createdAt DateTime @default(now())
+
+  @@index([path])
+  @@index([createdAt])
+  @@index([sessionId])
+  @@map("page_views")
+}
+
+model SearchAnalytics {
+  id        String   @id @default(cuid())
+  query     String
+  results   Int      @default(0)
+  userId    String?
+  createdAt DateTime @default(now())
+
+  @@index([query])
+  @@index([createdAt])
+  @@map("search_analytics")
+}
+
+// ─── Audit Logs ───────────────────────────────────────────────────────────────
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  userId    String
+  action    String
+  entity    String
+  entityId  String?
+  oldValues String?
+  newValues String?
+  ipAddress String?
+  userAgent String?
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([entity])
+  @@index([action])
+  @@index([createdAt])
+  @@map("audit_logs")
+}
+
+// ─── Enums ────────────────────────────────────────────────────────────────────
+
+enum Role {
+  USER
+  MODERATOR
+  ADMIN
+}
+
+enum UserStatus {
+  ACTIVE
+  SUSPENDED
+  BANNED
+}
+
+enum MangaStatus {
+  ONGOING
+  COMPLETED
+  HIATUS
+  CANCELLED
+}
+
+enum BookmarkStatus {
+  WANT_TO_READ
+  CURRENTLY_READING
+  COMPLETED
+  DROPPED
+  ON_HOLD
+}
+
+enum ReadingMode {
+  VERTICAL
+  HORIZONTAL
+  WEBTOON
+  SINGLE_PAGE
+  DOUBLE_PAGE
+}
+
+enum NotificationType {
+  NEW_CHAPTER
+  NEW_MANGA
+  REPLY
+  MENTION
+  ANNOUNCEMENT
+  SYSTEM
+}
+
+enum ReportType {
+  MANGA
+  COMMENT
+  REVIEW
+  USER
+}
+
+enum ReportStatus {
+  PENDING
+  REVIEWED
+  RESOLVED
+  DISMISSED
+}
+
+enum AdType {
+  BANNER
+  SIDEBAR
+  HEADER
+  FOOTER
+  IN_READER
+  POPUP
+  NATIVE
+  CUSTOM_HTML
+  GOOGLE_ADSENSE
+  ADSTERRA
+}
+
+enum AdPosition {
+  HOME_HERO
+  HOME_SIDEBAR
+  HOME_FOOTER
+  MANGA_TOP
+  MANGA_SIDEBAR
+  MANGA_BOTTOM
+  READER_TOP
+  READER_BOTTOM
+  READER_SIDEBAR
+  CHAPTER_NAV
+  GLOBAL_HEADER
+  GLOBAL_FOOTER
+}

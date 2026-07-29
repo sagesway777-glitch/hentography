@@ -1,0 +1,336 @@
+<testsuites id="" name="" tests="126" failures="0" skipped="5" errors="0" time="184.3183">
+<testsuite name="utils\auth.setup.ts" timestamp="2026-07-29T10:34:07.106Z" hostname="setup" tests="1" failures="0" skipped="0" time="2.429" errors="0">
+<testcase name="authenticate as admin" classname="utils\auth.setup.ts" time="2.429">
+</testcase>
+</testsuite>
+<testsuite name="admin.spec.ts" timestamp="2026-07-29T10:34:07.106Z" hostname="chromium" tests="10" failures="0" skipped="0" time="107.054" errors="0">
+<testcase name="Admin Dashboard and CRUD › admin dashboard loads correctly" classname="admin.spec.ts" time="11.047">
+</testcase>
+<testcase name="Admin Dashboard and CRUD › admin manga page loads" classname="admin.spec.ts" time="10.822">
+</testcase>
+<testcase name="Admin Dashboard and CRUD › admin chapters page loads" classname="admin.spec.ts" time="12.609">
+</testcase>
+<testcase name="Admin Dashboard and CRUD › admin users page loads" classname="admin.spec.ts" time="10.977">
+</testcase>
+<testcase name="Admin Dashboard and CRUD › admin ads page loads" classname="admin.spec.ts" time="10.974">
+</testcase>
+<testcase name="Admin Dashboard and CRUD › admin audit-logs page loads" classname="admin.spec.ts" time="11.064">
+</testcase>
+<testcase name="Admin Dashboard and CRUD › admin settings page loads" classname="admin.spec.ts" time="4.939">
+</testcase>
+<testcase name="Admin Dashboard and CRUD › admin login page shows form (unauthenticated check)" classname="admin.spec.ts" time="4.433">
+</testcase>
+<testcase name="Admin Dashboard and CRUD › admin API: manga list returns data" classname="admin.spec.ts" time="2.366">
+</testcase>
+<testcase name="Admin Dashboard and CRUD › admin API: full CRUD lifecycle — manga → chapter → ad → cleanup" classname="admin.spec.ts" time="27.823">
+</testcase>
+</testsuite>
+<testsuite name="public.spec.ts" timestamp="2026-07-29T10:34:07.106Z" hostname="chromium" tests="5" failures="0" skipped="0" time="39.161" errors="0">
+<testcase name="Public Pages and Reader › homepage loads and displays content" classname="public.spec.ts" time="21.886">
+</testcase>
+<testcase name="Public Pages and Reader › search functionality" classname="public.spec.ts" time="11.035">
+</testcase>
+<testcase name="Public Pages and Reader › SEO: robots.txt is served" classname="public.spec.ts" time="1.023">
+</testcase>
+<testcase name="Public Pages and Reader › SEO: sitemap.xml is served" classname="public.spec.ts" time="2.138">
+</testcase>
+<testcase name="Public Pages and Reader › route protection - admin redirects unauthenticated users to login" classname="public.spec.ts" time="3.079">
+</testcase>
+</testsuite>
+<testsuite name="reader.spec.ts" timestamp="2026-07-29T10:34:07.106Z" hostname="chromium" tests="1" failures="0" skipped="1" time="2.002" errors="0">
+<testcase name="Reader Features › reader page loads when manga and chapter exist" classname="reader.spec.ts">
+<properties>
+<property name="skip" value="No manga found in the database — seed data needed for reader tests.">
+</property>
+</properties>
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="system.spec.ts" timestamp="2026-07-29T10:34:07.106Z" hostname="chromium" tests="2" failures="0" skipped="0" time="33.553" errors="0">
+<testcase name="System and Accessibility › no console errors on homepage" classname="system.spec.ts" time="17.174">
+</testcase>
+<testcase name="System and Accessibility › navigation is accessible" classname="system.spec.ts" time="16.379">
+</testcase>
+</testsuite>
+<testsuite name="user.spec.ts" timestamp="2026-07-29T10:34:07.106Z" hostname="chromium" tests="7" failures="0" skipped="0" time="26.626" errors="0">
+<testcase name="User Auth and Features (Clerk) › sign in page loads Clerk widget" classname="user.spec.ts" time="13.66">
+</testcase>
+<testcase name="User Auth and Features (Clerk) › sign up page loads Clerk widget" classname="user.spec.ts" time="8.97">
+</testcase>
+<testcase name="User Auth and Features (Clerk) › protected dashboard redirects unauthenticated users" classname="user.spec.ts" time="3.015">
+</testcase>
+<testcase name="User Auth and Features (Clerk) › public user API: bookmarks require auth" classname="user.spec.ts" time="0.355">
+</testcase>
+<testcase name="User Auth and Features (Clerk) › public user API: ratings require auth" classname="user.spec.ts" time="0.205">
+</testcase>
+<testcase name="User Auth and Features (Clerk) › public user API: comments require auth" classname="user.spec.ts" time="0.212">
+</testcase>
+<testcase name="User Auth and Features (Clerk) › public user API: likes require auth" classname="user.spec.ts" time="0.209">
+</testcase>
+</testsuite>
+<testsuite name="admin.spec.ts" timestamp="2026-07-29T10:34:07.106Z" hostname="firefox" tests="10" failures="0" skipped="0" time="140.457" errors="0">
+<testcase name="Admin Dashboard and CRUD › admin dashboard loads correctly" classname="admin.spec.ts" time="12.482">
+</testcase>
+<testcase name="Admin Dashboard and CRUD › admin manga page loads" classname="admin.spec.ts" time="13.06">
+</testcase>
+<testcase name="Admin Dashboard and CRUD › admin chapters page loads" classname="admin.spec.ts" time="19.278">
+</testcase>
+<testcase name="Admin Dashboard and CRUD › admin users page loads" classname="admin.spec.ts" time="12.247">
+</testcase>
+<testcase name="Admin Dashboard and CRUD › admin ads page loads" classname="admin.spec.ts" time="21.737">
+</testcase>
+<testcase name="Admin Dashboard and CRUD › admin audit-logs page loads" classname="admin.spec.ts" time="11.816">
+</testcase>
+<testcase name="Admin Dashboard and CRUD › admin settings page loads" classname="admin.spec.ts" time="8.816">
+</testcase>
+<testcase name="Admin Dashboard and CRUD › admin login page shows form (unauthenticated check)" classname="admin.spec.ts" time="7.903">
+</testcase>
+<testcase name="Admin Dashboard and CRUD › admin API: manga list returns data" classname="admin.spec.ts" time="0.922">
+</testcase>
+<testcase name="Admin Dashboard and CRUD › admin API: full CRUD lifecycle — manga → chapter → ad → cleanup" classname="admin.spec.ts" time="32.196">
+</testcase>
+</testsuite>
+<testsuite name="public.spec.ts" timestamp="2026-07-29T10:34:07.106Z" hostname="firefox" tests="5" failures="0" skipped="0" time="34.685" errors="0">
+<testcase name="Public Pages and Reader › homepage loads and displays content" classname="public.spec.ts" time="11.107">
+</testcase>
+<testcase name="Public Pages and Reader › search functionality" classname="public.spec.ts" time="13.76">
+</testcase>
+<testcase name="Public Pages and Reader › SEO: robots.txt is served" classname="public.spec.ts" time="0.512">
+</testcase>
+<testcase name="Public Pages and Reader › SEO: sitemap.xml is served" classname="public.spec.ts" time="2.804">
+</testcase>
+<testcase name="Public Pages and Reader › route protection - admin redirects unauthenticated users to login" classname="public.spec.ts" time="6.502">
+</testcase>
+</testsuite>
+<testsuite name="reader.spec.ts" timestamp="2026-07-29T10:34:07.106Z" hostname="firefox" tests="1" failures="0" skipped="1" time="4.563" errors="0">
+<testcase name="Reader Features › reader page loads when manga and chapter exist" classname="reader.spec.ts">
+<properties>
+<property name="skip" value="No manga found in the database — seed data needed for reader tests.">
+</property>
+</properties>
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="system.spec.ts" timestamp="2026-07-29T10:34:07.106Z" hostname="firefox" tests="2" failures="0" skipped="0" time="19.099" errors="0">
+<testcase name="System and Accessibility › no console errors on homepage" classname="system.spec.ts" time="7.339">
+</testcase>
+<testcase name="System and Accessibility › navigation is accessible" classname="system.spec.ts" time="11.76">
+</testcase>
+</testsuite>
+<testsuite name="user.spec.ts" timestamp="2026-07-29T10:34:07.106Z" hostname="firefox" tests="7" failures="0" skipped="0" time="30.863" errors="0">
+<testcase name="User Auth and Features (Clerk) › sign in page loads Clerk widget" classname="user.spec.ts" time="9.717">
+</testcase>
+<testcase name="User Auth and Features (Clerk) › sign up page loads Clerk widget" classname="user.spec.ts" time="10.797">
+</testcase>
+<testcase name="User Auth and Features (Clerk) › protected dashboard redirects unauthenticated users" classname="user.spec.ts" time="7.712">
+</testcase>
+<testcase name="User Auth and Features (Clerk) › public user API: bookmarks require auth" classname="user.spec.ts" time="0.941">
+</testcase>
+<testcase name="User Auth and Features (Clerk) › public user API: ratings require auth" classname="user.spec.ts" time="0.174">
+</testcase>
+<testcase name="User Auth and Features (Clerk) › public user API: comments require auth" classname="user.spec.ts" time="1.329">
+</testcase>
+<testcase name="User Auth and Features (Clerk) › public user API: likes require auth" classname="user.spec.ts" time="0.193">
+</testcase>
+</testsuite>
+<testsuite name="admin.spec.ts" timestamp="2026-07-29T10:34:07.106Z" hostname="webkit" tests="10" failures="0" skipped="0" time="82.185" errors="0">
+<testcase name="Admin Dashboard and CRUD › admin dashboard loads correctly" classname="admin.spec.ts" time="6.935">
+</testcase>
+<testcase name="Admin Dashboard and CRUD › admin manga page loads" classname="admin.spec.ts" time="7.75">
+</testcase>
+<testcase name="Admin Dashboard and CRUD › admin chapters page loads" classname="admin.spec.ts" time="9.179">
+</testcase>
+<testcase name="Admin Dashboard and CRUD › admin users page loads" classname="admin.spec.ts" time="3.988">
+</testcase>
+<testcase name="Admin Dashboard and CRUD › admin ads page loads" classname="admin.spec.ts" time="5.282">
+</testcase>
+<testcase name="Admin Dashboard and CRUD › admin audit-logs page loads" classname="admin.spec.ts" time="4.535">
+</testcase>
+<testcase name="Admin Dashboard and CRUD › admin settings page loads" classname="admin.spec.ts" time="5.582">
+</testcase>
+<testcase name="Admin Dashboard and CRUD › admin login page shows form (unauthenticated check)" classname="admin.spec.ts" time="9.685">
+</testcase>
+<testcase name="Admin Dashboard and CRUD › admin API: manga list returns data" classname="admin.spec.ts" time="0.535">
+</testcase>
+<testcase name="Admin Dashboard and CRUD › admin API: full CRUD lifecycle — manga → chapter → ad → cleanup" classname="admin.spec.ts" time="28.714">
+</testcase>
+</testsuite>
+<testsuite name="public.spec.ts" timestamp="2026-07-29T10:34:07.106Z" hostname="webkit" tests="5" failures="0" skipped="0" time="38.743" errors="0">
+<testcase name="Public Pages and Reader › homepage loads and displays content" classname="public.spec.ts" time="13.01">
+</testcase>
+<testcase name="Public Pages and Reader › search functionality" classname="public.spec.ts" time="15.962">
+</testcase>
+<testcase name="Public Pages and Reader › SEO: robots.txt is served" classname="public.spec.ts" time="0.119">
+</testcase>
+<testcase name="Public Pages and Reader › SEO: sitemap.xml is served" classname="public.spec.ts" time="0.856">
+</testcase>
+<testcase name="Public Pages and Reader › route protection - admin redirects unauthenticated users to login" classname="public.spec.ts" time="8.796">
+</testcase>
+</testsuite>
+<testsuite name="reader.spec.ts" timestamp="2026-07-29T10:34:07.106Z" hostname="webkit" tests="1" failures="0" skipped="1" time="6.795" errors="0">
+<testcase name="Reader Features › reader page loads when manga and chapter exist" classname="reader.spec.ts">
+<properties>
+<property name="skip" value="No manga found in the database — seed data needed for reader tests.">
+</property>
+</properties>
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="system.spec.ts" timestamp="2026-07-29T10:34:07.106Z" hostname="webkit" tests="2" failures="0" skipped="0" time="40.273" errors="0">
+<testcase name="System and Accessibility › no console errors on homepage" classname="system.spec.ts" time="19.121">
+</testcase>
+<testcase name="System and Accessibility › navigation is accessible" classname="system.spec.ts" time="21.152">
+</testcase>
+</testsuite>
+<testsuite name="user.spec.ts" timestamp="2026-07-29T10:34:07.106Z" hostname="webkit" tests="7" failures="0" skipped="0" time="48.691" errors="0">
+<testcase name="User Auth and Features (Clerk) › sign in page loads Clerk widget" classname="user.spec.ts" time="17.532">
+</testcase>
+<testcase name="User Auth and Features (Clerk) › sign up page loads Clerk widget" classname="user.spec.ts" time="18.754">
+</testcase>
+<testcase name="User Auth and Features (Clerk) › protected dashboard redirects unauthenticated users" classname="user.spec.ts" time="11.704">
+</testcase>
+<testcase name="User Auth and Features (Clerk) › public user API: bookmarks require auth" classname="user.spec.ts" time="0.296">
+</testcase>
+<testcase name="User Auth and Features (Clerk) › public user API: ratings require auth" classname="user.spec.ts" time="0.137">
+</testcase>
+<testcase name="User Auth and Features (Clerk) › public user API: comments require auth" classname="user.spec.ts" time="0.163">
+</testcase>
+<testcase name="User Auth and Features (Clerk) › public user API: likes require auth" classname="user.spec.ts" time="0.105">
+</testcase>
+</testsuite>
+<testsuite name="admin.spec.ts" timestamp="2026-07-29T10:34:07.106Z" hostname="Mobile Chrome" tests="10" failures="0" skipped="0" time="55.284" errors="0">
+<testcase name="Admin Dashboard and CRUD › admin dashboard loads correctly" classname="admin.spec.ts" time="3.428">
+</testcase>
+<testcase name="Admin Dashboard and CRUD › admin manga page loads" classname="admin.spec.ts" time="7.122">
+</testcase>
+<testcase name="Admin Dashboard and CRUD › admin chapters page loads" classname="admin.spec.ts" time="7.44">
+</testcase>
+<testcase name="Admin Dashboard and CRUD › admin users page loads" classname="admin.spec.ts" time="3.2">
+</testcase>
+<testcase name="Admin Dashboard and CRUD › admin ads page loads" classname="admin.spec.ts" time="2.534">
+</testcase>
+<testcase name="Admin Dashboard and CRUD › admin audit-logs page loads" classname="admin.spec.ts" time="2.307">
+</testcase>
+<testcase name="Admin Dashboard and CRUD › admin settings page loads" classname="admin.spec.ts" time="2.442">
+</testcase>
+<testcase name="Admin Dashboard and CRUD › admin login page shows form (unauthenticated check)" classname="admin.spec.ts" time="3.098">
+</testcase>
+<testcase name="Admin Dashboard and CRUD › admin API: manga list returns data" classname="admin.spec.ts" time="2.408">
+</testcase>
+<testcase name="Admin Dashboard and CRUD › admin API: full CRUD lifecycle — manga → chapter → ad → cleanup" classname="admin.spec.ts" time="21.305">
+</testcase>
+</testsuite>
+<testsuite name="public.spec.ts" timestamp="2026-07-29T10:34:07.106Z" hostname="Mobile Chrome" tests="5" failures="0" skipped="0" time="20.433" errors="0">
+<testcase name="Public Pages and Reader › homepage loads and displays content" classname="public.spec.ts" time="8.262">
+</testcase>
+<testcase name="Public Pages and Reader › search functionality" classname="public.spec.ts" time="6.153">
+</testcase>
+<testcase name="Public Pages and Reader › SEO: robots.txt is served" classname="public.spec.ts" time="0.187">
+</testcase>
+<testcase name="Public Pages and Reader › SEO: sitemap.xml is served" classname="public.spec.ts" time="2.386">
+</testcase>
+<testcase name="Public Pages and Reader › route protection - admin redirects unauthenticated users to login" classname="public.spec.ts" time="3.445">
+</testcase>
+</testsuite>
+<testsuite name="reader.spec.ts" timestamp="2026-07-29T10:34:07.106Z" hostname="Mobile Chrome" tests="1" failures="0" skipped="1" time="2.712" errors="0">
+<testcase name="Reader Features › reader page loads when manga and chapter exist" classname="reader.spec.ts">
+<properties>
+<property name="skip" value="No manga found in the database — seed data needed for reader tests.">
+</property>
+</properties>
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="system.spec.ts" timestamp="2026-07-29T10:34:07.106Z" hostname="Mobile Chrome" tests="2" failures="0" skipped="0" time="22.55" errors="0">
+<testcase name="System and Accessibility › no console errors on homepage" classname="system.spec.ts" time="11.68">
+</testcase>
+<testcase name="System and Accessibility › navigation is accessible" classname="system.spec.ts" time="10.87">
+</testcase>
+</testsuite>
+<testsuite name="user.spec.ts" timestamp="2026-07-29T10:34:07.106Z" hostname="Mobile Chrome" tests="7" failures="0" skipped="0" time="21.32" errors="0">
+<testcase name="User Auth and Features (Clerk) › sign in page loads Clerk widget" classname="user.spec.ts" time="7.68">
+</testcase>
+<testcase name="User Auth and Features (Clerk) › sign up page loads Clerk widget" classname="user.spec.ts" time="7.766">
+</testcase>
+<testcase name="User Auth and Features (Clerk) › protected dashboard redirects unauthenticated users" classname="user.spec.ts" time="4.941">
+</testcase>
+<testcase name="User Auth and Features (Clerk) › public user API: bookmarks require auth" classname="user.spec.ts" time="0.397">
+</testcase>
+<testcase name="User Auth and Features (Clerk) › public user API: ratings require auth" classname="user.spec.ts" time="0.16">
+</testcase>
+<testcase name="User Auth and Features (Clerk) › public user API: comments require auth" classname="user.spec.ts" time="0.234">
+</testcase>
+<testcase name="User Auth and Features (Clerk) › public user API: likes require auth" classname="user.spec.ts" time="0.142">
+</testcase>
+</testsuite>
+<testsuite name="admin.spec.ts" timestamp="2026-07-29T10:34:07.106Z" hostname="Mobile Safari" tests="10" failures="0" skipped="0" time="87.33" errors="0">
+<testcase name="Admin Dashboard and CRUD › admin dashboard loads correctly" classname="admin.spec.ts" time="7.931">
+</testcase>
+<testcase name="Admin Dashboard and CRUD › admin manga page loads" classname="admin.spec.ts" time="8.445">
+</testcase>
+<testcase name="Admin Dashboard and CRUD › admin chapters page loads" classname="admin.spec.ts" time="11.525">
+</testcase>
+<testcase name="Admin Dashboard and CRUD › admin users page loads" classname="admin.spec.ts" time="8.021">
+</testcase>
+<testcase name="Admin Dashboard and CRUD › admin ads page loads" classname="admin.spec.ts" time="7.523">
+</testcase>
+<testcase name="Admin Dashboard and CRUD › admin audit-logs page loads" classname="admin.spec.ts" time="5.502">
+</testcase>
+<testcase name="Admin Dashboard and CRUD › admin settings page loads" classname="admin.spec.ts" time="3.333">
+</testcase>
+<testcase name="Admin Dashboard and CRUD › admin login page shows form (unauthenticated check)" classname="admin.spec.ts" time="5.417">
+</testcase>
+<testcase name="Admin Dashboard and CRUD › admin API: manga list returns data" classname="admin.spec.ts" time="1.112">
+</testcase>
+<testcase name="Admin Dashboard and CRUD › admin API: full CRUD lifecycle — manga → chapter → ad → cleanup" classname="admin.spec.ts" time="28.521">
+</testcase>
+</testsuite>
+<testsuite name="public.spec.ts" timestamp="2026-07-29T10:34:07.106Z" hostname="Mobile Safari" tests="5" failures="0" skipped="0" time="34.421" errors="0">
+<testcase name="Public Pages and Reader › homepage loads and displays content" classname="public.spec.ts" time="13.348">
+</testcase>
+<testcase name="Public Pages and Reader › search functionality" classname="public.spec.ts" time="14.69">
+</testcase>
+<testcase name="Public Pages and Reader › SEO: robots.txt is served" classname="public.spec.ts" time="0.448">
+</testcase>
+<testcase name="Public Pages and Reader › SEO: sitemap.xml is served" classname="public.spec.ts" time="0.974">
+</testcase>
+<testcase name="Public Pages and Reader › route protection - admin redirects unauthenticated users to login" classname="public.spec.ts" time="4.961">
+</testcase>
+</testsuite>
+<testsuite name="reader.spec.ts" timestamp="2026-07-29T10:34:07.106Z" hostname="Mobile Safari" tests="1" failures="0" skipped="1" time="7.255" errors="0">
+<testcase name="Reader Features › reader page loads when manga and chapter exist" classname="reader.spec.ts">
+<properties>
+<property name="skip" value="No manga found in the database — seed data needed for reader tests.">
+</property>
+</properties>
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="system.spec.ts" timestamp="2026-07-29T10:34:07.106Z" hostname="Mobile Safari" tests="2" failures="0" skipped="0" time="34.022" errors="0">
+<testcase name="System and Accessibility › no console errors on homepage" classname="system.spec.ts" time="16.166">
+</testcase>
+<testcase name="System and Accessibility › navigation is accessible" classname="system.spec.ts" time="17.856">
+</testcase>
+</testsuite>
+<testsuite name="user.spec.ts" timestamp="2026-07-29T10:34:07.106Z" hostname="Mobile Safari" tests="7" failures="0" skipped="0" time="44.145" errors="0">
+<testcase name="User Auth and Features (Clerk) › sign in page loads Clerk widget" classname="user.spec.ts" time="17.121">
+</testcase>
+<testcase name="User Auth and Features (Clerk) › sign up page loads Clerk widget" classname="user.spec.ts" time="15.207">
+</testcase>
+<testcase name="User Auth and Features (Clerk) › protected dashboard redirects unauthenticated users" classname="user.spec.ts" time="10.386">
+</testcase>
+<testcase name="User Auth and Features (Clerk) › public user API: bookmarks require auth" classname="user.spec.ts" time="0.265">
+</testcase>
+<testcase name="User Auth and Features (Clerk) › public user API: ratings require auth" classname="user.spec.ts" time="0.539">
+</testcase>
+<testcase name="User Auth and Features (Clerk) › public user API: comments require auth" classname="user.spec.ts" time="0.35">
+</testcase>
+<testcase name="User Auth and Features (Clerk) › public user API: likes require auth" classname="user.spec.ts" time="0.277">
+</testcase>
+</testsuite>
+</testsuites>
