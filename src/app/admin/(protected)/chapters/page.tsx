@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Plus, Search, Edit, Trash, Eye, Settings } from "lucide-react";
 import prisma from "@/lib/prisma";
-import { Prisma } from "@prisma/client";
 
 export default async function AdminChaptersPage({
   searchParams,
@@ -15,29 +14,29 @@ export default async function AdminChaptersPage({
   const limit = 30;
   const skip = (page - 1) * limit;
 
-  const where: Prisma.ChapterWhereInput = mangaId ? { mangaId } : {};
+  const where = mangaId ? { mangaId } : undefined;
 
-  const [chapters, total, mangaList] = await Promise.all([
-    prisma.chapter.findMany({
-      where,
-      skip,
-      take: limit,
-      orderBy: [
-        { mangaId: "desc" },
-        { chapterNumber: "desc" },
-      ],
-      include: {
-        manga: {
-          select: { title: true, coverImage: true, slug: true }
-        }
+  const chapters = await prisma.chapter.findMany({
+    where,
+    skip,
+    take: limit,
+    orderBy: [
+      { mangaId: "desc" },
+      { chapterNumber: "desc" },
+    ],
+    include: {
+      manga: {
+        select: { title: true, coverImage: true, slug: true }
       }
-    }),
-    prisma.chapter.count({ where }),
-    prisma.manga.findMany({
-      select: { id: true, title: true },
-      orderBy: { title: "asc" },
-    }),
-  ]);
+    }
+  });
+
+  const total = await prisma.chapter.count({ where });
+  
+  const mangaList = await prisma.manga.findMany({
+    select: { id: true, title: true },
+    orderBy: { title: "asc" },
+  });
 
   return (
     <div className="space-y-6">
@@ -91,7 +90,7 @@ export default async function AdminChaptersPage({
                     </td>
                   </tr>
                 ) : (
-                  chapters.map((chapter: Prisma.ChapterGetPayload<{ include: { manga: { select: { title: true, coverImage: true, slug: true } } } }>) => (
+                  chapters.map((chapter) => (
                     <tr key={chapter.id} className="hover:bg-slate-800/50 transition-colors">
                       <td className="px-6 py-4 font-medium text-white">
                         <div className="flex flex-col">
