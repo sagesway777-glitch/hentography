@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   const url = `${baseUrl}/playlists/${id}`;
 
   return {
-    title: `${playlist.name} | Hentography Playlists`,
+    title: `${playlist.name} | HentaiPlus Playlists`,
     description: playlist.description || `Check out the manga playlist: ${playlist.name}`,
     metadataBase: new URL(baseUrl),
     alternates: { canonical: `/playlists/${id}` },
@@ -170,12 +170,12 @@ export default async function PlaylistPage({
           </div>
 
           <div className="flex items-center gap-4">
-            <Button className="bg-indigo-600 hover:bg-indigo-700 text-white rounded-full px-8 font-semibold">
+            <Button className="bg-[var(--primary)] hover:bg-[var(--primary-hover)] text-white rounded-full px-8 font-semibold">
               Read First
             </Button>
             <ShareButton 
               title={playlist.name}
-              text={`Check out ${playlist.name} on Hentography!`}
+              text={`Check out ${playlist.name} on HentaiPlus!`}
               className="rounded-full border-slate-700 hover:bg-slate-800"
             />
           </div>

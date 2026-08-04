@@ -2,8 +2,8 @@ import { SignUp } from "@clerk/nextjs";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Create an Account | Hentography",
-  description: "Join Hentography to track your reading history, bookmark your favorite series, and engage with the community.",
+  title: "Create an Account | HentaiPlus",
+  description: "Join HentaiPlus to track your reading history, bookmark your favorite series, and engage with the community.",
 };
 
 export default function SignUpPage() {

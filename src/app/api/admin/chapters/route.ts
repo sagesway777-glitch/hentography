@@ -21,10 +21,7 @@ export async function GET(request: Request) {
         where,
         skip,
         take: limit,
-        orderBy: [
-          { mangaId: "desc" },
-          { chapterNumber: "desc" }
-        ],
+        orderBy: { createdAt: "desc" },
         include: {
           manga: {
             select: { title: true, coverImage: true }

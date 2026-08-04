@@ -4,8 +4,8 @@ import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy | Hentography",
-  description: "Privacy policy for Hentography manga reading platform.",
+  title: "Privacy Policy | HentaiPlus",
+  description: "Privacy policy for HentaiPlus manga reading platform.",
 };
 
 export default function PrivacyPage() {
@@ -37,7 +37,7 @@ export default function PrivacyPage() {
           </section>
           <section>
             <h2 className="text-2xl font-bold text-white mb-4">6. Contact Us</h2>
-            <p>If you have any questions about this Privacy Policy, please contact us at privacy@hentography.com</p>
+            <p>If you have any questions about this Privacy Policy, please contact us at privacy@hentaiplus.com</p>
           </section>
         </div>
       </main>

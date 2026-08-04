@@ -3,14 +3,6 @@ import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { z } from "zod";
 
-const updateChapterSchema = z.object({
-  title: z.string().optional().nullable(),
-  chapterNumber: z.number().optional(),
-  isPublished: z.boolean().optional(),
-  isDraft: z.boolean().optional(),
-  volume: z.number().int().optional().nullable(),
-});
-
 export async function GET(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
@@ -55,18 +47,55 @@ export async function PATCH(
     }
 
     const body = await request.json();
-    const result = updateChapterSchema.safeParse(body);
+
+    // Accept both simple metadata updates AND full page updates from the chapter editor
+    const updateSchema = z.object({
+      title: z.string().optional().nullable(),
+      chapterNumber: z.number().optional(),
+      mangaId: z.string().optional(),
+      isPublished: z.boolean().optional(),
+      isDraft: z.boolean().optional(),
+      volume: z.number().int().optional().nullable(),
+      // Page images array from chapter editor (already uploaded Cloudinary URLs)
+      images: z.array(z.string()).optional(),
+      pages: z.number().int().optional(),
+    });
+
+    const result = updateSchema.safeParse(body);
     if (!result.success) {
       return NextResponse.json({ error: result.error.errors[0].message }, { status: 400 });
     }
 
     const data = result.data;
+
+    // Build update payload — only include explicitly provided fields
+    const updateData: Record<string, unknown> = {};
+    if (data.title !== undefined) updateData.title = data.title;
+    if (data.chapterNumber !== undefined) updateData.chapterNumber = data.chapterNumber;
+    if (data.isPublished !== undefined) updateData.isPublished = data.isPublished;
+    if (data.isDraft !== undefined) updateData.isDraft = data.isDraft;
+    if (data.volume !== undefined) updateData.volume = data.volume;
+
+    // Handle page images update — images array takes priority over pages count
+    if (data.images !== undefined && data.images.length > 0) {
+      updateData.images = data.images;
+      updateData.pages = data.images.length;
+    } else if (data.pages !== undefined) {
+      updateData.pages = data.pages;
+    }
+
+    // Handle publishedAt transitions
+    if (data.isPublished === true && !existing.publishedAt) {
+      updateData.publishedAt = new Date();
+    } else if (data.isPublished === false) {
+      updateData.publishedAt = null;
+    } else {
+      updateData.publishedAt = existing.publishedAt;
+    }
+
     const chapter = await prisma.chapter.update({
       where: { id },
-      data: {
-        ...data,
-        publishedAt: data.isPublished === true && !existing.publishedAt ? new Date() : existing.publishedAt,
-      },
+      data: updateData,
     });
 
     await prisma.auditLog.create({

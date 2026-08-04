@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -10,17 +10,17 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-import { Loader2, Plus, GripVertical, Trash2, Image as ImageIcon, UploadCloud } from "lucide-react";
+import { Loader2, Plus, GripVertical, Trash2, Image as ImageIcon, Save } from "lucide-react";
 import toast from "react-hot-toast";
 
-const createChapterSchema = z.object({
+const editChapterSchema = z.object({
   mangaId: z.string().min(1, "Manga is required"),
   chapterNumber: z.coerce.number().min(0, "Chapter number must be positive"),
   title: z.string().optional(),
   isPublished: z.boolean(),
 });
 
-type CreateChapterFormValues = z.infer<typeof createChapterSchema>;
+type EditChapterFormValues = z.infer<typeof editChapterSchema>;
 
 interface PageItem {
   id: string;
@@ -30,12 +30,13 @@ interface PageItem {
   isUploading: boolean;
 }
 
-export default function AdminNewChapterContent() {
+export default function AdminEditChapterContent() {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const initialMangaId = searchParams.get("mangaId") || "";
+  const params = useParams();
+  const id = params.id as string;
 
   const [isLoading, setIsLoading] = useState(false);
+  const [isFetching, setIsFetching] = useState(true);
   const [mangaList, setMangaList] = useState<{ id: string; title: string }[]>([]);
   const [pages, setPages] = useState<PageItem[]>([]);
   const [draggedItemIndex, setDraggedItemIndex] = useState<number | null>(null);
@@ -45,11 +46,11 @@ export default function AdminNewChapterContent() {
     handleSubmit,
     setValue,
     watch,
+    reset,
     formState: { errors },
-  } = useForm<CreateChapterFormValues>({
-    resolver: zodResolver(createChapterSchema),
+  } = useForm<EditChapterFormValues>({
+    resolver: zodResolver(editChapterSchema),
     defaultValues: {
-      mangaId: initialMangaId,
       isPublished: true,
     },
   });
@@ -58,17 +59,44 @@ export default function AdminNewChapterContent() {
   const isPublished = watch("isPublished");
 
   useEffect(() => {
-    const fetchManga = async () => {
+    const fetchData = async () => {
       try {
-        const res = await fetch("/api/admin/manga?limit=100");
-        const json = await res.json();
-        if (json.data) setMangaList(json.data);
-      } catch (err) {
-        toast.error("Failed to load manga list");
+        // Fetch manga list
+        const mangaRes = await fetch("/api/admin/manga?limit=100");
+        const mangaJson = await mangaRes.json();
+        if (mangaJson.data) setMangaList(mangaJson.data);
+
+        // Fetch chapter data
+        const res = await fetch(`/api/admin/chapters/${id}`);
+        if (!res.ok) throw new Error("Failed to fetch chapter");
+        const responseJson = await res.json();
+        const data = responseJson.data;
+        
+        reset({
+          mangaId: data.mangaId,
+          chapterNumber: data.chapterNumber,
+          title: data.title || "",
+          isPublished: !data.isDraft,
+        });
+
+        if (data.images && Array.isArray(data.images)) {
+          setPages(data.images.map((url: string, index: number) => ({
+            id: `page-${index}-${Math.random().toString(36).substring(2, 9)}`,
+            file: null,
+            url,
+            progress: 0,
+            isUploading: false,
+          })));
+        }
+      } catch (error) {
+        toast.error("Failed to load chapter data");
+        router.push("/admin/chapters");
+      } finally {
+        setIsFetching(false);
       }
     };
-    fetchManga();
-  }, []);
+    fetchData();
+  }, [id, reset, router]);
 
   const addPage = () => {
     document.getElementById("page-upload")?.click();
@@ -171,20 +199,22 @@ export default function AdminNewChapterContent() {
     });
   };
 
-  const onSubmit = async (data: CreateChapterFormValues) => {
+  const onSubmit = async (data: EditChapterFormValues) => {
     if (pages.length === 0) {
       toast.error("Please add at least one page");
       return;
     }
 
     setIsLoading(true);
-    toast.loading("Uploading pages...", { id: "save" });
+    toast.loading("Saving pages...", { id: "save" });
 
     try {
-      // 1. Upload all pending files sequentially (to not overload browser/network)
+      // 1. Upload all pending files sequentially
       const uploadedUrls: string[] = [];
       for (let i = 0; i < pages.length; i++) {
-        toast.loading(`Uploading page ${i + 1} of ${pages.length}...`, { id: "save" });
+        if (pages[i].file) {
+          toast.loading(`Uploading new page ${i + 1} of ${pages.length}...`, { id: "save" });
+        }
         const url = await uploadPageToCloudinary(pages[i], i);
         uploadedUrls.push(url);
       }
@@ -195,19 +225,19 @@ export default function AdminNewChapterContent() {
         ...data,
         isDraft: !data.isPublished,
         pages: uploadedUrls.length,
-        images: uploadedUrls, // Send directly to /api/admin/chapters as JSON
+        images: uploadedUrls, 
       };
 
-      const res = await fetch("/api/admin/chapters", {
-        method: "POST",
+      const res = await fetch(`/api/admin/chapters/${id}`, {
+        method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
 
       const result = await res.json();
-      if (!res.ok) throw new Error(result.error || "Failed to create chapter");
+      if (!res.ok) throw new Error(result.error || "Failed to update chapter");
 
-      toast.success("Chapter created successfully!", { id: "save" });
+      toast.success("Chapter updated successfully!", { id: "save" });
       router.push("/admin/chapters");
     } catch (error) {
       console.error(error);
@@ -217,20 +247,28 @@ export default function AdminNewChapterContent() {
     }
   };
 
+  if (isFetching) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <Loader2 className="w-8 h-8 animate-spin text-[var(--primary)]" />
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-6 max-w-5xl mx-auto pb-12 animate-fade-in">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-white tracking-tight">Add New Chapter</h1>
-          <p className="text-[var(--text-muted)] mt-1">Upload chapter pages individually and arrange them.</p>
+          <h1 className="text-3xl font-bold text-white tracking-tight">Edit Chapter</h1>
+          <p className="text-[var(--text-muted)] mt-1">Reorder, replace, or add pages.</p>
         </div>
         <Button
           onClick={handleSubmit(onSubmit)}
           disabled={isLoading || pages.length === 0}
           className="bg-[var(--primary)] hover:bg-[var(--primary-hover)] text-white shadow-lg shadow-[var(--primary)]/25"
         >
-          {isLoading ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <UploadCloud className="w-4 h-4 mr-2" />}
-          Save Chapter
+          {isLoading ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Save className="w-4 h-4 mr-2" />}
+          Save Changes
         </Button>
       </div>
 
@@ -354,7 +392,7 @@ export default function AdminNewChapterContent() {
                           </div>
                         ) : (
                           <p className="text-xs text-slate-500 mt-1">
-                            {page.file ? `${(page.file.size / 1024 / 1024).toFixed(2)} MB` : 'Uploaded'}
+                            {page.file ? `${(page.file.size / 1024 / 1024).toFixed(2)} MB` : 'Existing Page'}
                           </p>
                         )}
                       </div>

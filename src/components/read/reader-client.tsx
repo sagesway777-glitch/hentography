@@ -14,8 +14,6 @@ import {
   Plus,
   Maximize,
   Minimize,
-  AlignJustify,
-  LayoutGrid,
   ArrowLeftRight,
   ChevronLeft,
   ChevronRight,
@@ -373,7 +371,7 @@ export function ReaderClient({
     const s = loadSettings(initialHistory);
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setSettings(s);
-    // eslint-disable-next-line react-hooks/set-state-in-effect
+     
     setSettingsLoaded(true);
   }, [initialHistory]);
 

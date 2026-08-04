@@ -5,7 +5,7 @@ async function main() {
   console.log('Starting seed...')
 
   // 1. Create Admin User
-  const adminEmail = process.env.ADMIN_EMAIL || 'admin@hentography.com'
+  const adminEmail = process.env.ADMIN_EMAIL || 'admin@hentaiplus.com'
   const adminPassword = process.env.ADMIN_PASSWORD || 'admin123456'
   
   const hashedPassword = await bcrypt.hash(adminPassword, 10)
@@ -30,9 +30,9 @@ async function main() {
 
   // 2. Create Default Site Settings
   const defaultSettings = [
-    { key: 'site_name', value: 'Hentography', description: 'Name of the website' },
+    { key: 'site_name', value: 'HentaiPlus', description: 'Name of the website' },
     { key: 'site_description', value: 'Your ultimate manga reading platform.', description: 'SEO Description' },
-    { key: 'contact_email', value: 'contact@hentography.com', description: 'Public contact email' },
+    { key: 'contact_email', value: 'contact@hentaiplus.com', description: 'Public contact email' },
     { key: 'allow_registration', value: 'true', type: 'boolean', description: 'Allow new user registration' },
   ]
 

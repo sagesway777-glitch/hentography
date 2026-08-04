@@ -8,11 +8,11 @@ function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center">
+              <div className="w-8 h-8 bg-gradient-to-br from-[#7C5CFF] to-[#9376FF] rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-sm">H</span>
               </div>
-              <span className="text-xl font-bold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
-                Hentography
+              <span className="text-xl font-bold bg-gradient-to-r from-[#7C5CFF] to-[#9376FF] bg-clip-text text-transparent">
+                HentaiPlus
               </span>
             </div>
             <p className="text-slate-400 text-sm leading-relaxed max-w-md">
@@ -52,9 +52,7 @@ function Footer() {
         </div>
 
         <div className="border-t border-slate-800 mt-12 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-slate-500 text-sm">
-            © {new Date().getFullYear()} Hentography. All rights reserved.
-          </p>
+            © {new Date().getFullYear()} HentaiPlus. All rights reserved.
           <p className="text-slate-600 text-xs">
             This site does not store any files on our server. We only index links to publicly available content.
           </p>

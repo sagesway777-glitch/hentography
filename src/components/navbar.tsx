@@ -43,11 +43,11 @@ function Navbar() {
           {/* Logo + Nav */}
           <div className="flex items-center gap-8">
             <Link href="/" className="flex items-center gap-2 group shrink-0">
-              <div className="relative w-8 h-8 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center shadow-lg shadow-indigo-500/20 group-hover:shadow-indigo-500/40 transition-shadow">
+              <div className="relative w-8 h-8 bg-gradient-to-br from-[#7C5CFF] to-[#9376FF] rounded-lg flex items-center justify-center shadow-lg shadow-[#7C5CFF]/20 group-hover:shadow-[#7C5CFF]/40 transition-shadow">
                 <span className="text-white font-bold text-sm">H</span>
               </div>
-              <span className="text-xl font-bold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
-                Hentography
+              <span className="text-xl font-bold bg-gradient-to-r from-[#7C5CFF] to-[#9376FF] bg-clip-text text-transparent">
+                HentaiPlus
               </span>
             </Link>
 

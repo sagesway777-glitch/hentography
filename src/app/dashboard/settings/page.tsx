@@ -1,9 +1,8 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { UserProfile } from "@clerk/nextjs";
-import { dark } from "@clerk/themes";
 
 export const metadata = {
-  title: "Settings | Dashboard | Hentography",
+  title: "Settings | Dashboard | HentaiPlus",
 };
 
 export default function SettingsPage() {

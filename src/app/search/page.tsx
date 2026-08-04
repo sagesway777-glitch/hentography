@@ -8,20 +8,20 @@ import prisma from "@/lib/prisma";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Search Manga | Hentography",
+  title: "Search Manga | HentaiPlus",
   description:
     "Browse and filter our full collection of manga by genre, status, author, rating, and more. Find your next favourite series.",
   alternates: {
-    canonical: "https://hentography.com/search",
+    canonical: "https://hentaiplus.com/search",
   },
   openGraph: {
-    title: "Search Manga | Hentography",
+    title: "Search Manga | HentaiPlus",
     description: "Browse and filter thousands of manga titles.",
     type: "website",
   },
   twitter: {
     card: "summary",
-    title: "Search Manga | Hentography",
+    title: "Search Manga | HentaiPlus",
     description: "Browse and filter thousands of manga titles.",
   },
   robots: {

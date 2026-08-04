@@ -4,11 +4,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { formatDistanceToNow } from "date-fns";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { List, Plus, Shield } from "lucide-react";
+import { List, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export const metadata = {
-  title: "Playlists | Dashboard | Hentography",
+  title: "Playlists | Dashboard | HentaiPlus",
 };
 
 export default async function PlaylistsPage() {

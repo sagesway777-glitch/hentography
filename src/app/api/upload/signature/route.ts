@@ -13,15 +13,7 @@ export async function GET(request: Request) {
     }
 
     const { searchParams } = new URL(request.url);
-    const folder = searchParams.get("folder") || "hentography";
-
-    // Validate folder to prevent arbitrary uploads
-    const allowedFolders = [
-      "hentography/covers",
-      "hentography/banners",
-      "hentography/chapters",
-      "hentography/avatars"
-    ];
+    const folder = searchParams.get("folder") || "hentaiplus";
 
     const signatureData = getUploadSignature(folder);
 

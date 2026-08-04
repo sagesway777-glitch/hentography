@@ -3,7 +3,7 @@ import { PrismaPg } from "@prisma/adapter-pg";
 import { Pool } from "pg";
 
 const prismaClientSingleton = () => {
-  const connectionString = process.env.DATABASE_URL || "postgresql://user:password@localhost:5432/hentography_db";
+  const connectionString = process.env.DATABASE_URL || "postgresql://user:password@localhost:5432/hentaiplus_db";
   const pool = new Pool({ connectionString });
   const adapter = new PrismaPg(pool);
   return new PrismaClient({ adapter });

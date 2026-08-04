@@ -18,10 +18,9 @@ export default async function AdminChaptersPage({
     where: mangaId ? { mangaId } : undefined,
     skip,
     take: limit,
-    orderBy: [
-      { mangaId: "desc" },
-      { chapterNumber: "desc" },
-    ],
+    orderBy: {
+      createdAt: "desc"
+    },
     include: {
       manga: {
         select: { title: true, coverImage: true, slug: true }
@@ -46,7 +45,7 @@ export default async function AdminChaptersPage({
           <p className="text-slate-400 mt-1">Manage all chapters and pages across your library.</p>
         </div>
         <Link href="/admin/chapters/new">
-          <Button className="bg-indigo-600 hover:bg-indigo-700">
+          <Button className="bg-[var(--primary)] hover:bg-[var(--primary-hover)] text-white">
             <Plus className="w-4 h-4 mr-2" />
             Add Chapter
           </Button>
@@ -122,7 +121,7 @@ export default async function AdminChaptersPage({
                           <Link href={`/manga/${chapter.manga.slug}/chapter-${chapter.chapterNumber}`} target="_blank" className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-8 w-8 text-slate-400 hover:text-white">
                             <Eye className="w-4 h-4" />
                           </Link>
-                          <Link href={`/admin/chapters/${chapter.id}/edit`} className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-8 w-8 text-indigo-400 hover:text-indigo-300 hover:bg-indigo-400/10">
+                          <Link href={`/admin/chapters/${chapter.id}/edit`} className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-8 w-8 text-[var(--primary)] hover:text-[var(--primary-hover)] hover:bg-[var(--primary)]/10">
                             <Edit className="w-4 h-4" />
                           </Link>
                           <Button variant="ghost" size="icon" className="h-8 w-8 text-red-400 hover:text-red-300 hover:bg-red-400/10">

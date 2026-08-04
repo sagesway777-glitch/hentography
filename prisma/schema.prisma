@@ -6,34 +6,31 @@ datasource db {
   provider = "postgresql"
 }
 
-// ─── Users ───────────────────────────────────────────────────────────────────
-
 model User {
-  id        String     @id @default(cuid())
-  clerkId   String     @unique
-  name      String?
-  username  String?    @unique
-  email     String     @unique
-  password  String? // Only used for Admin authentication
-  image     String?
-  role      Role       @default(USER)
-  status    UserStatus @default(ACTIVE)
-  bio       String?
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-
-  settings      UserSettings?
-  ratings       Rating[]
-  comments      Comment[]
+  id            String           @id @default(cuid())
+  clerkId       String           @unique
+  name          String?
+  username      String?          @unique
+  email         String           @unique
+  password      String?
+  image         String?
+  role          Role             @default(USER)
+  status        UserStatus       @default(ACTIVE)
+  bio           String?
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+  auditLogs     AuditLog[]
   bookmarks     Bookmark[]
-  mangaLikes    MangaLike[]
   commentLikes  CommentLike[]
-  history       ReadingHistory[]
+  comments      Comment[]
+  mangaLikes    MangaLike[]
   notifications Notification[]
+  playlists     Playlist[]
+  ratings       Rating[]
+  history       ReadingHistory[]
   reports       Report[]
   reviews       Review[]
-  auditLogs     AuditLog[]
-  playlists     Playlist[]
+  settings      UserSettings?
 
   @@index([clerkId])
   @@index([email])
@@ -57,26 +54,22 @@ model UserSettings {
   emailAnnouncements Boolean     @default(true)
   showNSFW           Boolean     @default(false)
   updatedAt          DateTime    @updatedAt
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user               User        @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("user_settings")
 }
 
-// ─── Playlists ─────────────────────────────────────────────────────────────────
-
 model Playlist {
-  id          String   @id @default(cuid())
+  id          String         @id @default(cuid())
   userId      String
   name        String
   description String?
-  isPublic    Boolean  @default(true)
+  isPublic    Boolean        @default(true)
   coverImage  String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  user  User           @relation(fields: [userId], references: [id], onDelete: Cascade)
-  items PlaylistItem[]
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+  items       PlaylistItem[]
+  user        User           @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
   @@index([isPublic])
@@ -89,65 +82,62 @@ model PlaylistItem {
   mangaId    String
   addedAt    DateTime @default(now())
   sortOrder  Int      @default(0)
-
-  playlist Playlist @relation(fields: [playlistId], references: [id], onDelete: Cascade)
-  manga    Manga    @relation(fields: [mangaId], references: [id], onDelete: Cascade)
+  manga      Manga    @relation(fields: [mangaId], references: [id], onDelete: Cascade)
+  playlist   Playlist @relation(fields: [playlistId], references: [id], onDelete: Cascade)
 
   @@unique([playlistId, mangaId])
+  @@index([playlistId])
   @@map("playlist_items")
 }
 
-// ─── Manga ────────────────────────────────────────────────────────────────────
-
 model Manga {
-  id                String      @id @default(cuid())
+  id                String           @id @default(cuid())
   title             String
   alternativeTitles String?
-  slug              String      @unique
+  slug              String           @unique
   synopsis          String?
   coverImage        String
   bannerImage       String?
-  status            MangaStatus @default(ONGOING)
+  status            MangaStatus      @default(ONGOING)
   releaseYear       Int?
-  language          String      @default("Japanese")
+  language          String           @default("Japanese")
   demographic       String?
   ageRating         String?
-  views             Int         @default(0)
-  bookmarkCount     Int         @default(0)
-  likeCount         Int         @default(0)
-  commentCount      Int         @default(0)
-  reviewCount       Int         @default(0)
-  averageRating     Float       @default(0)
-  ratingCount       Int         @default(0)
-  isFeatured        Boolean     @default(false)
-  isTrending        Boolean     @default(false)
-  isCompleted       Boolean     @default(false)
-  isDraft           Boolean     @default(true)
+  views             Int              @default(0)
+  bookmarkCount     Int              @default(0)
+  likeCount         Int              @default(0)
+  commentCount      Int              @default(0)
+  reviewCount       Int              @default(0)
+  averageRating     Float            @default(0)
+  ratingCount       Int              @default(0)
+  isFeatured        Boolean          @default(false)
+  isTrending        Boolean          @default(false)
+  isCompleted       Boolean          @default(false)
+  isDraft           Boolean          @default(true)
   seoTitle          String?
   seoDescription    String?
   seoKeywords       String?
   publishedAt       DateTime?
-  createdAt         DateTime    @default(now())
-  updatedAt         DateTime    @updatedAt
-
-  genres        GenreManga[]
-  tags          TagManga[]
-  themes        ThemeManga[]
-  authors       AuthorManga[]
-  artists       ArtistManga[]
-  publishers    PublisherManga[]
-  chapters      Chapter[]
-  comments      Comment[]
-  ratings       Rating[]
-  bookmarks     Bookmark[]
-  mangaLikes    MangaLike[]
-  history       ReadingHistory[]
-  related       RelatedManga[]   @relation("MangaRelation")
-  relatedTo     RelatedManga[]   @relation("MangaRelationTo")
-  notifications Notification[]
-  reports       Report[]
-  reviews       Review[]
-  playlistItems PlaylistItem[]
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+  artists           ArtistManga[]
+  authors           AuthorManga[]
+  bookmarks         Bookmark[]
+  chapters          Chapter[]
+  comments          Comment[]
+  genres            GenreManga[]
+  mangaLikes        MangaLike[]
+  notifications     Notification[]
+  playlistItems     PlaylistItem[]
+  publishers        PublisherManga[]
+  ratings           Rating[]
+  history           ReadingHistory[]
+  related           RelatedManga[]   @relation("MangaRelation")
+  relatedTo         RelatedManga[]   @relation("MangaRelationTo")
+  reports           Report[]
+  reviews           Review[]
+  tags              TagManga[]
+  themes            ThemeManga[]
 
   @@index([slug])
   @@index([status])
@@ -163,16 +153,13 @@ model Manga {
   @@map("manga")
 }
 
-// ─── Taxonomy ─────────────────────────────────────────────────────────────────
-
 model Genre {
-  id          String   @id @default(cuid())
-  name        String   @unique
-  slug        String   @unique
+  id          String       @id @default(cuid())
+  name        String       @unique
+  slug        String       @unique
   description String?
-  createdAt   DateTime @default(now())
-
-  manga GenreManga[]
+  createdAt   DateTime     @default(now())
+  manga       GenreManga[]
 
   @@map("genres")
 }
@@ -181,8 +168,8 @@ model GenreManga {
   id      String @id @default(cuid())
   mangaId String
   genreId String
-  manga   Manga  @relation(fields: [mangaId], references: [id], onDelete: Cascade)
   genre   Genre  @relation(fields: [genreId], references: [id], onDelete: Cascade)
+  manga   Manga  @relation(fields: [mangaId], references: [id], onDelete: Cascade)
 
   @@unique([mangaId, genreId])
   @@index([genreId])
@@ -190,10 +177,9 @@ model GenreManga {
 }
 
 model Tag {
-  id   String @id @default(cuid())
-  name String @unique
-  slug String @unique
-
+  id    String     @id @default(cuid())
+  name  String     @unique
+  slug  String     @unique
   manga TagManga[]
 
   @@map("tags")
@@ -212,10 +198,9 @@ model TagManga {
 }
 
 model Theme {
-  id   String @id @default(cuid())
-  name String @unique
-  slug String @unique
-
+  id    String       @id @default(cuid())
+  name  String       @unique
+  slug  String       @unique
   manga ThemeManga[]
 
   @@map("themes")
@@ -233,17 +218,14 @@ model ThemeManga {
   @@map("theme_manga")
 }
 
-// ─── People & Publishers ──────────────────────────────────────────────────────
-
 model Author {
-  id        String   @id @default(cuid())
-  name      String   @unique
-  slug      String   @unique
+  id        String        @id @default(cuid())
+  name      String        @unique
+  slug      String        @unique
   bio       String?
   image     String?
-  createdAt DateTime @default(now())
-
-  manga AuthorManga[]
+  createdAt DateTime      @default(now())
+  manga     AuthorManga[]
 
   @@map("authors")
 }
@@ -252,22 +234,21 @@ model AuthorManga {
   id       String @id @default(cuid())
   mangaId  String
   authorId String
-  manga    Manga  @relation(fields: [mangaId], references: [id], onDelete: Cascade)
   author   Author @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  manga    Manga  @relation(fields: [mangaId], references: [id], onDelete: Cascade)
 
   @@unique([mangaId, authorId])
   @@map("author_manga")
 }
 
 model Artist {
-  id        String   @id @default(cuid())
-  name      String   @unique
-  slug      String   @unique
+  id        String        @id @default(cuid())
+  name      String        @unique
+  slug      String        @unique
   bio       String?
   image     String?
-  createdAt DateTime @default(now())
-
-  manga ArtistManga[]
+  createdAt DateTime      @default(now())
+  manga     ArtistManga[]
 
   @@map("artists")
 }
@@ -276,21 +257,20 @@ model ArtistManga {
   id       String @id @default(cuid())
   mangaId  String
   artistId String
-  manga    Manga  @relation(fields: [mangaId], references: [id], onDelete: Cascade)
   artist   Artist @relation(fields: [artistId], references: [id], onDelete: Cascade)
+  manga    Manga  @relation(fields: [mangaId], references: [id], onDelete: Cascade)
 
   @@unique([mangaId, artistId])
   @@map("artist_manga")
 }
 
 model Publisher {
-  id        String   @id @default(cuid())
-  name      String   @unique
-  slug      String   @unique
+  id        String           @id @default(cuid())
+  name      String           @unique
+  slug      String           @unique
   website   String?
-  createdAt DateTime @default(now())
-
-  manga PublisherManga[]
+  createdAt DateTime         @default(now())
+  manga     PublisherManga[]
 
   @@map("publishers")
 }
@@ -306,61 +286,56 @@ model PublisherManga {
   @@map("publisher_manga")
 }
 
-// ─── Chapters ─────────────────────────────────────────────────────────────────
-
 model Chapter {
-  id             String    @id @default(cuid())
+  id             String           @id @default(cuid())
   mangaId        String
   chapterNumber  Float
   title          String?
   volume         Int?
-  pages          Int       @default(0)
+  pages          Int              @default(0)
   images         String[]
-  views          Int       @default(0)
-  isPublished    Boolean   @default(false)
-  isDraft        Boolean   @default(true)
+  views          Int              @default(0)
+  isPublished    Boolean          @default(false)
+  isDraft        Boolean          @default(true)
   scheduledAt    DateTime?
   seoTitle       String?
   seoDescription String?
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
   publishedAt    DateTime?
-
-  manga    Manga            @relation(fields: [mangaId], references: [id], onDelete: Cascade)
-  comments Comment[]
-  history  ReadingHistory[]
+  manga          Manga            @relation(fields: [mangaId], references: [id], onDelete: Cascade)
+  comments       Comment[]
+  history        ReadingHistory[]
 
   @@unique([mangaId, chapterNumber])
   @@index([isPublished])
   @@index([isDraft])
   @@index([publishedAt])
   @@index([chapterNumber])
+  @@index([mangaId])
   @@map("chapters")
 }
 
-// ─── Community ────────────────────────────────────────────────────────────────
-
 model Comment {
-  id         String    @id @default(cuid())
+  id         String        @id @default(cuid())
   content    String
   mangaId    String
   chapterId  String?
   userId     String
   parentId   String?
-  isSpoiler  Boolean   @default(false)
-  isApproved Boolean   @default(true)
-  isHidden   Boolean   @default(false)
+  isSpoiler  Boolean       @default(false)
+  isApproved Boolean       @default(true)
+  isHidden   Boolean       @default(false)
   editedAt   DateTime?
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
-
-  manga   Manga         @relation(fields: [mangaId], references: [id], onDelete: Cascade)
-  chapter Chapter?      @relation(fields: [chapterId], references: [id], onDelete: SetNull)
-  user    User          @relation(fields: [userId], references: [id], onDelete: Cascade)
-  parent  Comment?      @relation("CommentReplies", fields: [parentId], references: [id], onDelete: Cascade)
-  replies Comment[]     @relation("CommentReplies")
-  likes   CommentLike[]
-  reports Report[]
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
+  likes      CommentLike[]
+  chapter    Chapter?      @relation(fields: [chapterId], references: [id])
+  manga      Manga         @relation(fields: [mangaId], references: [id], onDelete: Cascade)
+  parent     Comment?      @relation("CommentReplies", fields: [parentId], references: [id], onDelete: Cascade)
+  replies    Comment[]     @relation("CommentReplies")
+  user       User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  reports    Report[]
 
   @@index([mangaId])
   @@index([chapterId])
@@ -383,16 +358,16 @@ model Review {
   isApproved   Boolean  @default(true)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
-
-  manga   Manga    @relation(fields: [mangaId], references: [id], onDelete: Cascade)
-  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  reports Report[]
+  reports      Report[]
+  manga        Manga    @relation(fields: [mangaId], references: [id], onDelete: Cascade)
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([mangaId, userId])
   @@index([userId])
   @@index([rating])
   @@index([helpfulVotes])
   @@index([createdAt])
+  @@index([mangaId])
   @@map("reviews")
 }
 
@@ -403,26 +378,24 @@ model Rating {
   userId    String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
-  manga Manga @relation(fields: [mangaId], references: [id], onDelete: Cascade)
-  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  manga     Manga    @relation(fields: [mangaId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([mangaId, userId])
+  @@index([mangaId])
   @@map("ratings")
 }
-
-// ─── Likes (split by target type) ────────────────────────────────────────────
 
 model MangaLike {
   id        String   @id @default(cuid())
   mangaId   String
   userId    String
   createdAt DateTime @default(now())
-
-  manga Manga @relation(fields: [mangaId], references: [id], onDelete: Cascade)
-  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  manga     Manga    @relation(fields: [mangaId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([mangaId, userId])
+  @@index([mangaId])
   @@map("manga_likes")
 }
 
@@ -431,15 +404,13 @@ model CommentLike {
   commentId String
   userId    String
   createdAt DateTime @default(now())
-
-  comment Comment @relation(fields: [commentId], references: [id], onDelete: Cascade)
-  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  comment   Comment  @relation(fields: [commentId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([commentId, userId])
+  @@index([commentId])
   @@map("comment_likes")
 }
-
-// ─── User Lists ───────────────────────────────────────────────────────────────
 
 model Bookmark {
   id        String         @id @default(cuid())
@@ -448,9 +419,8 @@ model Bookmark {
   status    BookmarkStatus @default(WANT_TO_READ)
   createdAt DateTime       @default(now())
   updatedAt DateTime       @updatedAt
-
-  manga Manga @relation(fields: [mangaId], references: [id], onDelete: Cascade)
-  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  manga     Manga          @relation(fields: [mangaId], references: [id], onDelete: Cascade)
+  user      User           @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([mangaId, userId])
   @@index([userId])
@@ -471,10 +441,9 @@ model ReadingHistory {
   isCompleted      Boolean  @default(false)
   lastReadAt       DateTime @default(now())
   createdAt        DateTime @default(now())
-
-  manga   Manga   @relation(fields: [mangaId], references: [id], onDelete: Cascade)
-  chapter Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
-  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  chapter          Chapter  @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  manga            Manga    @relation(fields: [mangaId], references: [id], onDelete: Cascade)
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([mangaId, chapterId, userId])
   @@index([userId, lastReadAt])
@@ -482,8 +451,6 @@ model ReadingHistory {
   @@index([mangaId])
   @@map("reading_history")
 }
-
-// ─── Notifications ────────────────────────────────────────────────────────────
 
 model Notification {
   id        String           @id @default(cuid())
@@ -496,17 +463,14 @@ model Notification {
   mangaId   String?
   chapterId String?
   createdAt DateTime         @default(now())
-
-  user  User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  manga Manga? @relation(fields: [mangaId], references: [id], onDelete: Cascade)
+  manga     Manga?           @relation(fields: [mangaId], references: [id], onDelete: Cascade)
+  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId, isRead])
   @@index([userId])
   @@index([createdAt])
   @@map("notifications")
 }
-
-// ─── Moderation ───────────────────────────────────────────────────────────────
 
 model Report {
   id        String       @id @default(cuid())
@@ -520,19 +484,16 @@ model Report {
   reviewId  String?
   createdAt DateTime     @default(now())
   updatedAt DateTime     @updatedAt
-
-  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  manga   Manga?   @relation(fields: [mangaId], references: [id], onDelete: Cascade)
-  comment Comment? @relation(fields: [commentId], references: [id], onDelete: Cascade)
-  review  Review?  @relation(fields: [reviewId], references: [id], onDelete: Cascade)
+  comment   Comment?     @relation(fields: [commentId], references: [id], onDelete: Cascade)
+  manga     Manga?       @relation(fields: [mangaId], references: [id], onDelete: Cascade)
+  review    Review?      @relation(fields: [reviewId], references: [id], onDelete: Cascade)
+  user      User         @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([status])
   @@index([type])
   @@index([createdAt])
   @@map("reports")
 }
-
-// ─── Related Manga ────────────────────────────────────────────────────────────
 
 model RelatedManga {
   id           String @id @default(cuid())
@@ -545,35 +506,6 @@ model RelatedManga {
   @@unique([mangaId, relatedId])
   @@map("related_manga")
 }
-
-// ─── Advertisements ───────────────────────────────────────────────────────────
-
-model Advertisement {
-  id          String     @id @default(cuid())
-  name        String
-  type        AdType
-  position    AdPosition
-  content     String
-  imageUrl    String?
-  linkUrl     String?
-  isActive    Boolean    @default(true)
-  isDraft     Boolean    @default(false)
-  priority    Int        @default(0)
-  impressions Int        @default(0)
-  clicks      Int        @default(0)
-  startDate   DateTime?
-  endDate     DateTime?
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
-
-  @@index([isActive])
-  @@index([position])
-  @@index([startDate])
-  @@index([endDate])
-  @@map("advertisements")
-}
-
-// ─── Site Content ─────────────────────────────────────────────────────────────
 
 model SiteSettings {
   id          String   @id @default(cuid())
@@ -601,8 +533,6 @@ model Announcement {
   @@index([startsAt])
   @@map("announcements")
 }
-
-// ─── Analytics ────────────────────────────────────────────────────────────────
 
 model PageView {
   id        String   @id @default(cuid())
@@ -632,8 +562,6 @@ model SearchAnalytics {
   @@map("search_analytics")
 }
 
-// ─── Audit Logs ───────────────────────────────────────────────────────────────
-
 model AuditLog {
   id        String   @id @default(cuid())
   userId    String
@@ -645,8 +573,7 @@ model AuditLog {
   ipAddress String?
   userAgent String?
   createdAt DateTime @default(now())
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
   @@index([entity])
@@ -655,7 +582,29 @@ model AuditLog {
   @@map("audit_logs")
 }
 
-// ─── Enums ────────────────────────────────────────────────────────────────────
+model advertisements {
+  id          String     @id
+  name        String
+  type        AdType
+  position    AdPosition
+  content     String
+  imageUrl    String?
+  linkUrl     String?
+  isActive    Boolean    @default(true)
+  isDraft     Boolean    @default(false)
+  priority    Int        @default(0)
+  impressions Int        @default(0)
+  clicks      Int        @default(0)
+  startDate   DateTime?
+  endDate     DateTime?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime
+
+  @@index([endDate])
+  @@index([isActive])
+  @@index([position])
+  @@index([startDate])
+}
 
 enum Role {
   USER
@@ -715,19 +664,6 @@ enum ReportStatus {
   DISMISSED
 }
 
-enum AdType {
-  BANNER
-  SIDEBAR
-  HEADER
-  FOOTER
-  IN_READER
-  POPUP
-  NATIVE
-  CUSTOM_HTML
-  GOOGLE_ADSENSE
-  ADSTERRA
-}
-
 enum AdPosition {
   HOME_HERO
   HOME_SIDEBAR
@@ -741,4 +677,17 @@ enum AdPosition {
   CHAPTER_NAV
   GLOBAL_HEADER
   GLOBAL_FOOTER
+}
+
+enum AdType {
+  BANNER
+  SIDEBAR
+  HEADER
+  FOOTER
+  IN_READER
+  POPUP
+  NATIVE
+  CUSTOM_HTML
+  GOOGLE_ADSENSE
+  ADSTERRA
 }

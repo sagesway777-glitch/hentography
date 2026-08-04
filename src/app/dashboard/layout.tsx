@@ -6,7 +6,7 @@ import Link from "next/link";
 import { headers } from "next/headers";
 
 export const metadata = {
-  title: "Dashboard | Hentography",
+  title: "Dashboard | HentaiPlus",
 };
 
 export default async function DashboardLayout({
@@ -42,7 +42,7 @@ export default async function DashboardLayout({
   return (
     <div className="container max-w-6xl mx-auto px-4 py-8">
       <div className="flex flex-col md:flex-row items-center md:items-start gap-6 mb-8 text-center md:text-left">
-        <div className="w-24 h-24 rounded-full bg-indigo-500/20 border-4 border-slate-800 flex items-center justify-center text-3xl font-bold overflow-hidden shadow-xl shrink-0">
+        <div className="w-24 h-24 rounded-full bg-[var(--primary)]/20 border-4 border-[var(--border)] flex items-center justify-center text-3xl font-bold overflow-hidden shadow-xl shrink-0">
           {user.imageUrl ? (
             <img src={user.imageUrl} alt={user.fullName || "User"} className="w-full h-full object-cover" />
           ) : (
@@ -82,7 +82,7 @@ export default async function DashboardLayout({
               href={tab.path}
               className={`px-6 py-4 text-sm font-medium whitespace-nowrap border-b-2 transition-colors ${
                 isActive
-                  ? "border-indigo-500 text-indigo-400"
+                  ? "border-[var(--primary)] text-[var(--primary)]"
                   : "border-transparent text-slate-400 hover:text-slate-200 hover:border-slate-700"
               }`}
             >

@@ -2,8 +2,8 @@ import { SignIn } from "@clerk/nextjs";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Sign In | Hentography",
-  description: "Sign in to your Hentography account to track reading progress, bookmark manga, and join our community.",
+  title: "Sign In | HentaiPlus",
+  description: "Sign in to your HentaiPlus account to track reading progress, bookmark manga, and join our community.",
 };
 
 export default function SignInPage() {

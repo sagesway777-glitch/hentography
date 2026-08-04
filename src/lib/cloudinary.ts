@@ -9,7 +9,7 @@ cloudinary.config({
 
 export async function uploadToCloudinary(
   file: Buffer | string,
-  folder: string = "hentography"
+  folder: string = "hentaiplus"
 ): Promise<{ secure_url: string; public_id: string }> {
   const uploadOptions: UploadApiOptions = {
     folder,
@@ -42,7 +42,7 @@ export async function uploadToCloudinary(
 
 
 
-export function getUploadSignature(folder: string = "hentography") {
+export function getUploadSignature(folder: string = "hentaiplus") {
   const timestamp = Math.round(new Date().getTime() / 1000);
   const signature = cloudinary.utils.api_sign_request(
     {

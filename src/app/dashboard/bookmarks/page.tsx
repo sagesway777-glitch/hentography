@@ -2,12 +2,11 @@ import { requireAuth } from "@/lib/auth-helpers";
 import prisma from "@/lib/prisma";
 import Image from "next/image";
 import Link from "next/link";
-import { formatDistanceToNow } from "date-fns";
+import { Shield, Bookmark, Heart } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Clock, Shield, Bookmark, Heart } from "lucide-react";
 
 export const metadata = {
-  title: "Bookmarks | Dashboard | Hentography",
+  title: "Bookmarks | Dashboard | HentaiPlus",
 };
 
 export default async function BookmarksPage() {

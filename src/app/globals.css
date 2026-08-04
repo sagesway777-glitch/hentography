@@ -1,64 +1,73 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-background: var(--bg-base);
+  --color-foreground: var(--text);
 }
 
 :root {
-  --background: #020617;
-  --foreground: #f8fafc;
-}
+  /* HentaiPlus Design Tokens */
+  --bg-base:       #090B16;
+  --bg-card:       #121827;
+  --bg-card-2:     #181F31;
+  --border:        rgba(255, 255, 255, 0.08);
+  --primary:       #7C5CFF;
+  --primary-hover: #9376FF;
+  --text:          #FFFFFF;
+  --text-muted:    #94A3B8;
+  --danger:        #EF4444;
+  --success:       #10B981;
 
-.dark {
-  --background: #020617;
-  --foreground: #f8fafc;
+  /* Legacy aliases for Tailwind utilities still used in components */
+  --background: #090B16;
+  --foreground: #FFFFFF;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
+  background: var(--bg-base);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
 
 @layer base {
   * {
     scrollbar-width: thin;
-    scrollbar-color: #475569 #0f172a;
+    scrollbar-color: #7C5CFF33 #090B16;
   }
-  ::-webkit-scrollbar { width: 8px; height: 8px; }
-  ::-webkit-scrollbar-track { background: #0f172a; }
-  ::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; }
-  ::-webkit-scrollbar-thumb:hover { background: #64748b; }
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: #090B16; }
+  ::-webkit-scrollbar-thumb { background: #7C5CFF55; border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: #9376FF88; }
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes slideIn {
-  from { opacity: 0; transform: translateX(-20px); }
-  to { opacity: 1; transform: translateX(0); }
+  from { opacity: 0; transform: translateX(-16px); }
+  to   { opacity: 1; transform: translateX(0); }
 }
 
 @keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 5px rgba(99, 102, 241, 0.2); }
-  50% { box-shadow: 0 0 20px rgba(99, 102, 241, 0.4); }
+  0%, 100% { box-shadow: 0 0 6px rgba(124, 92, 255, 0.25); }
+  50%       { box-shadow: 0 0 22px rgba(124, 92, 255, 0.5); }
 }
 
-.animate-fade-in {
-  animation: fadeIn 0.6s ease-out forwards;
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
 }
 
-.animate-slide-in {
-  animation: slideIn 0.4s ease-out forwards;
-}
+.animate-fade-in   { animation: fadeIn  0.5s ease-out forwards; }
+.animate-slide-in  { animation: slideIn 0.4s ease-out forwards; }
+.animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
 
-.animate-pulse-glow {
-  animation: pulse-glow 2s ease-in-out infinite;
+.skeleton {
+  background: linear-gradient(90deg, #121827 25%, #181F31 50%, #121827 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
 }
 
 .line-clamp-2 {
@@ -76,14 +85,28 @@ body {
 }
 
 .glass-card {
-  background: rgba(15, 23, 42, 0.6);
+  background: rgba(18, 24, 39, 0.7);
   backdrop-filter: blur(12px);
-  border: 1px solid rgba(51, 65, 85, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .text-gradient {
-  background: linear-gradient(135deg, #818cf8, #c084fc);
+  background: linear-gradient(135deg, #7C5CFF, #9376FF);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+/* No-cover placeholder */
+.cover-placeholder {
+  background: #121827;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #94A3B8;
+  font-size: 0.75rem;
+  text-align: center;
 }

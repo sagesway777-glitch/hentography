@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Search, Home, ArrowLeft } from "lucide-react";
+import { Search, Home } from "lucide-react";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "404 - Page Not Found | Hentography",
+  title: "404 - Page Not Found | HentaiPlus",
   description: "The page you are looking for could not be found.",
 };
 

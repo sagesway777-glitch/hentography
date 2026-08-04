@@ -1,4 +1,4 @@
-import { getCurrentUser } from "@/lib/auth-helpers";
+
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { Prisma } from "@prisma/client";
@@ -10,11 +10,8 @@ export async function GET(request: Request) {
     const query = searchParams.get("q") || "";
     const genres = searchParams.getAll("genres");
     const statusParams = searchParams.getAll("status");
-    const type = searchParams.getAll("type");
-    const year = searchParams.getAll("year");
-    const rating = searchParams.get("rating");
-    const language = searchParams.getAll("language");
     const tags = searchParams.getAll("tags");
+    const rating = searchParams.get("rating");
     const sortBy = searchParams.get("sortBy") || "popularity";
     const page = parseInt(searchParams.get("page") || "1");
     const limit = parseInt(searchParams.get("limit") || "24");
@@ -47,7 +44,7 @@ export async function GET(request: Request) {
           },
         },
       } : undefined,
-      ...(rating && { averageRating: { gte: parseFloat(rating) } }),
+      ...(rating ? { averageRating: { gte: parseFloat(rating) } } : {}),
     };
 
     let orderBy: Prisma.MangaOrderByWithRelationInput = {};

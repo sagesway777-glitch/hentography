@@ -40,7 +40,7 @@ export default async function AdminMangaPage({
           <p className="text-slate-400 mt-1">Manage all manga entries in the database.</p>
         </div>
         <Link href="/admin/manga/new">
-          <Button className="bg-indigo-600 hover:bg-indigo-700">
+          <Button className="bg-[var(--primary)] hover:bg-[var(--primary-hover)] text-white">
             <Plus className="w-4 h-4 mr-2" />
             Add Manga
           </Button>
@@ -115,7 +115,7 @@ export default async function AdminMangaPage({
                           <Link href={`/manga/${manga.slug}`} target="_blank" className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-8 w-8 text-slate-400 hover:text-white">
                             <Eye className="w-4 h-4" />
                           </Link>
-                          <Link href={`/admin/manga/${manga.id}/edit`} className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-8 w-8 text-indigo-400 hover:text-indigo-300 hover:bg-indigo-400/10">
+                          <Link href={`/admin/manga/${manga.id}/edit`} className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-8 w-8 text-[var(--primary)] hover:text-[var(--primary-hover)] hover:bg-[var(--primary)]/10">
                             <Edit className="w-4 h-4" />
                           </Link>
                           <Button variant="ghost" size="icon" className="h-8 w-8 text-red-400 hover:text-red-300 hover:bg-red-400/10">

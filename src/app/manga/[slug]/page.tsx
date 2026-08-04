@@ -5,11 +5,10 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Star, Bookmark, Share2, Eye, Heart, BookOpen, Play, ChevronDown } from "lucide-react";
+import { Star, Bookmark, Eye, BookOpen, Play, ChevronDown } from "lucide-react";
 import { MangaRatingSection } from "@/components/manga/manga-rating-section";
 import { CommentsSection } from "@/components/manga/comments-section";
 import { ReviewsSection } from "@/components/manga/reviews-section";
-import { AdSlot } from "@/components/ads/ad-slot";
 import { ShareButton } from "@/components/ui/share-button";
 
 interface AuthorRelation { author: { name: string } }
@@ -31,7 +30,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const manga = await res.json();
 
   return {
-    title: `${manga.title} - Read Online Free | Hentography`,
+    title: `${manga.title} - Read Online Free | HentaiPlus`,
     description: manga.seoDescription || manga.synopsis?.slice(0, 160) || `Read ${manga.title} online for free. Latest chapters available.`,
     metadataBase: new URL(baseUrl),
     openGraph: {
@@ -155,14 +154,12 @@ export default async function MangaPage({ params }: { params: Promise<{ slug: st
                 </Button>
                 <ShareButton 
                   title={manga.title} 
-                  text={`Read ${manga.title} on Hentography!`} 
+                  text={`Read ${manga.title} on HentaiPlus!`} 
                   className="h-11 px-8 text-slate-300 hover:text-white" 
                 />
               </div>
             </div>
           </div>
-
-          <AdSlot position="MANGA_TOP" className="mt-8 mb-4" />
 
           <div className="mt-12 grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div className="lg:col-span-2 space-y-8">

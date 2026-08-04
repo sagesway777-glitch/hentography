@@ -4,7 +4,6 @@ import { notFound } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, Home, List } from "lucide-react";
 import { ReaderClient } from "@/components/read/reader-client";
-import { AdSlot } from "@/components/ads/ad-slot";
 import { ShareButton } from "@/components/ui/share-button";
 import prisma from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
@@ -49,12 +48,12 @@ export async function generateMetadata({
     },
   });
 
-  if (!chapter) return { title: "Chapter Not Found | Hentography" };
+  if (!chapter) return { title: "Chapter Not Found | HentaiPlus" };
 
   const chTitle = chapter.title ? ` — ${chapter.title}` : "";
-  const title = `${chapter.manga.title} Ch.${chapter.chapterNumber}${chTitle} | Hentography`;
-  const description = `Read ${chapter.manga.title} Chapter ${chapter.chapterNumber} online for free at Hentography. No account required.`;
-  const canonicalUrl = `https://hentography.com/read/${chapter.manga.slug}/chapter-${chapter.chapterNumber}`;
+  const title = `${chapter.manga.title} Ch.${chapter.chapterNumber}${chTitle} | HentaiPlus`;
+  const description = `Read ${chapter.manga.title} Chapter ${chapter.chapterNumber} online for free at HentaiPlus. No account required.`;
+  const canonicalUrl = `https://hentaiplus.com/read/${chapter.manga.slug}/chapter-${chapter.chapterNumber}`;
 
   return {
     title,
@@ -214,22 +213,22 @@ function ArticleJsonLd({
     name: `${manga.title} Chapter ${chapter.chapterNumber}`,
     headline: `Read ${manga.title} Chapter ${chapter.chapterNumber} Online`,
     image: manga.coverImage,
-    url: `https://hentography.com/read/${manga.slug}/chapter-${chapter.chapterNumber}`,
+    url: `https://hentaiplus.com/read/${manga.slug}/chapter-${chapter.chapterNumber}`,
     isPartOf: {
       "@type": "Book",
       name: manga.title,
-      url: `https://hentography.com/manga/${manga.slug}`,
+      url: `https://hentaiplus.com/manga/${manga.slug}`,
     },
     breadcrumb: {
       "@type": "BreadcrumbList",
       itemListElement: [
-        { "@type": "ListItem", position: 1, name: "Home", item: "https://hentography.com" },
-        { "@type": "ListItem", position: 2, name: manga.title, item: `https://hentography.com/manga/${manga.slug}` },
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://hentaiplus.com" },
+        { "@type": "ListItem", position: 2, name: manga.title, item: `https://hentaiplus.com/manga/${manga.slug}` },
         {
           "@type": "ListItem",
           position: 3,
           name: `Chapter ${chapter.chapterNumber}`,
-          item: `https://hentography.com/read/${manga.slug}/chapter-${chapter.chapterNumber}`,
+          item: `https://hentaiplus.com/read/${manga.slug}/chapter-${chapter.chapterNumber}`,
         },
       ],
     },
@@ -277,16 +276,12 @@ export default async function ReaderPage({
         nextSlug={nextSlug}
       />
 
-      <AdSlot position="READER_TOP" className="mt-14 mb-0 max-w-4xl mx-auto px-4" />
-
       <ReaderClient
         chapter={chapter}
         mangaSlug={mangaSlug}
         initialHistory={readingHistory}
         nextChapterSlug={nextSlug}
       />
-
-      <AdSlot position="READER_BOTTOM" className="mb-4 max-w-4xl mx-auto px-4" />
 
       <ReaderFooter
         manga={chapter.manga}
@@ -403,7 +398,7 @@ function ReaderHeader({
           <div className="h-4 w-px bg-slate-700 mx-1" aria-hidden="true" />
           <ShareButton 
             title={`${manga.title} Ch. ${chapter.chapterNumber}`} 
-            text={`Read ${manga.title} Chapter ${chapter.chapterNumber} on Hentography!`}
+            text={`Read ${manga.title} Chapter ${chapter.chapterNumber} on HentaiPlus!`}
             className="h-8 border-none bg-transparent hover:bg-slate-800 text-slate-300"
           />
         </nav>

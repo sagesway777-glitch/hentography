@@ -7,7 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Clock, Shield } from "lucide-react";
 
 export const metadata = {
-  title: "Reading History | Dashboard | Hentography",
+  title: "Reading History | Dashboard | HentaiPlus",
 };
 
 export default async function HistoryPage() {

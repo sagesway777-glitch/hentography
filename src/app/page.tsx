@@ -17,7 +17,6 @@ import {
   Eye,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { AdSlot } from "@/components/ads/ad-slot";
 import prisma from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
 import { formatDistanceToNow } from "date-fns";
@@ -75,23 +74,23 @@ export const revalidate = 3600;
 // ─── SEO Metadata ─────────────────────────────────────────────────────────────
 
 export const metadata: Metadata = {
-  title: "Hentography — Read Manga Online Free",
+  title: "HentaiPlus — Read Manga Online Free",
   description:
-    "Read the latest manga online for free at Hentography. Discover new series, keep track of your reading progress, and join our community of passionate readers.",
+    "Read the latest manga online for free at HentaiPlus. Discover new series, keep track of your reading progress, and join our community of passionate readers.",
   alternates: {
-    canonical: "https://hentography.com",
+    canonical: "https://hentaiplus.com",
   },
   openGraph: {
-    title: "Hentography — Read Manga Online Free",
+    title: "HentaiPlus — Read Manga Online Free",
     description:
       "Discover thousands of manga titles. Read the latest chapters, track your progress, and join our community.",
     type: "website",
-    url: "https://hentography.com",
-    siteName: "Hentography",
+    url: "https://hentaiplus.com",
+    siteName: "HentaiPlus",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Hentography — Read Manga Online Free",
+    title: "HentaiPlus — Read Manga Online Free",
     description:
       "Discover thousands of manga titles. Read the latest chapters, track your progress.",
   },
@@ -438,7 +437,7 @@ async function getRecommendations(userId: string): Promise<MangaCardData[]> {
 function MangaCard({ manga, priority = false }: { manga: MangaCardData; priority?: boolean }) {
   return (
     <Link href={`/manga/${manga.slug}`} className="group block">
-      <div className="relative aspect-[2/3] rounded-xl overflow-hidden bg-slate-900 border border-slate-800 group-hover:border-indigo-500/40 transition-all duration-300 shadow-md group-hover:shadow-xl group-hover:shadow-indigo-900/20">
+      <div className="relative aspect-[2/3] rounded-xl overflow-hidden bg-[var(--bg-card)] border border-[var(--border)] group-hover:border-[var(--primary)]/40 transition-all duration-300 shadow-md group-hover:shadow-xl group-hover:shadow-[var(--primary)]/20">
         {manga.coverImage ? (
           <Image
             src={manga.coverImage}
@@ -488,7 +487,7 @@ function MangaCard({ manga, priority = false }: { manga: MangaCardData; priority
         </div>
       </div>
       <div className="mt-2 px-0.5">
-        <h3 className="text-sm font-semibold text-slate-200 line-clamp-2 group-hover:text-indigo-300 transition-colors leading-tight">
+        <h3 className="text-sm font-semibold text-slate-200 line-clamp-2 group-hover:text-[var(--primary)] transition-colors leading-tight">
           {manga.title}
         </h3>
         {manga.genres?.[0] && (
@@ -516,8 +515,8 @@ function SectionHeader({
     <div className="flex items-end justify-between mb-5">
       <div className="flex items-center gap-3">
         {Icon && (
-          <div className="p-2 bg-indigo-500/10 rounded-xl border border-indigo-500/20" aria-hidden="true">
-            <Icon className="w-5 h-5 text-indigo-400" />
+          <div className="p-2 bg-[var(--primary)]/10 rounded-xl border border-[var(--primary)]/20" aria-hidden="true">
+            <Icon className="w-5 h-5 text-[var(--primary)]" />
           </div>
         )}
         <div>
@@ -528,7 +527,7 @@ function SectionHeader({
       {href && (
         <Link
           href={href}
-          className="flex items-center gap-1.5 text-sm text-indigo-400 hover:text-indigo-300 transition-colors font-medium group"
+          className="flex items-center gap-1.5 text-sm text-[var(--primary)] hover:text-[var(--primary-hover)] transition-colors font-medium group"
           aria-label={`View all ${title}`}
         >
           View All
@@ -854,15 +853,15 @@ function WebSiteJsonLd() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    name: "Hentography",
-    url: "https://hentography.com",
+    name: "HentaiPlus",
+    url: "https://hentaiplus.com",
     description:
-      "Read the latest manga online for free at Hentography. Discover new series, track your progress, and join our community.",
+      "Read the latest manga online for free at HentaiPlus. Discover new series, track your progress, and join our community.",
     potentialAction: {
       "@type": "SearchAction",
       target: {
         "@type": "EntryPoint",
-        urlTemplate: "https://hentography.com/search?q={search_term_string}",
+        urlTemplate: "https://hentaiplus.com/search?q={search_term_string}",
       },
       "query-input": "required name=search_term_string",
     },
@@ -910,7 +909,15 @@ async function HomeContent() {
   return (
     <>
       <WebSiteJsonLd />
-      <HeroCarousel featured={featured} />
+      {featured.length === 0 && ongoing.length === 0 && completed.length === 0 ? (
+        <div className="flex flex-col items-center justify-center min-h-[60vh] text-center px-4">
+          <BookOpen className="w-16 h-16 text-slate-700 mb-4" />
+          <h1 className="text-3xl font-bold text-white mb-2">No Manga Yet</h1>
+          <p className="text-slate-400 max-w-md">There are currently no manga uploaded to the database. Check back later!</p>
+        </div>
+      ) : (
+        <HeroCarousel featured={featured} />
+      )}
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <AnnouncementsSection announcements={announcements} />
@@ -954,10 +961,6 @@ async function HomeContent() {
           subtitle="Fresh chapters added this week"
         />
 
-        {/* Mid-page Ad */}
-        <div className="mb-14">
-          <AdSlot position="HOME_HERO" />
-        </div>
 
         <MangaRow
           manga={highestRated}
@@ -997,10 +1000,6 @@ async function HomeContent() {
 
         <GenresSection genres={genres} />
 
-        {/* Bottom Ad */}
-        <div className="mb-14">
-          <AdSlot position="HOME_HERO" />
-        </div>
       </div>
     </>
   );

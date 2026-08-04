@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: { params: Promise<{ username:
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
   const url = `${baseUrl}/profile/${user.username}`;
   const title = `${user.name || user.username} | Profile`;
-  const description = `Check out ${user.name || user.username}'s profile on Hentography.`;
+  const description = `Check out ${user.name || user.username}'s profile on HentaiPlus.`;
 
   return {
     title,
@@ -89,10 +89,10 @@ export default async function ProfilePage({
         <div className="flex-1 mt-4 md:mt-0">
           <h1 className="text-4xl font-bold text-white mb-2">{profileUser.name || profileUser.username}</h1>
           <div className="flex items-center gap-3 mb-6">
-            <p className="text-indigo-400 font-medium">@{profileUser.username}</p>
+            <p className="text-[var(--primary)] font-medium">@{profileUser.username}</p>
             <ShareButton 
               title={`${profileUser.name || profileUser.username}'s Profile`}
-              text={`Check out ${profileUser.name || profileUser.username} on Hentography!`}
+              text={`Check out ${profileUser.name || profileUser.username} on HentaiPlus!`}
               className="h-7 px-3 text-xs border-slate-700 bg-slate-900/50 hover:bg-slate-800"
             />
           </div>

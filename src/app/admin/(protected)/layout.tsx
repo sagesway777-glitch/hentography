@@ -1,11 +1,11 @@
 import { getAdminUser } from "@/lib/admin-auth";
 import { redirect } from "next/navigation";
 import Link from "next/link";
-import { LayoutDashboard, Book, Layers, Users, MessageSquare, AlertTriangle, Settings, Megaphone, FileText, BarChart2 } from "lucide-react";
+import { LayoutDashboard, Book, Layers, Users, MessageSquare, AlertTriangle, Settings, FileText } from "lucide-react";
 import { AdminLogoutButton } from "@/components/admin/admin-logout-button";
 
 export const metadata = {
-  title: "Admin Dashboard | Hentography",
+  title: "Admin Dashboard | HentaiPlus",
 };
 
 export default async function AdminLayout({
@@ -28,7 +28,6 @@ export default async function AdminLayout({
     { href: "/admin/users", label: "Users", icon: Users },
     { href: "/admin/comments", label: "Comments", icon: MessageSquare },
     { href: "/admin/reports", label: "Reports", icon: AlertTriangle },
-    { href: "/admin/ads", label: "Ads", icon: Megaphone },
     { href: "/admin/audit-logs", label: "Audit Logs", icon: FileText },
     { href: "/admin/settings", label: "Settings", icon: Settings },
   ];

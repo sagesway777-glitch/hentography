@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Search, Shield, Ban, CheckCircle, UserX, UserCheck } from "lucide-react";
+import { Search, Shield, Ban, CheckCircle, UserX } from "lucide-react";
 import toast from "react-hot-toast";
 
 interface AdminUser {

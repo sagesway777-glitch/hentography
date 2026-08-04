@@ -4,8 +4,8 @@ import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 
 export const metadata: Metadata = {
-  title: "DMCA | Hentography",
-  description: "DMCA policy for Hentography manga reading platform.",
+  title: "DMCA | HentaiPlus",
+  description: "DMCA policy for HentaiPlus manga reading platform.",
 };
 
 export default function DMCAPage() {
@@ -17,7 +17,7 @@ export default function DMCAPage() {
         <div className="prose prose-invert max-w-none space-y-6 text-slate-300">
           <section>
             <h2 className="text-2xl font-bold text-white mb-4">DMCA Takedown Policy</h2>
-            <p>Hentography respects the intellectual property rights of others and expects its users to do the same. In accordance with the Digital Millennium Copyright Act (DMCA), we will respond to notices of alleged copyright infringement.</p>
+            <p>HentaiPlus respects the intellectual property rights of others and expects its users to do the same. In accordance with the Digital Millennium Copyright Act (DMCA), we will respond to notices of alleged copyright infringement.</p>
           </section>
           <section>
             <h2 className="text-2xl font-bold text-white mb-4">How to Submit a DMCA Notice</h2>
@@ -33,7 +33,7 @@ export default function DMCAPage() {
           </section>
           <section>
             <h2 className="text-2xl font-bold text-white mb-4">Contact Information</h2>
-            <p>DMCA notices should be sent to our designated copyright agent at: dmca@hentography.com</p>
+            <p>DMCA notices should be sent to our designated copyright agent at: dmca@hentaiplus.com</p>
           </section>
         </div>
       </main>
