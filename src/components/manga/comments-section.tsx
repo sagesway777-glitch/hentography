@@ -5,10 +5,30 @@ import { useAuth } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { MessageSquare, Heart, Flag, MoreVertical, Reply, CornerDownRight } from "lucide-react";
+import { MessageSquare, Heart, MoreVertical, Reply, CornerDownRight } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import toast from "react-hot-toast";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+
+interface CommentUser {
+  name: string | null;
+  image: string;
+  clerkId: string;
+}
+
+interface CommentLike {
+  user: CommentUser;
+}
+
+interface Comment {
+  id: string;
+  content: string;
+  createdAt: string | Date;
+  parentId?: string | null;
+  user: CommentUser;
+  likes?: CommentLike[];
+  replies?: Comment[];
+}
 
 interface CommentsSectionProps {
   mangaId: string;
@@ -16,7 +36,7 @@ interface CommentsSectionProps {
 
 export function CommentsSection({ mangaId }: CommentsSectionProps) {
   const { isSignedIn, userId } = useAuth();
-  const [comments, setComments] = useState<any[]>([]);
+  const [comments, setComments] = useState<Comment[]>([]);
   const [newComment, setNewComment] = useState("");
   const [replyingTo, setReplyingTo] = useState<string | null>(null);
   const [replyContent, setReplyContent] = useState("");
@@ -32,7 +52,7 @@ export function CommentsSection({ mangaId }: CommentsSectionProps) {
       if (res.ok) {
         const data = await res.json();
         // Filter out replies, as they are nested inside top-level comments
-        setComments(data.data.filter((c: any) => !c.parentId));
+        setComments(data.data.filter((c: Comment) => !c.parentId));
       }
     } catch (error) {
       console.error("Failed to load comments", error);
@@ -101,8 +121,8 @@ export function CommentsSection({ mangaId }: CommentsSectionProps) {
     }
   };
 
-  const CommentItem = ({ comment, isReply = false }: { comment: any, isReply?: boolean }) => {
-    const isLiked = comment.likes?.some((l: any) => l.user?.clerkId === userId);
+  const CommentItem = ({ comment, isReply = false }: { comment: Comment, isReply?: boolean }) => {
+    const isLiked = comment.likes?.some((l: CommentLike) => l.user?.clerkId === userId);
     const isOwner = comment.user?.clerkId === userId;
 
     return (
@@ -166,9 +186,9 @@ export function CommentsSection({ mangaId }: CommentsSectionProps) {
             </div>
           )}
 
-          {comment.replies?.length > 0 && (
-            <div className="pl-4 border-l-2 border-slate-800 mt-2 space-y-4">
-              {comment.replies.map((reply: any) => (
+          {(comment.replies?.length ?? 0) > 0 && (
+            <div className="mt-4 pl-4 border-l-2 border-slate-800 space-y-4">
+              {comment.replies?.map((reply: Comment) => (
                 <CommentItem key={reply.id} comment={reply} isReply={true} />
               ))}
             </div>

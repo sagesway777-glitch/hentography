@@ -22,7 +22,7 @@ export default function NotFound() {
         <div className="space-y-4">
           <h2 className="text-3xl font-bold text-white">Oops! Page not found.</h2>
           <p className="text-slate-400 text-lg">
-            It seems the page you're looking for has vanished into the void, or maybe it was never here to begin with.
+            It seems the page you&apos;re looking for has vanished into the void, or maybe it was never here to begin with.
           </p>
         </div>
 

@@ -12,6 +12,15 @@ import { ReviewsSection } from "@/components/manga/reviews-section";
 import { AdSlot } from "@/components/ads/ad-slot";
 import { ShareButton } from "@/components/ui/share-button";
 
+interface AuthorRelation { author: { name: string } }
+interface ArtistRelation { artist: { name: string } }
+interface PublisherRelation { publisher: { name: string } }
+interface GenreRelation { genre: { id: string; name: string; slug: string } }
+interface ThemeRelation { theme: { id: string; name: string; slug: string } }
+interface TagRelation { tag: { id: string; name: string } }
+interface ChapterData { id: string; chapterNumber: number; title: string | null }
+
+
 export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
@@ -69,9 +78,9 @@ export default async function MangaPage({ params }: { params: Promise<{ slug: st
     alternateName: manga.alternativeTitles,
     description: manga.synopsis,
     image: manga.coverImage,
-    genre: manga.genres?.map((g: any) => g.genre.name),
-    author: manga.authors?.map((a: any) => ({ "@type": "Person", name: a.author.name })),
-    publisher: manga.publishers?.map((p: any) => ({ "@type": "Organization", name: p.publisher.name })),
+    genre: manga.genres?.map((g: GenreRelation) => g.genre.name),
+    author: manga.authors?.map((a: AuthorRelation) => ({ "@type": "Person", name: a.author.name })),
+    publisher: manga.publishers?.map((p: PublisherRelation) => ({ "@type": "Organization", name: p.publisher.name })),
     datePublished: manga.releaseYear ? `${manga.releaseYear}-01-01` : undefined,
     aggregateRating: manga.ratingCount > 0 ? {
       "@type": "AggregateRating",
@@ -171,19 +180,19 @@ export default async function MangaPage({ params }: { params: Promise<{ slug: st
                     {manga.authors?.length > 0 && (
                       <div>
                         <span className="text-slate-400 text-sm">Author</span>
-                        <p className="text-white font-medium">{manga.authors.map((a: any) => a.author.name).join(", ")}</p>
+                        <p className="text-white font-medium">{manga.authors.map((a: AuthorRelation) => a.author.name).join(", ")}</p>
                       </div>
                     )}
                     {manga.artists?.length > 0 && (
                       <div>
                         <span className="text-slate-400 text-sm">Artist</span>
-                        <p className="text-white font-medium">{manga.artists.map((a: any) => a.artist.name).join(", ")}</p>
+                        <p className="text-white font-medium">{manga.artists.map((a: ArtistRelation) => a.artist.name).join(", ")}</p>
                       </div>
                     )}
                     {manga.publishers?.length > 0 && (
                       <div>
                         <span className="text-slate-400 text-sm">Publisher</span>
-                        <p className="text-white font-medium">{manga.publishers.map((p: any) => p.publisher.name).join(", ")}</p>
+                        <p className="text-white font-medium">{manga.publishers.map((p: PublisherRelation) => p.publisher.name).join(", ")}</p>
                       </div>
                     )}
                     {manga.releaseYear && (
@@ -212,17 +221,17 @@ export default async function MangaPage({ params }: { params: Promise<{ slug: st
                 <CardContent className="p-6">
                   <h2 className="text-xl font-bold text-white mb-4">Genres & Themes</h2>
                   <div className="flex flex-wrap gap-2">
-                    {manga.genres?.map((g: any) => (
+                    {manga.genres?.map((g: GenreRelation) => (
                       <Link key={g.genre.id} href={`/search?genres=${g.genre.slug}`}>
                         <Badge variant="secondary" className="hover:bg-indigo-500/20 transition-colors cursor-pointer">{g.genre.name}</Badge>
                       </Link>
                     ))}
-                    {manga.themes?.map((t: any) => (
+                    {manga.themes?.map((t: ThemeRelation) => (
                       <Link key={t.theme.id} href={`/search?themes=${t.theme.slug}`}>
                         <Badge key={t.theme.id} variant="outline" className="hover:bg-indigo-500/20 transition-colors cursor-pointer">{t.theme.name}</Badge>
                       </Link>
                     ))}
-                    {manga.tags?.map((t: any) => (
+                    {manga.tags?.map((t: TagRelation) => (
                       <Badge key={t.tag.id} variant="outline" className="text-slate-400">{t.tag.name}</Badge>
                     ))}
                   </div>
@@ -251,7 +260,7 @@ export default async function MangaPage({ params }: { params: Promise<{ slug: st
                   <h2 className="text-xl font-bold text-white mb-4">Chapters</h2>
                   {manga.chapters?.length > 0 ? (
                     <div className="space-y-2 max-h-[400px] overflow-y-auto pr-2">
-                      {manga.chapters.map((chapter: any) => (
+                      {manga.chapters.map((chapter: ChapterData) => (
                         <Link key={chapter.id} href={`/read/${manga.slug}/chapter-${chapter.chapterNumber}`}>
                           <div className="flex items-center justify-between p-3 rounded-lg bg-slate-800/30 hover:bg-slate-800/60 transition-colors cursor-pointer group">
                             <div className="flex items-center gap-3">

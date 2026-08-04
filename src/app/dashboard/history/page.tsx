@@ -42,7 +42,7 @@ export default async function HistoryPage() {
       </CardHeader>
       <CardContent>
         {historyItems.length === 0 ? (
-          <p className="text-slate-400 text-center py-8">You haven't read any manga yet.</p>
+          <p className="text-slate-400 text-center py-8">You haven&apos;t read any manga yet.</p>
         ) : (
           <div className="space-y-4">
             {historyItems.map((item) => (

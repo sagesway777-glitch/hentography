@@ -39,11 +39,11 @@ export default async function BookmarksPage() {
     <Card className="bg-slate-900/50 border-slate-800">
       <CardHeader>
         <CardTitle>Your Bookmarks</CardTitle>
-        <CardDescription>Manga you're tracking</CardDescription>
+        <CardDescription>Manga you&apos;re tracking</CardDescription>
       </CardHeader>
       <CardContent>
         {bookmarks.length === 0 ? (
-          <p className="text-slate-400 text-center py-8">You haven't bookmarked any manga yet.</p>
+          <p className="text-slate-400 text-center py-8">You haven&apos;t bookmarked any manga yet.</p>
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
             {bookmarks.map((bookmark) => (

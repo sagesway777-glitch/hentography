@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
+import { AdPosition } from "@prisma/client";
 
 export async function GET(request: Request) {
   try {
@@ -15,7 +16,7 @@ export async function GET(request: Request) {
     // Fetch active ads for position that are not drafts, and within date bounds if set
     const ads = await prisma.advertisement.findMany({
       where: {
-        position: position as any,
+        position: position as AdPosition,
         isActive: true,
         isDraft: false,
         OR: [

@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
+import { Prisma } from "@prisma/client";
 import { requireAuth } from "@/lib/auth-helpers";
 import { z } from "zod";
 import { getCurrentUser } from "@/lib/auth-helpers";
@@ -21,7 +22,7 @@ export async function GET(request: Request) {
 
     const user = await getCurrentUser().catch(() => null);
 
-    const where: any = {};
+    const where: Prisma.PlaylistWhereInput = {};
 
     if (userId) {
       where.userId = userId;

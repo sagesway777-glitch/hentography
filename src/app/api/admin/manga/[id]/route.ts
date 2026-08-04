@@ -87,7 +87,7 @@ export async function PATCH(
     // Handle slug update if title changed
     let slug = existing.slug;
     if (data.title && data.title !== existing.title) {
-      let baseSlug = generateSlug(data.title);
+      const baseSlug = generateSlug(data.title);
       slug = baseSlug;
       let counter = 1;
       while (await prisma.manga.findFirst({ where: { slug, NOT: { id } } })) {

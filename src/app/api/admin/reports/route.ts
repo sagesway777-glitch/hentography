@@ -1,6 +1,8 @@
 import { requireAdmin, handleAdminError } from "@/lib/admin-auth";
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
+import { Prisma } from "@prisma/client";
+import { ReportStatus, ReportType } from "@prisma/client";
 
 export async function GET(request: Request) {
   try {
@@ -13,9 +15,9 @@ export async function GET(request: Request) {
     const type = searchParams.get("type");
     const skip = (page - 1) * limit;
 
-    const where: any = {};
-    if (status) where.status = status;
-    if (type) where.type = type;
+    const where: Prisma.ReportWhereInput = {};
+    if (status) where.status = status as ReportStatus;
+    if (type) where.type = type as ReportType;
 
     const [reports, total] = await Promise.all([
       prisma.report.findMany({

@@ -1,6 +1,7 @@
 import { requireAdmin, handleAdminError } from "@/lib/admin-auth";
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
+import { Prisma } from "@prisma/client";
 
 export async function GET(request: Request) {
   try {
@@ -13,7 +14,7 @@ export async function GET(request: Request) {
     const action = searchParams.get("action");
     const skip = (page - 1) * limit;
 
-    const where: any = {};
+    const where: Prisma.AuditLogWhereInput = {};
     if (entity) where.entity = entity;
     if (action) where.action = action;
 

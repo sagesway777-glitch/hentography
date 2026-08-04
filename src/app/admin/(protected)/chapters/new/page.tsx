@@ -22,6 +22,9 @@ const createChapterSchema = z.object({
 
 type CreateChapterFormValues = z.infer<typeof createChapterSchema>;
 
+interface MangaOption { id: string; title: string; }
+interface PageUploadResult { pageNumber: number; url: string; }
+
 function AdminNewChapterContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -55,7 +58,7 @@ function AdminNewChapterContent() {
         const res = await fetch("/api/admin/manga?limit=100");
         const json = await res.json();
         if (json.data) {
-          setMangaList(json.data.map((m: any) => ({ id: m.id, title: m.title })));
+          setMangaList(json.data.map((m: MangaOption) => ({ id: m.id, title: m.title })));
         }
       } catch (error) {
         toast.error("Failed to fetch manga list");
@@ -121,7 +124,7 @@ function AdminNewChapterContent() {
           chapterNumber: data.chapterNumber,
           title: data.title,
           isPublished: data.isPublished,
-          pages: pages.map((p: any) => ({
+          pages: pages.map((p: PageUploadResult) => ({
             pageNumber: p.pageNumber,
             imageUrl: p.url,
           })),

@@ -5,9 +5,23 @@ import { useAuth } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Star, Award, MessageSquare } from "lucide-react";
+import { Star, Award } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import toast from "react-hot-toast";
+
+interface ReviewUser {
+  name: string | null;
+  image: string;
+}
+
+interface Review {
+  id: string;
+  rating: number;
+  body: string;
+  helpfulVotes: number;
+  createdAt: string | Date;
+  user: ReviewUser;
+}
 
 interface ReviewsSectionProps {
   mangaId: string;
@@ -15,14 +29,10 @@ interface ReviewsSectionProps {
 
 export function ReviewsSection({ mangaId }: ReviewsSectionProps) {
   const { isSignedIn } = useAuth();
-  const [reviews, setReviews] = useState<any[]>([]);
+  const [reviews, setReviews] = useState<Review[]>([]);
   const [newReview, setNewReview] = useState("");
   const [rating, setRating] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  useEffect(() => {
-    fetchReviews();
-  }, [mangaId]);
 
   const fetchReviews = async () => {
     try {
@@ -35,6 +45,11 @@ export function ReviewsSection({ mangaId }: ReviewsSectionProps) {
       console.error("Failed to load reviews", error);
     }
   };
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    fetchReviews();
+  }, [mangaId]);
 
   const handleSubmit = async () => {
     if (!isSignedIn) {
@@ -75,7 +90,7 @@ export function ReviewsSection({ mangaId }: ReviewsSectionProps) {
     }
   };
 
-  const ReviewItem = ({ review }: { review: any }) => {
+  const ReviewItem = ({ review }: { review: Review }) => {
     return (
       <div className="bg-slate-900/50 p-6 rounded-xl border border-slate-800">
         <div className="flex items-center justify-between mb-4">

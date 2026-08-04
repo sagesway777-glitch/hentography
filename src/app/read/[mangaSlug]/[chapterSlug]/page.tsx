@@ -307,9 +307,9 @@ function ReaderHeader({
   prevSlug,
   nextSlug,
 }: {
-  manga: any;
-  chapter: any;
-  allChapters: any[];
+  manga: { title: string; slug: string; coverImage?: string | null };
+  chapter: { chapterNumber: number; title: string | null };
+  allChapters: { chapterNumber: number; title: string | null }[];
   prevSlug: string | null;
   nextSlug: string | null;
 }) {
@@ -357,7 +357,7 @@ function ReaderHeader({
               <SelectValue />
             </SelectTrigger>
             <SelectContent className="max-h-64 overflow-y-auto">
-              {allChapters.map((ch: any) => (
+              {allChapters.map((ch: { chapterNumber: number; title: string | null }) => (
                 <SelectItem
                   key={ch.chapterNumber}
                   value={`chapter-${ch.chapterNumber}`}
@@ -420,8 +420,8 @@ function ReaderFooter({
   prevSlug,
   nextSlug,
 }: {
-  manga: any;
-  chapter: any;
+  manga: { title: string; slug: string; coverImage?: string | null };
+  chapter: { chapterNumber: number; title: string | null };
   prevSlug: string | null;
   nextSlug: string | null;
 }) {

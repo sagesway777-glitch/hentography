@@ -3,7 +3,7 @@ import prisma from "@/lib/prisma";
 import Image from "next/image";
 import Link from "next/link";
 import { formatDistanceToNow } from "date-fns";
-import { List, Shield } from "lucide-react";
+import { List } from "lucide-react";
 import { ShareButton } from "@/components/ui/share-button";
 
 export async function generateMetadata({ params }: { params: Promise<{ username: string }> }) {
@@ -127,7 +127,7 @@ export default async function ProfilePage({
         
         {profileUser.playlists.length === 0 ? (
           <div className="bg-slate-900/30 rounded-2xl border border-slate-800/50 border-dashed p-12 text-center">
-            <p className="text-slate-400">This user hasn't created any public playlists yet.</p>
+            <p className="text-slate-400">This user hasn&apos;t created any public playlists yet.</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

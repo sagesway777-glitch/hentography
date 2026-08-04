@@ -1,6 +1,8 @@
 import { requireAdmin, handleAdminError } from "@/lib/admin-auth";
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
+import { Prisma } from "@prisma/client";
+import { Role, UserStatus } from "@prisma/client";
 
 export async function PATCH(request: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
@@ -11,9 +13,9 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
     const body = await request.json();
     const { role, status } = body;
 
-    const data: any = {};
-    if (role) data.role = role;
-    if (status) data.status = status;
+    const data: Prisma.UserUpdateInput = {};
+    if (role) data.role = role as Role;
+    if (status) data.status = status as UserStatus;
 
     const user = await prisma.user.update({
       where: { id },

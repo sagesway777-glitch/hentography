@@ -8,7 +8,7 @@ export async function GET(
 ) {
   try {
     const { slug } = await params;
-    const manga = await prisma.manga.findUnique({
+    const manga = await prisma.manga.findFirst({
       where: { slug, isDraft: false },
       include: {
         genres: { include: { genre: true } },

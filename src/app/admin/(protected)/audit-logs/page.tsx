@@ -7,27 +7,44 @@ import { Badge } from "@/components/ui/badge";
 import { Activity, ShieldAlert, Edit, Trash, Plus } from "lucide-react";
 import toast from "react-hot-toast";
 
+interface AuditLogEntry {
+  id: string;
+  action: string;
+  entity: string;
+  entityId: string | null;
+  oldValues: Record<string, unknown> | null;
+  newValues: Record<string, unknown> | null;
+  createdAt: string | Date;
+  user: { name: string | null; image: string | null; };
+}
+
 export default function AdminAuditLogsPage() {
-  const [logs, setLogs] = useState<any[]>([]);
+  const [logs, setLogs] = useState<AuditLogEntry[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchLogs();
-  }, []);
+    let mounted = true;
 
-  const fetchLogs = async () => {
-    try {
-      const res = await fetch("/api/admin/audit-logs");
-      if (res.ok) {
-        const data = await res.json();
-        setLogs(data.data);
+    const loadLogs = async () => {
+      try {
+        const res = await fetch("/api/admin/audit-logs");
+        if (res.ok) {
+          const data = await res.json();
+          if (mounted) setLogs(data.data);
+        }
+      } catch {
+        toast.error("Failed to fetch audit logs");
+      } finally {
+        if (mounted) setLoading(false);
       }
-    } catch (error) {
-      toast.error("Failed to load audit logs");
-    } finally {
-      setLoading(false);
-    }
-  };
+    };
+
+    void loadLogs();
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   const getActionIcon = (action: string) => {
     if (action.includes("CREATE")) return <Plus className="w-4 h-4 text-emerald-400" />;
@@ -72,7 +89,7 @@ export default function AdminAuditLogsPage() {
                     
                     <div className="flex items-center gap-2 mt-2">
                       <Avatar className="w-5 h-5 border border-slate-700">
-                        <AvatarImage src={log.user.image} />
+                        <AvatarImage src={log.user.image || undefined} />
                         <AvatarFallback>{log.user.name?.charAt(0) || "U"}</AvatarFallback>
                       </Avatar>
                       <span className="text-xs text-slate-300">by <span className="font-medium text-indigo-400">{log.user.name}</span></span>
@@ -85,13 +102,13 @@ export default function AdminAuditLogsPage() {
                         {log.oldValues && (
                           <div>
                             <div className="text-slate-500 mb-1 font-sans font-medium">Previous State:</div>
-                            <pre className="text-slate-400 whitespace-pre-wrap">{log.oldValues}</pre>
+                            <pre className="text-slate-400 whitespace-pre-wrap">{JSON.stringify(log.oldValues, null, 2)}</pre>
                           </div>
                         )}
                         {log.newValues && (
                           <div>
                             <div className="text-slate-500 mb-1 font-sans font-medium">New State:</div>
-                            <pre className="text-emerald-400/80 whitespace-pre-wrap">{log.newValues}</pre>
+                            <pre className="text-emerald-400/80 whitespace-pre-wrap">{JSON.stringify(log.newValues, null, 2)}</pre>
                           </div>
                         )}
                       </div>

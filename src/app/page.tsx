@@ -22,6 +22,54 @@ import prisma from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
 import { formatDistanceToNow } from "date-fns";
 
+interface GenreData { genre: { name: string; slug?: string; id?: string; } }
+interface ChapterData { chapterNumber: number; title?: string | null; id?: string; createdAt?: Date | string; manga?: { id: string; title: string; slug: string; coverImage: string | null; }; }
+
+interface MangaCardData {
+  id: string;
+  title: string;
+  slug: string;
+  coverImage: string | null;
+  bannerImage?: string | null;
+  synopsis?: string | null;
+  status: string;
+  averageRating?: number;
+  views?: number;
+  isTrending?: boolean;
+  genres?: GenreData[];
+  chapters?: ChapterData[];
+}
+
+interface ChapterUpdate {
+  id: string;
+  chapterNumber: number;
+  title: string | null;
+  createdAt: Date;
+  manga: { id: string; title: string; slug: string; coverImage: string | null; };
+}
+
+interface AnnouncementData {
+  id: string;
+  title: string;
+  content: string;
+  type: string;
+  createdAt: Date;
+}
+
+interface GenreCountData {
+  id: string;
+  name: string;
+  slug: string;
+  _count: { manga: number };
+}
+
+interface ContinueReadingData {
+  id: string;
+  lastReadAt: Date;
+  manga: { title: string; slug: string; coverImage: string | null; };
+  chapter: { chapterNumber: number; };
+}
+
 export const revalidate = 3600;
 
 // ─── SEO Metadata ─────────────────────────────────────────────────────────────
@@ -265,7 +313,7 @@ async function getContinueReading(userId: string) {
 // Excludes manga the user has already read or explicitly bookmarked as "completed/dropped"
 // Cold-start fallback: return popular manga when no history exists
 
-async function getRecommendations(userId: string): Promise<any[]> {
+async function getRecommendations(userId: string): Promise<MangaCardData[]> {
   // Fetch user signals in parallel
   const [history, bookmarks, ratings] = await Promise.all([
     prisma.readingHistory.findMany({
@@ -387,7 +435,7 @@ async function getRecommendations(userId: string): Promise<any[]> {
 
 // ─── Components ───────────────────────────────────────────────────────────────
 
-function MangaCard({ manga, priority = false }: { manga: any; priority?: boolean }) {
+function MangaCard({ manga, priority = false }: { manga: MangaCardData; priority?: boolean }) {
   return (
     <Link href={`/manga/${manga.slug}`} className="group block">
       <div className="relative aspect-[2/3] rounded-xl overflow-hidden bg-slate-900 border border-slate-800 group-hover:border-indigo-500/40 transition-all duration-300 shadow-md group-hover:shadow-xl group-hover:shadow-indigo-900/20">
@@ -434,7 +482,7 @@ function MangaCard({ manga, priority = false }: { manga: any; priority?: boolean
             )}
             <span className="flex items-center gap-1">
               <Star className="w-3 h-3 text-amber-400 fill-amber-400" />
-              {manga.averageRating > 0 ? manga.averageRating.toFixed(1) : "—"}
+              {manga.averageRating !== undefined && manga.averageRating > 0 ? manga.averageRating.toFixed(1) : "—"}
             </span>
           </div>
         </div>
@@ -445,7 +493,7 @@ function MangaCard({ manga, priority = false }: { manga: any; priority?: boolean
         </h3>
         {manga.genres?.[0] && (
           <p className="text-[11px] text-slate-500 mt-1 truncate">
-            {manga.genres.map((g: any) => g.genre.name).join(", ")}
+            {manga.genres.map((g: GenreData) => g.genre.name).join(", ")}
           </p>
         )}
       </div>
@@ -498,7 +546,7 @@ function MangaRow({
   icon,
   subtitle,
 }: {
-  manga: any[];
+  manga: MangaCardData[];
   title: string;
   href?: string;
   icon?: React.ComponentType<{ className?: string }>;
@@ -509,7 +557,7 @@ function MangaRow({
     <section className="mb-14" aria-label={title}>
       <SectionHeader title={title} href={href} icon={icon} subtitle={subtitle} />
       <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-3 sm:gap-4">
-        {manga.map((m: any, i: number) => (
+        {manga.map((m: MangaCardData, i: number) => (
           <MangaCard key={m.id} manga={m} priority={i < 3} />
         ))}
       </div>
@@ -535,7 +583,7 @@ function SkeletonRow() {
 
 // ─── Hero Carousel ────────────────────────────────────────────────────────────
 
-function HeroCarousel({ featured }: { featured: any[] }) {
+function HeroCarousel({ featured }: { featured: MangaCardData[] }) {
   if (featured.length === 0) return <SimpleHero />;
 
   const hero = featured[0];
@@ -544,7 +592,7 @@ function HeroCarousel({ featured }: { featured: any[] }) {
       {/* Background */}
       <div className="absolute inset-0">
         <Image
-          src={hero.bannerImage || hero.coverImage}
+          src={hero.bannerImage || hero.coverImage || ""}
           alt={`${hero.title} banner`}
           fill
           className="object-cover"
@@ -559,7 +607,7 @@ function HeroCarousel({ featured }: { featured: any[] }) {
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 w-full">
         <div className="max-w-xl">
           <div className="flex flex-wrap gap-2 mb-4" aria-label="Genres">
-            {hero.genres.slice(0, 3).map((g: any) => (
+            {hero.genres?.slice(0, 3).map((g: GenreData) => (
               <Badge key={g.genre.name} variant="secondary" className="text-xs">
                 {g.genre.name}
               </Badge>
@@ -584,7 +632,7 @@ function HeroCarousel({ featured }: { featured: any[] }) {
                 Read Now
               </button>
             </Link>
-            {hero.chapters[0] && (
+            {hero.chapters?.[0] && (
               <Link href={`/read/${hero.slug}/chapter-${hero.chapters[0].chapterNumber}`}>
                 <button
                   className="px-6 py-3 bg-slate-800/80 hover:bg-slate-700 text-slate-200 font-semibold rounded-xl backdrop-blur-sm transition-colors border border-slate-700 flex items-center gap-2"
@@ -605,7 +653,7 @@ function HeroCarousel({ featured }: { featured: any[] }) {
               <Link key={m.id} href={`/manga/${m.slug}`} className="shrink-0 group" aria-label={m.title}>
                 <div className="relative w-20 h-28 rounded-lg overflow-hidden border-2 border-transparent group-hover:border-indigo-500 transition-colors">
                   <Image
-                    src={m.coverImage}
+                    src={m.coverImage || ""}
                     alt={`${m.title} cover`}
                     fill
                     className="object-cover"
@@ -652,7 +700,7 @@ function SimpleHero() {
 
 // ─── Latest Chapters ──────────────────────────────────────────────────────────
 
-function LatestChaptersSection({ chapters }: { chapters: any[] }) {
+function LatestChaptersSection({ chapters }: { chapters: ChapterUpdate[] }) {
   if (chapters.length === 0) return null;
   return (
     <section className="mb-14" aria-label="Latest chapter updates">
@@ -691,7 +739,7 @@ function LatestChaptersSection({ chapters }: { chapters: any[] }) {
               </p>
               <p className="text-[11px] text-slate-500 mt-1 flex items-center gap-1">
                 <Clock className="w-3 h-3" aria-hidden="true" />
-                <time dateTime={ch.createdAt}>{formatDistanceToNow(new Date(ch.createdAt))} ago</time>
+                <time dateTime={new Date(ch.createdAt).toISOString()}>{formatDistanceToNow(new Date(ch.createdAt))} ago</time>
               </p>
             </div>
           </Link>
@@ -710,7 +758,7 @@ const announcementStyles: Record<string, string> = {
   error: "border-red-500/30 bg-red-500/10 text-red-300",
 };
 
-function AnnouncementsSection({ announcements }: { announcements: any[] }) {
+function AnnouncementsSection({ announcements }: { announcements: AnnouncementData[] }) {
   if (announcements.length === 0) return null;
   return (
     <section className="mb-14" aria-label="Site announcements">
@@ -733,7 +781,7 @@ function AnnouncementsSection({ announcements }: { announcements: any[] }) {
 
 // ─── Genres ───────────────────────────────────────────────────────────────────
 
-function GenresSection({ genres }: { genres: any[] }) {
+function GenresSection({ genres }: { genres: GenreCountData[] }) {
   if (genres.length === 0) return null;
   return (
     <section className="mb-14" aria-label="Browse by genre">
@@ -758,7 +806,7 @@ function GenresSection({ genres }: { genres: any[] }) {
 
 // ─── Continue Reading ─────────────────────────────────────────────────────────
 
-function ContinueReadingSection({ items }: { items: any[] }) {
+function ContinueReadingSection({ items }: { items: ContinueReadingData[] }) {
   if (items.length === 0) return null;
   return (
     <section className="mb-14" aria-label="Continue reading">

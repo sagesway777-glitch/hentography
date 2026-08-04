@@ -1,6 +1,7 @@
 import { getCurrentUser } from "@/lib/auth-helpers";
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
+import { Prisma } from "@prisma/client";
 
 export async function GET(request: Request) {
   try {
@@ -9,7 +10,7 @@ export async function GET(request: Request) {
     const page = parseInt(searchParams.get("page") || "1");
     const limit = parseInt(searchParams.get("limit") || "20");
 
-    const where: any = {};
+    const where: Prisma.GenreWhereInput = {};
     if (query) {
       where.OR = [
         { name: { contains: query, mode: "insensitive" } },

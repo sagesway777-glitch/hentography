@@ -19,7 +19,7 @@ export async function POST(request: Request) {
     }
 
     try {
-      const decoded = jwt.verify(adminToken, process.env.JWT_SECRET!) as any;
+      const decoded = jwt.verify(adminToken, process.env.JWT_SECRET!) as jwt.JwtPayload & { role?: string };
       if (decoded.role !== "ADMIN" && decoded.role !== "MODERATOR") {
          return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
       }

@@ -36,10 +36,24 @@ interface ReaderSettings {
   zoom: number; // 0.5 – 2
 }
 
+interface ChapterData {
+  id: string;
+  mangaId: string;
+  images: string[];
+}
+
+interface HistoryData {
+  pageNumber?: number;
+  readingMode?: string;
+  readingDirection?: string;
+  zoomLevel?: number;
+  brightness?: number;
+}
+
 interface ReaderClientProps {
-  chapter: any;
+  chapter: ChapterData;
   mangaSlug: string;
-  initialHistory: any;
+  initialHistory: HistoryData | null;
   nextChapterSlug?: string | null;
 }
 
@@ -47,7 +61,7 @@ interface ReaderClientProps {
 
 const SETTINGS_KEY = "reader_settings_v2";
 
-function loadSettings(history: any): ReaderSettings {
+function loadSettings(history: HistoryData | null): ReaderSettings {
   const defaults: ReaderSettings = {
     readingMode: "vertical",
     readingDirection: "ltr",
@@ -357,9 +371,11 @@ export function ReaderClient({
   // Load from localStorage on mount (client only)
   useEffect(() => {
     const s = loadSettings(initialHistory);
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setSettings(s);
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setSettingsLoaded(true);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [initialHistory]);
 
   // Persist settings to localStorage
   useEffect(() => {
@@ -441,35 +457,8 @@ export function ReaderClient({
     return () => window.removeEventListener("scroll", handleScroll);
   }, [handleScroll]);
 
-  // Keyboard shortcuts
-  useEffect(() => {
-    const handleKey = (e: KeyboardEvent) => {
-      const tag = (e.target as HTMLElement).tagName;
-      if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
-
-      if (showSettings) {
-        if (e.key === "Escape") setShowSettings(false);
-        return;
-      }
-
-      if (settings.readingMode === "horizontal") {
-        if (e.key === "ArrowRight") {
-          settings.readingDirection === "ltr" ? nextPage() : prevPage();
-        } else if (e.key === "ArrowLeft") {
-          settings.readingDirection === "ltr" ? prevPage() : nextPage();
-        }
-      }
-
-      if (e.key === "f" || e.key === "F") toggleFullscreen();
-      if (e.key === "s" || e.key === "S") setShowSettings((v) => !v);
-    };
-
-    window.addEventListener("keydown", handleKey);
-    return () => window.removeEventListener("keydown", handleKey);
-  }, [settings, showSettings, currentPage]); // eslint-disable-line react-hooks/exhaustive-deps
-
   // Fullscreen
-  const toggleFullscreen = () => {
+  const toggleFullscreen = useCallback(() => {
     if (!document.fullscreenElement) {
       document.documentElement.requestFullscreen().catch(() => {});
       setIsFullscreen(true);
@@ -477,12 +466,6 @@ export function ReaderClient({
       document.exitFullscreen().catch(() => {});
       setIsFullscreen(false);
     }
-  };
-
-  useEffect(() => {
-    const handler = () => setIsFullscreen(!!document.fullscreenElement);
-    document.addEventListener("fullscreenchange", handler);
-    return () => document.removeEventListener("fullscreenchange", handler);
   }, []);
 
   const prevPage = useCallback(() => {
@@ -498,6 +481,47 @@ export function ReaderClient({
       window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
     }
   }, [currentPage, chapter.images.length]);
+
+  // Keyboard shortcuts
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      const tag = (e.target as HTMLElement).tagName;
+      if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
+
+      if (showSettings) {
+        if (e.key === "Escape") setShowSettings(false);
+        return;
+      }
+
+      if (settings.readingMode === "horizontal") {
+        if (e.key === "ArrowRight") {
+          if (settings.readingDirection === "ltr") {
+            nextPage();
+          } else {
+            prevPage();
+          }
+        } else if (e.key === "ArrowLeft") {
+          if (settings.readingDirection === "ltr") {
+            prevPage();
+          } else {
+            nextPage();
+          }
+        }
+      }
+
+      if (e.key === "f" || e.key === "F") toggleFullscreen();
+      if (e.key === "s" || e.key === "S") setShowSettings((v) => !v);
+    };
+
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [settings, showSettings, currentPage, toggleFullscreen]);
+
+  useEffect(() => {
+    const handler = () => setIsFullscreen(!!document.fullscreenElement);
+    document.addEventListener("fullscreenchange", handler);
+    return () => document.removeEventListener("fullscreenchange", handler);
+  }, []);
 
   const handleSettingChange = useCallback((next: Partial<ReaderSettings>) => {
     setSettings((prev) => ({ ...prev, ...next }));
@@ -559,7 +583,11 @@ export function ReaderClient({
             className="relative flex items-center justify-center w-full h-[calc(100vh-8rem)]"
             onClick={(e) => {
               const rect = e.currentTarget.getBoundingClientRect();
-              e.clientX - rect.left < rect.width / 2 ? prevPage() : nextPage();
+              if (e.clientX - rect.left < rect.width / 2) {
+                prevPage();
+              } else {
+                nextPage();
+              }
             }}
             role="region"
             aria-label={`Page ${displayPageNumber} of ${chapter.images.length}`}

@@ -4,7 +4,7 @@ import { getCurrentUser } from "@/lib/auth-helpers";
 import Image from "next/image";
 import Link from "next/link";
 import { formatDistanceToNow } from "date-fns";
-import { List, Clock, Share2, Shield, Heart } from "lucide-react";
+import { List, Clock, Shield, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ShareButton } from "@/components/ui/share-button";
@@ -190,10 +190,10 @@ export default async function PlaylistPage({
             <h3 className="text-xl font-semibold text-white mb-2">This playlist is empty</h3>
             {isOwner ? (
               <p className="text-slate-400 max-w-sm mx-auto">
-                Explore the library and click the "Add to Playlist" button on any manga to start building your collection.
+                Explore the library and click the &quot;Add to Playlist&quot; button on any manga to start building your collection.
               </p>
             ) : (
-              <p className="text-slate-400">The owner hasn't added any manga yet.</p>
+              <p className="text-slate-400">The owner hasn&apos;t added any manga yet.</p>
             )}
           </div>
         ) : (

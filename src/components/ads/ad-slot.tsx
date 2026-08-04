@@ -1,17 +1,23 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import Image from "next/image";
-import Link from "next/link";
 
 interface AdSlotProps {
   position: string;
   className?: string;
 }
 
+interface AdData {
+  id: string;
+  type: string;
+  name?: string;
+  imageUrl?: string;
+  linkUrl?: string;
+  content?: string;
+}
+
 export function AdSlot({ position, className = "" }: AdSlotProps) {
-  const [ad, setAd] = useState<any>(null);
-  const [isVisible, setIsVisible] = useState(false);
+  const [ad, setAd] = useState<AdData | null>(null);
   const [tracked, setTracked] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -37,7 +43,6 @@ export function AdSlot({ position, className = "" }: AdSlotProps) {
       (entries) => {
         const [entry] = entries;
         if (entry.isIntersecting && !tracked) {
-          setIsVisible(true);
           setTracked(true);
           // Track impression
           fetch("/api/ads/track", {
@@ -73,6 +78,7 @@ export function AdSlot({ position, className = "" }: AdSlotProps) {
         return (
           <a href={ad.linkUrl || "#"} target="_blank" rel="noopener noreferrer" onClick={handleClick} className="block relative w-full h-full min-h-[100px]">
             {ad.imageUrl && (
+              // eslint-disable-next-line @next/next/no-img-element
               <img src={ad.imageUrl} alt={ad.name} className="w-full h-full object-cover rounded-lg" />
             )}
             <div className="absolute top-1 right-1 bg-black/50 text-[10px] text-white px-1 rounded uppercase tracking-wider backdrop-blur-sm">Ad</div>
@@ -81,7 +87,7 @@ export function AdSlot({ position, className = "" }: AdSlotProps) {
       case "CUSTOM_HTML":
         return (
           <div className="relative">
-            <div dangerouslySetInnerHTML={{ __html: ad.content }} onClick={handleClick} />
+            <div dangerouslySetInnerHTML={{ __html: ad.content ?? "" }} onClick={handleClick} />
             <div className="absolute top-1 right-1 bg-black/50 text-[10px] text-white px-1 rounded uppercase tracking-wider backdrop-blur-sm">Ad</div>
           </div>
         );

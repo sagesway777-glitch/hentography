@@ -1,4 +1,4 @@
-import { v2 as cloudinary } from "cloudinary";
+import { v2 as cloudinary, UploadApiOptions, UploadApiResponse, UploadApiErrorResponse } from "cloudinary";
 import { Readable } from "stream";
 
 cloudinary.config({
@@ -11,7 +11,7 @@ export async function uploadToCloudinary(
   file: Buffer | string,
   folder: string = "hentography"
 ): Promise<{ secure_url: string; public_id: string }> {
-  const uploadOptions: any = {
+  const uploadOptions: UploadApiOptions = {
     folder,
     resource_type: "auto",
     transformation: [
@@ -22,7 +22,7 @@ export async function uploadToCloudinary(
 
   if (Buffer.isBuffer(file)) {
     return new Promise((resolve, reject) => {
-      const stream = cloudinary.uploader.upload_stream(uploadOptions, (error: any, result: any) => {
+      const stream = cloudinary.uploader.upload_stream(uploadOptions, (error: UploadApiErrorResponse | undefined, result: UploadApiResponse | undefined) => {
         if (error) return reject(error);
         if (!result) return reject(new Error("Upload failed"));
         resolve({ secure_url: result.secure_url, public_id: result.public_id });
@@ -32,7 +32,7 @@ export async function uploadToCloudinary(
   }
 
   return new Promise((resolve, reject) => {
-    cloudinary.uploader.upload(file, uploadOptions, (error: any, result: any) => {
+    cloudinary.uploader.upload(file, uploadOptions, (error: UploadApiErrorResponse | undefined, result: UploadApiResponse | undefined) => {
       if (error) return reject(error);
       if (!result) return reject(new Error("Upload failed"));
       resolve({ secure_url: result.secure_url, public_id: result.public_id });

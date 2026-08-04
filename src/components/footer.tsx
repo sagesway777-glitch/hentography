@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Bookmark, Mail, Globe } from "lucide-react";
+import { Mail, Globe } from "lucide-react";
 
 function Footer() {
   return (

@@ -43,7 +43,7 @@ export default async function PlaylistsPage() {
       </CardHeader>
       <CardContent>
         {playlists.length === 0 ? (
-          <p className="text-slate-400 text-center py-8">You haven't created any playlists yet.</p>
+          <p className="text-slate-400 text-center py-8">You haven&apos;t created any playlists yet.</p>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {playlists.map((playlist) => (

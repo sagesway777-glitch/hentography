@@ -197,7 +197,7 @@ export default function AdminMangaCreatePage() {
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <label className="text-sm font-medium text-slate-300">Status</label>
-                    <Select disabled={isLoading} value={status} onValueChange={(v) => setValue("status", v as any)}>
+                    <Select disabled={isLoading} value={status} onValueChange={(v) => setValue("status", v as "ONGOING" | "COMPLETED" | "HIATUS" | "CANCELLED")}>
                       <SelectTrigger className="bg-slate-950 border-slate-800">
                         <SelectValue placeholder="Select status" />
                       </SelectTrigger>

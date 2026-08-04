@@ -4,6 +4,7 @@ import prisma from "@/lib/prisma";
 import { z } from "zod";
 import { generateSlug } from "@/lib/utils";
 import { Prisma } from "@prisma/client";
+import { MangaStatus } from "@prisma/client";
 
 const createMangaSchema = z.object({
   title: z.string().min(1, "Title is required").max(200),
@@ -39,7 +40,7 @@ export async function GET(request: Request) {
 
     const where: Prisma.MangaWhereInput = {
       ...(search ? { title: { contains: search, mode: "insensitive" } } : {}),
-      ...(status ? { status: status as any } : {}),
+      ...(status ? { status: status as MangaStatus } : {}),
     };
 
     const [manga, total] = await Promise.all([
@@ -89,7 +90,7 @@ export async function POST(request: Request) {
     const data = result.data;
     
     // Generate unique slug
-    let baseSlug = generateSlug(data.title);
+    const baseSlug = generateSlug(data.title);
     let slug = baseSlug;
     let counter = 1;
     

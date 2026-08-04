@@ -1,6 +1,7 @@
 import { requireAdmin, handleAdminError } from "@/lib/admin-auth";
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
+import { Prisma } from "@prisma/client";
 
 export async function GET(request: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
@@ -28,7 +29,7 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
     const { id } = await params;
     const body = await request.json();
 
-    const updateData: any = { ...body };
+    const updateData: Prisma.AdvertisementUpdateInput = { ...body };
     if (body.startDate) updateData.startDate = new Date(body.startDate);
     if (body.endDate) updateData.endDate = new Date(body.endDate);
 

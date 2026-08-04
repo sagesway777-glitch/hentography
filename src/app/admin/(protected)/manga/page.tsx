@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Plus, Search, Edit, Trash, Eye } from "lucide-react";
 import prisma from "@/lib/prisma";
+import { Prisma } from "@prisma/client";
 
 export default async function AdminMangaPage({
   searchParams,
@@ -14,7 +15,7 @@ export default async function AdminMangaPage({
   const limit = 20;
   const skip = (page - 1) * limit;
 
-  const where = search ? { title: { contains: search, mode: "insensitive" as any } } : {};
+  const where: Prisma.MangaWhereInput = search ? { title: { contains: search, mode: Prisma.QueryMode.insensitive } } : {};
 
   const [mangaList, total] = await Promise.all([
     prisma.manga.findMany({

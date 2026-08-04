@@ -1,6 +1,7 @@
 import { requireAdmin, handleAdminError } from "@/lib/admin-auth";
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
+import { Prisma } from "@prisma/client";
 
 export async function GET(request: Request) {
   try {
@@ -14,11 +15,11 @@ export async function GET(request: Request) {
 
     const skip = (page - 1) * limit;
 
-    const where = search ? {
+    const where: Prisma.UserWhereInput = search ? {
       OR: [
-        { name: { contains: search, mode: "insensitive" as any } },
-        { email: { contains: search, mode: "insensitive" as any } },
-        { username: { contains: search, mode: "insensitive" as any } },
+        { name: { contains: search, mode: Prisma.QueryMode.insensitive } },
+        { email: { contains: search, mode: Prisma.QueryMode.insensitive } },
+        { username: { contains: search, mode: Prisma.QueryMode.insensitive } },
       ],
     } : {};
 

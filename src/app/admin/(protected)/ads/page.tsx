@@ -7,8 +7,19 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Plus, Trash2, Edit2, Megaphone, Activity, MousePointerClick } from "lucide-react";
 import toast from "react-hot-toast";
 
+interface Ad {
+  id: string;
+  name: string;
+  type: string;
+  position: string;
+  isActive: boolean;
+  impressions: number;
+  clicks: number;
+  priority: number;
+}
+
 export default function AdminAdsPage() {
-  const [ads, setAds] = useState<any[]>([]);
+  const [ads, setAds] = useState<Ad[]>([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   
@@ -21,10 +32,6 @@ export default function AdminAdsPage() {
   const [linkUrl, setLinkUrl] = useState("");
   const [priority, setPriority] = useState(0);
 
-  useEffect(() => {
-    fetchAds();
-  }, []);
-
   const fetchAds = async () => {
     try {
       const res = await fetch("/api/admin/ads");
@@ -32,12 +39,36 @@ export default function AdminAdsPage() {
         const data = await res.json();
         setAds(data.data);
       }
-    } catch (error) {
+    } catch {
       toast.error("Failed to load ads");
     } finally {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    let mounted = true;
+
+    const loadAds = async () => {
+      try {
+        const res = await fetch("/api/admin/ads");
+        if (res.ok) {
+          const data = await res.json();
+          if (mounted) setAds(data.data);
+        }
+      } catch {
+        toast.error("Failed to load ads");
+      } finally {
+        if (mounted) setLoading(false);
+      }
+    };
+
+    void loadAds();
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

@@ -124,11 +124,11 @@ export async function POST(
     });
 
     return NextResponse.json({ success: true, data: item }, { status: 201 });
-  } catch (error: any) {
+  } catch (error: unknown) {
     if (error instanceof Error && error.message === "UNAUTHORIZED") {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
-    if (error.code === 'P2002') {
+    if (error && typeof error === 'object' && 'code' in error && error.code === 'P2002') {
       return NextResponse.json({ error: "Manga is already in this playlist" }, { status: 400 });
     }
     console.error("Error adding item to playlist:", error);
@@ -172,11 +172,11 @@ export async function DELETE(
     });
 
     return NextResponse.json({ success: true });
-  } catch (error: any) {
+  } catch (error: unknown) {
     if (error instanceof Error && error.message === "UNAUTHORIZED") {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
-    if (error.code === 'P2025') {
+    if (error && typeof error === 'object' && 'code' in error && error.code === 'P2025') {
       return NextResponse.json({ error: "Item not found in playlist" }, { status: 404 });
     }
     console.error("Error removing item:", error);

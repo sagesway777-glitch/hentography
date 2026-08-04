@@ -1,336 +1,749 @@
-<testsuites id="" name="" tests="126" failures="0" skipped="5" errors="0" time="184.3183">
-<testsuite name="utils\auth.setup.ts" timestamp="2026-07-29T10:34:07.106Z" hostname="setup" tests="1" failures="0" skipped="0" time="2.429" errors="0">
-<testcase name="authenticate as admin" classname="utils\auth.setup.ts" time="2.429">
+<testsuites id="" name="" tests="126" failures="4" skipped="0" errors="0" time="213.51216900000003">
+<testsuite name="utils\auth.setup.ts" timestamp="2026-08-04T05:55:02.111Z" hostname="setup" tests="1" failures="0" skipped="0" time="1.49" errors="0">
+<testcase name="authenticate as admin" classname="utils\auth.setup.ts" time="1.49">
 </testcase>
 </testsuite>
-<testsuite name="admin.spec.ts" timestamp="2026-07-29T10:34:07.106Z" hostname="chromium" tests="10" failures="0" skipped="0" time="107.054" errors="0">
-<testcase name="Admin Dashboard and CRUD › admin dashboard loads correctly" classname="admin.spec.ts" time="11.047">
+<testsuite name="admin.spec.ts" timestamp="2026-08-04T05:55:02.111Z" hostname="chromium" tests="10" failures="0" skipped="0" time="128.915" errors="0">
+<testcase name="Admin Dashboard and CRUD › admin dashboard loads correctly" classname="admin.spec.ts" time="10.215">
 </testcase>
-<testcase name="Admin Dashboard and CRUD › admin manga page loads" classname="admin.spec.ts" time="10.822">
+<testcase name="Admin Dashboard and CRUD › admin manga page loads" classname="admin.spec.ts" time="10.279">
 </testcase>
-<testcase name="Admin Dashboard and CRUD › admin chapters page loads" classname="admin.spec.ts" time="12.609">
+<testcase name="Admin Dashboard and CRUD › admin chapters page loads" classname="admin.spec.ts" time="12.429">
 </testcase>
-<testcase name="Admin Dashboard and CRUD › admin users page loads" classname="admin.spec.ts" time="10.977">
+<testcase name="Admin Dashboard and CRUD › admin users page loads" classname="admin.spec.ts" time="10.481">
 </testcase>
-<testcase name="Admin Dashboard and CRUD › admin ads page loads" classname="admin.spec.ts" time="10.974">
+<testcase name="Admin Dashboard and CRUD › admin ads page loads" classname="admin.spec.ts" time="10.45">
 </testcase>
-<testcase name="Admin Dashboard and CRUD › admin audit-logs page loads" classname="admin.spec.ts" time="11.064">
+<testcase name="Admin Dashboard and CRUD › admin audit-logs page loads" classname="admin.spec.ts" time="10.448">
 </testcase>
-<testcase name="Admin Dashboard and CRUD › admin settings page loads" classname="admin.spec.ts" time="4.939">
+<testcase name="Admin Dashboard and CRUD › admin settings page loads" classname="admin.spec.ts" time="3.49">
 </testcase>
-<testcase name="Admin Dashboard and CRUD › admin login page shows form (unauthenticated check)" classname="admin.spec.ts" time="4.433">
+<testcase name="Admin Dashboard and CRUD › admin login page shows form (unauthenticated check)" classname="admin.spec.ts" time="3.367">
 </testcase>
-<testcase name="Admin Dashboard and CRUD › admin API: manga list returns data" classname="admin.spec.ts" time="2.366">
+<testcase name="Admin Dashboard and CRUD › admin API: manga list returns data" classname="admin.spec.ts" time="3.16">
 </testcase>
-<testcase name="Admin Dashboard and CRUD › admin API: full CRUD lifecycle — manga → chapter → ad → cleanup" classname="admin.spec.ts" time="27.823">
-</testcase>
-</testsuite>
-<testsuite name="public.spec.ts" timestamp="2026-07-29T10:34:07.106Z" hostname="chromium" tests="5" failures="0" skipped="0" time="39.161" errors="0">
-<testcase name="Public Pages and Reader › homepage loads and displays content" classname="public.spec.ts" time="21.886">
-</testcase>
-<testcase name="Public Pages and Reader › search functionality" classname="public.spec.ts" time="11.035">
-</testcase>
-<testcase name="Public Pages and Reader › SEO: robots.txt is served" classname="public.spec.ts" time="1.023">
-</testcase>
-<testcase name="Public Pages and Reader › SEO: sitemap.xml is served" classname="public.spec.ts" time="2.138">
-</testcase>
-<testcase name="Public Pages and Reader › route protection - admin redirects unauthenticated users to login" classname="public.spec.ts" time="3.079">
+<testcase name="Admin Dashboard and CRUD › admin API: full CRUD lifecycle — manga → chapter → ad → cleanup" classname="admin.spec.ts" time="54.596">
 </testcase>
 </testsuite>
-<testsuite name="reader.spec.ts" timestamp="2026-07-29T10:34:07.106Z" hostname="chromium" tests="1" failures="0" skipped="1" time="2.002" errors="0">
-<testcase name="Reader Features › reader page loads when manga and chapter exist" classname="reader.spec.ts">
+<testsuite name="public.spec.ts" timestamp="2026-08-04T05:55:02.111Z" hostname="chromium" tests="5" failures="0" skipped="0" time="18.458" errors="0">
+<testcase name="Public Pages and Reader › homepage loads and displays content" classname="public.spec.ts" time="9.449">
+</testcase>
+<testcase name="Public Pages and Reader › search functionality" classname="public.spec.ts" time="4.608">
+</testcase>
+<testcase name="Public Pages and Reader › SEO: robots.txt is served" classname="public.spec.ts" time="0.381">
+</testcase>
+<testcase name="Public Pages and Reader › SEO: sitemap.xml is served" classname="public.spec.ts" time="1.387">
+</testcase>
+<testcase name="Public Pages and Reader › route protection - admin redirects unauthenticated users to login" classname="public.spec.ts" time="2.633">
+</testcase>
+</testsuite>
+<testsuite name="reader.spec.ts" timestamp="2026-08-04T05:55:02.111Z" hostname="chromium" tests="1" failures="0" skipped="0" time="48.484" errors="0">
+<testcase name="Reader Features › reader page loads when manga and chapter exist" classname="reader.spec.ts" time="48.484">
 <properties>
-<property name="skip" value="No manga found in the database — seed data needed for reader tests.">
+<property name="skip" value="No chapters found on manga page.">
 </property>
 </properties>
-<skipped>
-</skipped>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-chromium\test-failed-1.png]]
+
+[[ATTACHMENT|..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-chromium\video.webm]]
+
+[[ATTACHMENT|..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-chromium\error-context.md]]
+
+[[ATTACHMENT|..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-chromium\trace.zip]]
+]]>
+</system-out>
 </testcase>
 </testsuite>
-<testsuite name="system.spec.ts" timestamp="2026-07-29T10:34:07.106Z" hostname="chromium" tests="2" failures="0" skipped="0" time="33.553" errors="0">
-<testcase name="System and Accessibility › no console errors on homepage" classname="system.spec.ts" time="17.174">
+<testsuite name="system.spec.ts" timestamp="2026-08-04T05:55:02.111Z" hostname="chromium" tests="2" failures="0" skipped="0" time="11.084" errors="0">
+<testcase name="System and Accessibility › no console errors on homepage" classname="system.spec.ts" time="5.131">
 </testcase>
-<testcase name="System and Accessibility › navigation is accessible" classname="system.spec.ts" time="16.379">
-</testcase>
-</testsuite>
-<testsuite name="user.spec.ts" timestamp="2026-07-29T10:34:07.106Z" hostname="chromium" tests="7" failures="0" skipped="0" time="26.626" errors="0">
-<testcase name="User Auth and Features (Clerk) › sign in page loads Clerk widget" classname="user.spec.ts" time="13.66">
-</testcase>
-<testcase name="User Auth and Features (Clerk) › sign up page loads Clerk widget" classname="user.spec.ts" time="8.97">
-</testcase>
-<testcase name="User Auth and Features (Clerk) › protected dashboard redirects unauthenticated users" classname="user.spec.ts" time="3.015">
-</testcase>
-<testcase name="User Auth and Features (Clerk) › public user API: bookmarks require auth" classname="user.spec.ts" time="0.355">
-</testcase>
-<testcase name="User Auth and Features (Clerk) › public user API: ratings require auth" classname="user.spec.ts" time="0.205">
-</testcase>
-<testcase name="User Auth and Features (Clerk) › public user API: comments require auth" classname="user.spec.ts" time="0.212">
-</testcase>
-<testcase name="User Auth and Features (Clerk) › public user API: likes require auth" classname="user.spec.ts" time="0.209">
+<testcase name="System and Accessibility › navigation is accessible" classname="system.spec.ts" time="5.953">
 </testcase>
 </testsuite>
-<testsuite name="admin.spec.ts" timestamp="2026-07-29T10:34:07.106Z" hostname="firefox" tests="10" failures="0" skipped="0" time="140.457" errors="0">
-<testcase name="Admin Dashboard and CRUD › admin dashboard loads correctly" classname="admin.spec.ts" time="12.482">
+<testsuite name="user.spec.ts" timestamp="2026-08-04T05:55:02.111Z" hostname="chromium" tests="7" failures="0" skipped="0" time="21.257" errors="0">
+<testcase name="User Auth and Features (Clerk) › sign in page loads Clerk widget" classname="user.spec.ts" time="8.692">
 </testcase>
-<testcase name="Admin Dashboard and CRUD › admin manga page loads" classname="admin.spec.ts" time="13.06">
+<testcase name="User Auth and Features (Clerk) › sign up page loads Clerk widget" classname="user.spec.ts" time="10.295">
 </testcase>
-<testcase name="Admin Dashboard and CRUD › admin chapters page loads" classname="admin.spec.ts" time="19.278">
+<testcase name="User Auth and Features (Clerk) › protected dashboard redirects unauthenticated users" classname="user.spec.ts" time="2.043">
 </testcase>
-<testcase name="Admin Dashboard and CRUD › admin users page loads" classname="admin.spec.ts" time="12.247">
+<testcase name="User Auth and Features (Clerk) › public user API: bookmarks require auth" classname="user.spec.ts" time="0.089">
 </testcase>
-<testcase name="Admin Dashboard and CRUD › admin ads page loads" classname="admin.spec.ts" time="21.737">
+<testcase name="User Auth and Features (Clerk) › public user API: ratings require auth" classname="user.spec.ts" time="0.073">
 </testcase>
-<testcase name="Admin Dashboard and CRUD › admin audit-logs page loads" classname="admin.spec.ts" time="11.816">
+<testcase name="User Auth and Features (Clerk) › public user API: comments require auth" classname="user.spec.ts" time="0.035">
 </testcase>
-<testcase name="Admin Dashboard and CRUD › admin settings page loads" classname="admin.spec.ts" time="8.816">
-</testcase>
-<testcase name="Admin Dashboard and CRUD › admin login page shows form (unauthenticated check)" classname="admin.spec.ts" time="7.903">
-</testcase>
-<testcase name="Admin Dashboard and CRUD › admin API: manga list returns data" classname="admin.spec.ts" time="0.922">
-</testcase>
-<testcase name="Admin Dashboard and CRUD › admin API: full CRUD lifecycle — manga → chapter → ad → cleanup" classname="admin.spec.ts" time="32.196">
+<testcase name="User Auth and Features (Clerk) › public user API: likes require auth" classname="user.spec.ts" time="0.03">
 </testcase>
 </testsuite>
-<testsuite name="public.spec.ts" timestamp="2026-07-29T10:34:07.106Z" hostname="firefox" tests="5" failures="0" skipped="0" time="34.685" errors="0">
-<testcase name="Public Pages and Reader › homepage loads and displays content" classname="public.spec.ts" time="11.107">
+<testsuite name="admin.spec.ts" timestamp="2026-08-04T05:55:02.111Z" hostname="firefox" tests="10" failures="0" skipped="0" time="80.48" errors="0">
+<testcase name="Admin Dashboard and CRUD › admin dashboard loads correctly" classname="admin.spec.ts" time="9.277">
 </testcase>
-<testcase name="Public Pages and Reader › search functionality" classname="public.spec.ts" time="13.76">
+<testcase name="Admin Dashboard and CRUD › admin manga page loads" classname="admin.spec.ts" time="9.02">
 </testcase>
-<testcase name="Public Pages and Reader › SEO: robots.txt is served" classname="public.spec.ts" time="0.512">
+<testcase name="Admin Dashboard and CRUD › admin chapters page loads" classname="admin.spec.ts" time="9.482">
 </testcase>
-<testcase name="Public Pages and Reader › SEO: sitemap.xml is served" classname="public.spec.ts" time="2.804">
+<testcase name="Admin Dashboard and CRUD › admin users page loads" classname="admin.spec.ts" time="7.515">
 </testcase>
-<testcase name="Public Pages and Reader › route protection - admin redirects unauthenticated users to login" classname="public.spec.ts" time="6.502">
+<testcase name="Admin Dashboard and CRUD › admin ads page loads" classname="admin.spec.ts" time="3.71">
 </testcase>
-</testsuite>
-<testsuite name="reader.spec.ts" timestamp="2026-07-29T10:34:07.106Z" hostname="firefox" tests="1" failures="0" skipped="1" time="4.563" errors="0">
-<testcase name="Reader Features › reader page loads when manga and chapter exist" classname="reader.spec.ts">
-<properties>
-<property name="skip" value="No manga found in the database — seed data needed for reader tests.">
-</property>
-</properties>
-<skipped>
-</skipped>
+<testcase name="Admin Dashboard and CRUD › admin audit-logs page loads" classname="admin.spec.ts" time="3.362">
 </testcase>
-</testsuite>
-<testsuite name="system.spec.ts" timestamp="2026-07-29T10:34:07.106Z" hostname="firefox" tests="2" failures="0" skipped="0" time="19.099" errors="0">
-<testcase name="System and Accessibility › no console errors on homepage" classname="system.spec.ts" time="7.339">
+<testcase name="Admin Dashboard and CRUD › admin settings page loads" classname="admin.spec.ts" time="2.957">
 </testcase>
-<testcase name="System and Accessibility › navigation is accessible" classname="system.spec.ts" time="11.76">
+<testcase name="Admin Dashboard and CRUD › admin login page shows form (unauthenticated check)" classname="admin.spec.ts" time="2.605">
+</testcase>
+<testcase name="Admin Dashboard and CRUD › admin API: manga list returns data" classname="admin.spec.ts" time="0.821">
+</testcase>
+<testcase name="Admin Dashboard and CRUD › admin API: full CRUD lifecycle — manga → chapter → ad → cleanup" classname="admin.spec.ts" time="31.731">
 </testcase>
 </testsuite>
-<testsuite name="user.spec.ts" timestamp="2026-07-29T10:34:07.106Z" hostname="firefox" tests="7" failures="0" skipped="0" time="30.863" errors="0">
-<testcase name="User Auth and Features (Clerk) › sign in page loads Clerk widget" classname="user.spec.ts" time="9.717">
+<testsuite name="public.spec.ts" timestamp="2026-08-04T05:55:02.111Z" hostname="firefox" tests="5" failures="0" skipped="0" time="12.677" errors="0">
+<testcase name="Public Pages and Reader › homepage loads and displays content" classname="public.spec.ts" time="3.298">
 </testcase>
-<testcase name="User Auth and Features (Clerk) › sign up page loads Clerk widget" classname="user.spec.ts" time="10.797">
+<testcase name="Public Pages and Reader › search functionality" classname="public.spec.ts" time="4.176">
 </testcase>
-<testcase name="User Auth and Features (Clerk) › protected dashboard redirects unauthenticated users" classname="user.spec.ts" time="7.712">
+<testcase name="Public Pages and Reader › SEO: robots.txt is served" classname="public.spec.ts" time="0.085">
 </testcase>
-<testcase name="User Auth and Features (Clerk) › public user API: bookmarks require auth" classname="user.spec.ts" time="0.941">
+<testcase name="Public Pages and Reader › SEO: sitemap.xml is served" classname="public.spec.ts" time="2.556">
 </testcase>
-<testcase name="User Auth and Features (Clerk) › public user API: ratings require auth" classname="user.spec.ts" time="0.174">
-</testcase>
-<testcase name="User Auth and Features (Clerk) › public user API: comments require auth" classname="user.spec.ts" time="1.329">
-</testcase>
-<testcase name="User Auth and Features (Clerk) › public user API: likes require auth" classname="user.spec.ts" time="0.193">
+<testcase name="Public Pages and Reader › route protection - admin redirects unauthenticated users to login" classname="public.spec.ts" time="2.562">
 </testcase>
 </testsuite>
-<testsuite name="admin.spec.ts" timestamp="2026-07-29T10:34:07.106Z" hostname="webkit" tests="10" failures="0" skipped="0" time="82.185" errors="0">
-<testcase name="Admin Dashboard and CRUD › admin dashboard loads correctly" classname="admin.spec.ts" time="6.935">
-</testcase>
-<testcase name="Admin Dashboard and CRUD › admin manga page loads" classname="admin.spec.ts" time="7.75">
-</testcase>
-<testcase name="Admin Dashboard and CRUD › admin chapters page loads" classname="admin.spec.ts" time="9.179">
-</testcase>
-<testcase name="Admin Dashboard and CRUD › admin users page loads" classname="admin.spec.ts" time="3.988">
-</testcase>
-<testcase name="Admin Dashboard and CRUD › admin ads page loads" classname="admin.spec.ts" time="5.282">
-</testcase>
-<testcase name="Admin Dashboard and CRUD › admin audit-logs page loads" classname="admin.spec.ts" time="4.535">
-</testcase>
-<testcase name="Admin Dashboard and CRUD › admin settings page loads" classname="admin.spec.ts" time="5.582">
-</testcase>
-<testcase name="Admin Dashboard and CRUD › admin login page shows form (unauthenticated check)" classname="admin.spec.ts" time="9.685">
-</testcase>
-<testcase name="Admin Dashboard and CRUD › admin API: manga list returns data" classname="admin.spec.ts" time="0.535">
-</testcase>
-<testcase name="Admin Dashboard and CRUD › admin API: full CRUD lifecycle — manga → chapter → ad → cleanup" classname="admin.spec.ts" time="28.714">
-</testcase>
-</testsuite>
-<testsuite name="public.spec.ts" timestamp="2026-07-29T10:34:07.106Z" hostname="webkit" tests="5" failures="0" skipped="0" time="38.743" errors="0">
-<testcase name="Public Pages and Reader › homepage loads and displays content" classname="public.spec.ts" time="13.01">
-</testcase>
-<testcase name="Public Pages and Reader › search functionality" classname="public.spec.ts" time="15.962">
-</testcase>
-<testcase name="Public Pages and Reader › SEO: robots.txt is served" classname="public.spec.ts" time="0.119">
-</testcase>
-<testcase name="Public Pages and Reader › SEO: sitemap.xml is served" classname="public.spec.ts" time="0.856">
-</testcase>
-<testcase name="Public Pages and Reader › route protection - admin redirects unauthenticated users to login" classname="public.spec.ts" time="8.796">
-</testcase>
-</testsuite>
-<testsuite name="reader.spec.ts" timestamp="2026-07-29T10:34:07.106Z" hostname="webkit" tests="1" failures="0" skipped="1" time="6.795" errors="0">
-<testcase name="Reader Features › reader page loads when manga and chapter exist" classname="reader.spec.ts">
-<properties>
-<property name="skip" value="No manga found in the database — seed data needed for reader tests.">
-</property>
-</properties>
-<skipped>
-</skipped>
-</testcase>
-</testsuite>
-<testsuite name="system.spec.ts" timestamp="2026-07-29T10:34:07.106Z" hostname="webkit" tests="2" failures="0" skipped="0" time="40.273" errors="0">
-<testcase name="System and Accessibility › no console errors on homepage" classname="system.spec.ts" time="19.121">
-</testcase>
-<testcase name="System and Accessibility › navigation is accessible" classname="system.spec.ts" time="21.152">
-</testcase>
-</testsuite>
-<testsuite name="user.spec.ts" timestamp="2026-07-29T10:34:07.106Z" hostname="webkit" tests="7" failures="0" skipped="0" time="48.691" errors="0">
-<testcase name="User Auth and Features (Clerk) › sign in page loads Clerk widget" classname="user.spec.ts" time="17.532">
-</testcase>
-<testcase name="User Auth and Features (Clerk) › sign up page loads Clerk widget" classname="user.spec.ts" time="18.754">
-</testcase>
-<testcase name="User Auth and Features (Clerk) › protected dashboard redirects unauthenticated users" classname="user.spec.ts" time="11.704">
-</testcase>
-<testcase name="User Auth and Features (Clerk) › public user API: bookmarks require auth" classname="user.spec.ts" time="0.296">
-</testcase>
-<testcase name="User Auth and Features (Clerk) › public user API: ratings require auth" classname="user.spec.ts" time="0.137">
-</testcase>
-<testcase name="User Auth and Features (Clerk) › public user API: comments require auth" classname="user.spec.ts" time="0.163">
-</testcase>
-<testcase name="User Auth and Features (Clerk) › public user API: likes require auth" classname="user.spec.ts" time="0.105">
-</testcase>
-</testsuite>
-<testsuite name="admin.spec.ts" timestamp="2026-07-29T10:34:07.106Z" hostname="Mobile Chrome" tests="10" failures="0" skipped="0" time="55.284" errors="0">
-<testcase name="Admin Dashboard and CRUD › admin dashboard loads correctly" classname="admin.spec.ts" time="3.428">
-</testcase>
-<testcase name="Admin Dashboard and CRUD › admin manga page loads" classname="admin.spec.ts" time="7.122">
-</testcase>
-<testcase name="Admin Dashboard and CRUD › admin chapters page loads" classname="admin.spec.ts" time="7.44">
-</testcase>
-<testcase name="Admin Dashboard and CRUD › admin users page loads" classname="admin.spec.ts" time="3.2">
-</testcase>
-<testcase name="Admin Dashboard and CRUD › admin ads page loads" classname="admin.spec.ts" time="2.534">
-</testcase>
-<testcase name="Admin Dashboard and CRUD › admin audit-logs page loads" classname="admin.spec.ts" time="2.307">
-</testcase>
-<testcase name="Admin Dashboard and CRUD › admin settings page loads" classname="admin.spec.ts" time="2.442">
-</testcase>
-<testcase name="Admin Dashboard and CRUD › admin login page shows form (unauthenticated check)" classname="admin.spec.ts" time="3.098">
-</testcase>
-<testcase name="Admin Dashboard and CRUD › admin API: manga list returns data" classname="admin.spec.ts" time="2.408">
-</testcase>
-<testcase name="Admin Dashboard and CRUD › admin API: full CRUD lifecycle — manga → chapter → ad → cleanup" classname="admin.spec.ts" time="21.305">
-</testcase>
-</testsuite>
-<testsuite name="public.spec.ts" timestamp="2026-07-29T10:34:07.106Z" hostname="Mobile Chrome" tests="5" failures="0" skipped="0" time="20.433" errors="0">
-<testcase name="Public Pages and Reader › homepage loads and displays content" classname="public.spec.ts" time="8.262">
-</testcase>
-<testcase name="Public Pages and Reader › search functionality" classname="public.spec.ts" time="6.153">
-</testcase>
-<testcase name="Public Pages and Reader › SEO: robots.txt is served" classname="public.spec.ts" time="0.187">
-</testcase>
-<testcase name="Public Pages and Reader › SEO: sitemap.xml is served" classname="public.spec.ts" time="2.386">
-</testcase>
-<testcase name="Public Pages and Reader › route protection - admin redirects unauthenticated users to login" classname="public.spec.ts" time="3.445">
-</testcase>
-</testsuite>
-<testsuite name="reader.spec.ts" timestamp="2026-07-29T10:34:07.106Z" hostname="Mobile Chrome" tests="1" failures="0" skipped="1" time="2.712" errors="0">
-<testcase name="Reader Features › reader page loads when manga and chapter exist" classname="reader.spec.ts">
-<properties>
-<property name="skip" value="No manga found in the database — seed data needed for reader tests.">
-</property>
-</properties>
-<skipped>
-</skipped>
-</testcase>
-</testsuite>
-<testsuite name="system.spec.ts" timestamp="2026-07-29T10:34:07.106Z" hostname="Mobile Chrome" tests="2" failures="0" skipped="0" time="22.55" errors="0">
-<testcase name="System and Accessibility › no console errors on homepage" classname="system.spec.ts" time="11.68">
-</testcase>
-<testcase name="System and Accessibility › navigation is accessible" classname="system.spec.ts" time="10.87">
+<testsuite name="reader.spec.ts" timestamp="2026-08-04T05:55:02.111Z" hostname="firefox" tests="1" failures="1" skipped="0" time="70.293" errors="0">
+<testcase name="Reader Features › reader page loads when manga and chapter exist" classname="reader.spec.ts" time="70.293">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-firefox\test-failed-1.png]]
+
+[[ATTACHMENT|..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-firefox\video.webm]]
+
+[[ATTACHMENT|..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-firefox\error-context.md]]
+
+[[ATTACHMENT|..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-firefox\trace.zip]]
+
+[[ATTACHMENT|..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-firefox-retry1\test-failed-1.png]]
+
+[[ATTACHMENT|..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-firefox-retry1\video.webm]]
+
+[[ATTACHMENT|..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-firefox-retry1\error-context.md]]
+
+[[ATTACHMENT|..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-firefox-retry1\trace.zip]]
+]]>
+</system-out>
+<failure message="expect(locator).toBeVisible() failed" type="expect.toBeVisible">
+<![CDATA[  [firefox] › reader.spec.ts:5:7 › Reader Features › reader page loads when manga and chapter exist 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('img').first()
+    Expected: visible
+    Timeout: 20000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 20000ms
+      - waiting for locator('img').first()
+        7 × waiting for "http://localhost:3000/read/playwright-e2e-test-manga-8/chapter-1" navigation to finish...
+          - navigated to "http://localhost:3000/read/playwright-e2e-test-manga-8/chapter-1"
+        - waiting for "http://localhost:3000/read/playwright-e2e-test-manga-8/chapter-1" navigation to finish...
+
+
+      38 |
+      39 |     // Reader page should have at least one image
+    > 40 |     await expect(page.locator('img').first()).toBeVisible({ timeout: 20000 });
+         |                                               ^
+      41 |   });
+      42 |
+      43 | });
+        at C:\Users\Sampad Chowdhury\OneDrive\Documents\website\hentography website\tests\e2e\reader.spec.ts:40:47
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-firefox\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ..\..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-firefox\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-firefox\error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-firefox\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-firefox\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('img').first()
+    Expected: visible
+    Timeout: 20000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 20000ms
+      - waiting for locator('img').first()
+        8 × waiting for "http://localhost:3000/read/playwright-e2e-test-manga-8/chapter-1" navigation to finish...
+          - navigated to "http://localhost:3000/read/playwright-e2e-test-manga-8/chapter-1"
+
+
+      38 |
+      39 |     // Reader page should have at least one image
+    > 40 |     await expect(page.locator('img').first()).toBeVisible({ timeout: 20000 });
+         |                                               ^
+      41 |   });
+      42 |
+      43 | });
+        at C:\Users\Sampad Chowdhury\OneDrive\Documents\website\hentography website\tests\e2e\reader.spec.ts:40:47
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-firefox-retry1\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ..\..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-firefox-retry1\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-firefox-retry1\error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-firefox-retry1\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-firefox-retry1\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</failure>
 </testcase>
 </testsuite>
-<testsuite name="user.spec.ts" timestamp="2026-07-29T10:34:07.106Z" hostname="Mobile Chrome" tests="7" failures="0" skipped="0" time="21.32" errors="0">
-<testcase name="User Auth and Features (Clerk) › sign in page loads Clerk widget" classname="user.spec.ts" time="7.68">
+<testsuite name="system.spec.ts" timestamp="2026-08-04T05:55:02.111Z" hostname="firefox" tests="2" failures="0" skipped="0" time="7.284" errors="0">
+<testcase name="System and Accessibility › no console errors on homepage" classname="system.spec.ts" time="2.48">
 </testcase>
-<testcase name="User Auth and Features (Clerk) › sign up page loads Clerk widget" classname="user.spec.ts" time="7.766">
-</testcase>
-<testcase name="User Auth and Features (Clerk) › protected dashboard redirects unauthenticated users" classname="user.spec.ts" time="4.941">
-</testcase>
-<testcase name="User Auth and Features (Clerk) › public user API: bookmarks require auth" classname="user.spec.ts" time="0.397">
-</testcase>
-<testcase name="User Auth and Features (Clerk) › public user API: ratings require auth" classname="user.spec.ts" time="0.16">
-</testcase>
-<testcase name="User Auth and Features (Clerk) › public user API: comments require auth" classname="user.spec.ts" time="0.234">
-</testcase>
-<testcase name="User Auth and Features (Clerk) › public user API: likes require auth" classname="user.spec.ts" time="0.142">
+<testcase name="System and Accessibility › navigation is accessible" classname="system.spec.ts" time="4.804">
 </testcase>
 </testsuite>
-<testsuite name="admin.spec.ts" timestamp="2026-07-29T10:34:07.106Z" hostname="Mobile Safari" tests="10" failures="0" skipped="0" time="87.33" errors="0">
-<testcase name="Admin Dashboard and CRUD › admin dashboard loads correctly" classname="admin.spec.ts" time="7.931">
+<testsuite name="user.spec.ts" timestamp="2026-08-04T05:55:02.111Z" hostname="firefox" tests="7" failures="0" skipped="0" time="14.207" errors="0">
+<testcase name="User Auth and Features (Clerk) › sign in page loads Clerk widget" classname="user.spec.ts" time="4.985">
 </testcase>
-<testcase name="Admin Dashboard and CRUD › admin manga page loads" classname="admin.spec.ts" time="8.445">
+<testcase name="User Auth and Features (Clerk) › sign up page loads Clerk widget" classname="user.spec.ts" time="6.1">
 </testcase>
-<testcase name="Admin Dashboard and CRUD › admin chapters page loads" classname="admin.spec.ts" time="11.525">
+<testcase name="User Auth and Features (Clerk) › protected dashboard redirects unauthenticated users" classname="user.spec.ts" time="2.999">
 </testcase>
-<testcase name="Admin Dashboard and CRUD › admin users page loads" classname="admin.spec.ts" time="8.021">
+<testcase name="User Auth and Features (Clerk) › public user API: bookmarks require auth" classname="user.spec.ts" time="0.048">
 </testcase>
-<testcase name="Admin Dashboard and CRUD › admin ads page loads" classname="admin.spec.ts" time="7.523">
+<testcase name="User Auth and Features (Clerk) › public user API: ratings require auth" classname="user.spec.ts" time="0.026">
 </testcase>
-<testcase name="Admin Dashboard and CRUD › admin audit-logs page loads" classname="admin.spec.ts" time="5.502">
+<testcase name="User Auth and Features (Clerk) › public user API: comments require auth" classname="user.spec.ts" time="0.03">
 </testcase>
-<testcase name="Admin Dashboard and CRUD › admin settings page loads" classname="admin.spec.ts" time="3.333">
-</testcase>
-<testcase name="Admin Dashboard and CRUD › admin login page shows form (unauthenticated check)" classname="admin.spec.ts" time="5.417">
-</testcase>
-<testcase name="Admin Dashboard and CRUD › admin API: manga list returns data" classname="admin.spec.ts" time="1.112">
-</testcase>
-<testcase name="Admin Dashboard and CRUD › admin API: full CRUD lifecycle — manga → chapter → ad → cleanup" classname="admin.spec.ts" time="28.521">
+<testcase name="User Auth and Features (Clerk) › public user API: likes require auth" classname="user.spec.ts" time="0.019">
 </testcase>
 </testsuite>
-<testsuite name="public.spec.ts" timestamp="2026-07-29T10:34:07.106Z" hostname="Mobile Safari" tests="5" failures="0" skipped="0" time="34.421" errors="0">
-<testcase name="Public Pages and Reader › homepage loads and displays content" classname="public.spec.ts" time="13.348">
+<testsuite name="admin.spec.ts" timestamp="2026-08-04T05:55:02.111Z" hostname="webkit" tests="10" failures="0" skipped="0" time="97.004" errors="0">
+<testcase name="Admin Dashboard and CRUD › admin dashboard loads correctly" classname="admin.spec.ts" time="4.51">
 </testcase>
-<testcase name="Public Pages and Reader › search functionality" classname="public.spec.ts" time="14.69">
+<testcase name="Admin Dashboard and CRUD › admin manga page loads" classname="admin.spec.ts" time="5.076">
 </testcase>
-<testcase name="Public Pages and Reader › SEO: robots.txt is served" classname="public.spec.ts" time="0.448">
+<testcase name="Admin Dashboard and CRUD › admin chapters page loads" classname="admin.spec.ts" time="39.856">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|..\test-results\admin-Admin-Dashboard-and-CRUD-admin-chapters-page-loads-webkit\test-failed-1.png]]
+
+[[ATTACHMENT|..\test-results\admin-Admin-Dashboard-and-CRUD-admin-chapters-page-loads-webkit\video.webm]]
+
+[[ATTACHMENT|..\test-results\admin-Admin-Dashboard-and-CRUD-admin-chapters-page-loads-webkit\error-context.md]]
+
+[[ATTACHMENT|..\test-results\admin-Admin-Dashboard-and-CRUD-admin-chapters-page-loads-webkit\trace.zip]]
+]]>
+</system-out>
 </testcase>
-<testcase name="Public Pages and Reader › SEO: sitemap.xml is served" classname="public.spec.ts" time="0.974">
+<testcase name="Admin Dashboard and CRUD › admin users page loads" classname="admin.spec.ts" time="3.366">
 </testcase>
-<testcase name="Public Pages and Reader › route protection - admin redirects unauthenticated users to login" classname="public.spec.ts" time="4.961">
+<testcase name="Admin Dashboard and CRUD › admin ads page loads" classname="admin.spec.ts" time="3.762">
+</testcase>
+<testcase name="Admin Dashboard and CRUD › admin audit-logs page loads" classname="admin.spec.ts" time="3.356">
+</testcase>
+<testcase name="Admin Dashboard and CRUD › admin settings page loads" classname="admin.spec.ts" time="3.374">
+</testcase>
+<testcase name="Admin Dashboard and CRUD › admin login page shows form (unauthenticated check)" classname="admin.spec.ts" time="3.325">
+</testcase>
+<testcase name="Admin Dashboard and CRUD › admin API: manga list returns data" classname="admin.spec.ts" time="0.607">
+</testcase>
+<testcase name="Admin Dashboard and CRUD › admin API: full CRUD lifecycle — manga → chapter → ad → cleanup" classname="admin.spec.ts" time="29.772">
 </testcase>
 </testsuite>
-<testsuite name="reader.spec.ts" timestamp="2026-07-29T10:34:07.106Z" hostname="Mobile Safari" tests="1" failures="0" skipped="1" time="7.255" errors="0">
-<testcase name="Reader Features › reader page loads when manga and chapter exist" classname="reader.spec.ts">
-<properties>
-<property name="skip" value="No manga found in the database — seed data needed for reader tests.">
-</property>
-</properties>
-<skipped>
-</skipped>
+<testsuite name="public.spec.ts" timestamp="2026-08-04T05:55:02.111Z" hostname="webkit" tests="5" failures="0" skipped="0" time="27.432" errors="0">
+<testcase name="Public Pages and Reader › homepage loads and displays content" classname="public.spec.ts" time="9.975">
+</testcase>
+<testcase name="Public Pages and Reader › search functionality" classname="public.spec.ts" time="9.553">
+</testcase>
+<testcase name="Public Pages and Reader › SEO: robots.txt is served" classname="public.spec.ts" time="0.063">
+</testcase>
+<testcase name="Public Pages and Reader › SEO: sitemap.xml is served" classname="public.spec.ts" time="1.227">
+</testcase>
+<testcase name="Public Pages and Reader › route protection - admin redirects unauthenticated users to login" classname="public.spec.ts" time="6.614">
 </testcase>
 </testsuite>
-<testsuite name="system.spec.ts" timestamp="2026-07-29T10:34:07.106Z" hostname="Mobile Safari" tests="2" failures="0" skipped="0" time="34.022" errors="0">
-<testcase name="System and Accessibility › no console errors on homepage" classname="system.spec.ts" time="16.166">
-</testcase>
-<testcase name="System and Accessibility › navigation is accessible" classname="system.spec.ts" time="17.856">
+<testsuite name="reader.spec.ts" timestamp="2026-08-04T05:55:02.111Z" hostname="webkit" tests="1" failures="1" skipped="0" time="66.104" errors="0">
+<testcase name="Reader Features › reader page loads when manga and chapter exist" classname="reader.spec.ts" time="66.104">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-webkit\test-failed-1.png]]
+
+[[ATTACHMENT|..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-webkit\video.webm]]
+
+[[ATTACHMENT|..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-webkit\error-context.md]]
+
+[[ATTACHMENT|..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-webkit\trace.zip]]
+
+[[ATTACHMENT|..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-webkit-retry1\test-failed-1.png]]
+
+[[ATTACHMENT|..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-webkit-retry1\video.webm]]
+
+[[ATTACHMENT|..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-webkit-retry1\error-context.md]]
+
+[[ATTACHMENT|..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-webkit-retry1\trace.zip]]
+]]>
+</system-out>
+<failure message="expect(locator).toBeVisible() failed" type="expect.toBeVisible">
+<![CDATA[  [webkit] › reader.spec.ts:5:7 › Reader Features › reader page loads when manga and chapter exist ─
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('img').first()
+    Expected: visible
+    Timeout: 20000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 20000ms
+      - waiting for locator('img').first()
+
+
+      38 |
+      39 |     // Reader page should have at least one image
+    > 40 |     await expect(page.locator('img').first()).toBeVisible({ timeout: 20000 });
+         |                                               ^
+      41 |   });
+      42 |
+      43 | });
+        at C:\Users\Sampad Chowdhury\OneDrive\Documents\website\hentography website\tests\e2e\reader.spec.ts:40:47
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-webkit\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ..\..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-webkit\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-webkit\error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-webkit\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-webkit\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('img').first()
+    Expected: visible
+    Timeout: 20000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 20000ms
+      - waiting for locator('img').first()
+
+
+      38 |
+      39 |     // Reader page should have at least one image
+    > 40 |     await expect(page.locator('img').first()).toBeVisible({ timeout: 20000 });
+         |                                               ^
+      41 |   });
+      42 |
+      43 | });
+        at C:\Users\Sampad Chowdhury\OneDrive\Documents\website\hentography website\tests\e2e\reader.spec.ts:40:47
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-webkit-retry1\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ..\..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-webkit-retry1\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-webkit-retry1\error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-webkit-retry1\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-webkit-retry1\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</failure>
 </testcase>
 </testsuite>
-<testsuite name="user.spec.ts" timestamp="2026-07-29T10:34:07.106Z" hostname="Mobile Safari" tests="7" failures="0" skipped="0" time="44.145" errors="0">
-<testcase name="User Auth and Features (Clerk) › sign in page loads Clerk widget" classname="user.spec.ts" time="17.121">
+<testsuite name="system.spec.ts" timestamp="2026-08-04T05:55:02.111Z" hostname="webkit" tests="2" failures="0" skipped="0" time="23.705" errors="0">
+<testcase name="System and Accessibility › no console errors on homepage" classname="system.spec.ts" time="10.792">
 </testcase>
-<testcase name="User Auth and Features (Clerk) › sign up page loads Clerk widget" classname="user.spec.ts" time="15.207">
+<testcase name="System and Accessibility › navigation is accessible" classname="system.spec.ts" time="12.913">
 </testcase>
-<testcase name="User Auth and Features (Clerk) › protected dashboard redirects unauthenticated users" classname="user.spec.ts" time="10.386">
+</testsuite>
+<testsuite name="user.spec.ts" timestamp="2026-08-04T05:55:02.111Z" hostname="webkit" tests="7" failures="0" skipped="0" time="20.442" errors="0">
+<testcase name="User Auth and Features (Clerk) › sign in page loads Clerk widget" classname="user.spec.ts" time="7.56">
 </testcase>
-<testcase name="User Auth and Features (Clerk) › public user API: bookmarks require auth" classname="user.spec.ts" time="0.265">
+<testcase name="User Auth and Features (Clerk) › sign up page loads Clerk widget" classname="user.spec.ts" time="8.06">
 </testcase>
-<testcase name="User Auth and Features (Clerk) › public user API: ratings require auth" classname="user.spec.ts" time="0.539">
+<testcase name="User Auth and Features (Clerk) › protected dashboard redirects unauthenticated users" classname="user.spec.ts" time="4.333">
 </testcase>
-<testcase name="User Auth and Features (Clerk) › public user API: comments require auth" classname="user.spec.ts" time="0.35">
+<testcase name="User Auth and Features (Clerk) › public user API: bookmarks require auth" classname="user.spec.ts" time="0.122">
 </testcase>
-<testcase name="User Auth and Features (Clerk) › public user API: likes require auth" classname="user.spec.ts" time="0.277">
+<testcase name="User Auth and Features (Clerk) › public user API: ratings require auth" classname="user.spec.ts" time="0.036">
+</testcase>
+<testcase name="User Auth and Features (Clerk) › public user API: comments require auth" classname="user.spec.ts" time="0.307">
+</testcase>
+<testcase name="User Auth and Features (Clerk) › public user API: likes require auth" classname="user.spec.ts" time="0.024">
+</testcase>
+</testsuite>
+<testsuite name="admin.spec.ts" timestamp="2026-08-04T05:55:02.111Z" hostname="Mobile Chrome" tests="10" failures="0" skipped="0" time="44.735" errors="0">
+<testcase name="Admin Dashboard and CRUD › admin dashboard loads correctly" classname="admin.spec.ts" time="2.429">
+</testcase>
+<testcase name="Admin Dashboard and CRUD › admin manga page loads" classname="admin.spec.ts" time="2.999">
+</testcase>
+<testcase name="Admin Dashboard and CRUD › admin chapters page loads" classname="admin.spec.ts" time="5.085">
+</testcase>
+<testcase name="Admin Dashboard and CRUD › admin users page loads" classname="admin.spec.ts" time="2.162">
+</testcase>
+<testcase name="Admin Dashboard and CRUD › admin ads page loads" classname="admin.spec.ts" time="1.613">
+</testcase>
+<testcase name="Admin Dashboard and CRUD › admin audit-logs page loads" classname="admin.spec.ts" time="1.725">
+</testcase>
+<testcase name="Admin Dashboard and CRUD › admin settings page loads" classname="admin.spec.ts" time="1.526">
+</testcase>
+<testcase name="Admin Dashboard and CRUD › admin login page shows form (unauthenticated check)" classname="admin.spec.ts" time="2.083">
+</testcase>
+<testcase name="Admin Dashboard and CRUD › admin API: manga list returns data" classname="admin.spec.ts" time="1.008">
+</testcase>
+<testcase name="Admin Dashboard and CRUD › admin API: full CRUD lifecycle — manga → chapter → ad → cleanup" classname="admin.spec.ts" time="24.105">
+</testcase>
+</testsuite>
+<testsuite name="public.spec.ts" timestamp="2026-08-04T05:55:02.111Z" hostname="Mobile Chrome" tests="5" failures="0" skipped="0" time="17.302" errors="0">
+<testcase name="Public Pages and Reader › homepage loads and displays content" classname="public.spec.ts" time="6.739">
+</testcase>
+<testcase name="Public Pages and Reader › search functionality" classname="public.spec.ts" time="4.717">
+</testcase>
+<testcase name="Public Pages and Reader › SEO: robots.txt is served" classname="public.spec.ts" time="0.133">
+</testcase>
+<testcase name="Public Pages and Reader › SEO: sitemap.xml is served" classname="public.spec.ts" time="2.394">
+</testcase>
+<testcase name="Public Pages and Reader › route protection - admin redirects unauthenticated users to login" classname="public.spec.ts" time="3.319">
+</testcase>
+</testsuite>
+<testsuite name="reader.spec.ts" timestamp="2026-08-04T05:55:02.111Z" hostname="Mobile Chrome" tests="1" failures="1" skipped="0" time="59.549" errors="0">
+<testcase name="Reader Features › reader page loads when manga and chapter exist" classname="reader.spec.ts" time="59.549">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-Mobile-Chrome\test-failed-1.png]]
+
+[[ATTACHMENT|..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-Mobile-Chrome\video.webm]]
+
+[[ATTACHMENT|..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-Mobile-Chrome\error-context.md]]
+
+[[ATTACHMENT|..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-Mobile-Chrome\trace.zip]]
+
+[[ATTACHMENT|..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-Mobile-Chrome-retry1\test-failed-1.png]]
+
+[[ATTACHMENT|..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-Mobile-Chrome-retry1\video.webm]]
+
+[[ATTACHMENT|..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-Mobile-Chrome-retry1\error-context.md]]
+
+[[ATTACHMENT|..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-Mobile-Chrome-retry1\trace.zip]]
+]]>
+</system-out>
+<failure message="expect(locator).toBeVisible() failed" type="expect.toBeVisible">
+<![CDATA[  [Mobile Chrome] › reader.spec.ts:5:7 › Reader Features › reader page loads when manga and chapter exist 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('img').first()
+    Expected: visible
+    Timeout: 20000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 20000ms
+      - waiting for locator('img').first()
+
+
+      38 |
+      39 |     // Reader page should have at least one image
+    > 40 |     await expect(page.locator('img').first()).toBeVisible({ timeout: 20000 });
+         |                                               ^
+      41 |   });
+      42 |
+      43 | });
+        at C:\Users\Sampad Chowdhury\OneDrive\Documents\website\hentography website\tests\e2e\reader.spec.ts:40:47
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-Mobile-Chrome\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ..\..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-Mobile-Chrome\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-Mobile-Chrome\error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-Mobile-Chrome\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-Mobile-Chrome\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('img').first()
+    Expected: visible
+    Timeout: 20000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 20000ms
+      - waiting for locator('img').first()
+
+
+      38 |
+      39 |     // Reader page should have at least one image
+    > 40 |     await expect(page.locator('img').first()).toBeVisible({ timeout: 20000 });
+         |                                               ^
+      41 |   });
+      42 |
+      43 | });
+        at C:\Users\Sampad Chowdhury\OneDrive\Documents\website\hentography website\tests\e2e\reader.spec.ts:40:47
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-Mobile-Chrome-retry1\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ..\..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-Mobile-Chrome-retry1\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-Mobile-Chrome-retry1\error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-Mobile-Chrome-retry1\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-Mobile-Chrome-retry1\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</failure>
+</testcase>
+</testsuite>
+<testsuite name="system.spec.ts" timestamp="2026-08-04T05:55:02.111Z" hostname="Mobile Chrome" tests="2" failures="0" skipped="0" time="20.021" errors="0">
+<testcase name="System and Accessibility › no console errors on homepage" classname="system.spec.ts" time="10.096">
+</testcase>
+<testcase name="System and Accessibility › navigation is accessible" classname="system.spec.ts" time="9.925">
+</testcase>
+</testsuite>
+<testsuite name="user.spec.ts" timestamp="2026-08-04T05:55:02.111Z" hostname="Mobile Chrome" tests="7" failures="0" skipped="0" time="12.301" errors="0">
+<testcase name="User Auth and Features (Clerk) › sign in page loads Clerk widget" classname="user.spec.ts" time="4.346">
+</testcase>
+<testcase name="User Auth and Features (Clerk) › sign up page loads Clerk widget" classname="user.spec.ts" time="6.116">
+</testcase>
+<testcase name="User Auth and Features (Clerk) › protected dashboard redirects unauthenticated users" classname="user.spec.ts" time="1.634">
+</testcase>
+<testcase name="User Auth and Features (Clerk) › public user API: bookmarks require auth" classname="user.spec.ts" time="0.066">
+</testcase>
+<testcase name="User Auth and Features (Clerk) › public user API: ratings require auth" classname="user.spec.ts" time="0.046">
+</testcase>
+<testcase name="User Auth and Features (Clerk) › public user API: comments require auth" classname="user.spec.ts" time="0.035">
+</testcase>
+<testcase name="User Auth and Features (Clerk) › public user API: likes require auth" classname="user.spec.ts" time="0.058">
+</testcase>
+</testsuite>
+<testsuite name="admin.spec.ts" timestamp="2026-08-04T05:55:02.111Z" hostname="Mobile Safari" tests="10" failures="0" skipped="0" time="51.096" errors="0">
+<testcase name="Admin Dashboard and CRUD › admin dashboard loads correctly" classname="admin.spec.ts" time="2.808">
+</testcase>
+<testcase name="Admin Dashboard and CRUD › admin manga page loads" classname="admin.spec.ts" time="4.175">
+</testcase>
+<testcase name="Admin Dashboard and CRUD › admin chapters page loads" classname="admin.spec.ts" time="7.959">
+</testcase>
+<testcase name="Admin Dashboard and CRUD › admin users page loads" classname="admin.spec.ts" time="1.912">
+</testcase>
+<testcase name="Admin Dashboard and CRUD › admin ads page loads" classname="admin.spec.ts" time="1.752">
+</testcase>
+<testcase name="Admin Dashboard and CRUD › admin audit-logs page loads" classname="admin.spec.ts" time="2.034">
+</testcase>
+<testcase name="Admin Dashboard and CRUD › admin settings page loads" classname="admin.spec.ts" time="1.882">
+</testcase>
+<testcase name="Admin Dashboard and CRUD › admin login page shows form (unauthenticated check)" classname="admin.spec.ts" time="2.56">
+</testcase>
+<testcase name="Admin Dashboard and CRUD › admin API: manga list returns data" classname="admin.spec.ts" time="1.342">
+</testcase>
+<testcase name="Admin Dashboard and CRUD › admin API: full CRUD lifecycle — manga → chapter → ad → cleanup" classname="admin.spec.ts" time="24.672">
+</testcase>
+</testsuite>
+<testsuite name="public.spec.ts" timestamp="2026-08-04T05:55:02.111Z" hostname="Mobile Safari" tests="5" failures="0" skipped="0" time="17.285" errors="0">
+<testcase name="Public Pages and Reader › homepage loads and displays content" classname="public.spec.ts" time="6.533">
+</testcase>
+<testcase name="Public Pages and Reader › search functionality" classname="public.spec.ts" time="7.31">
+</testcase>
+<testcase name="Public Pages and Reader › SEO: robots.txt is served" classname="public.spec.ts" time="0.069">
+</testcase>
+<testcase name="Public Pages and Reader › SEO: sitemap.xml is served" classname="public.spec.ts" time="1.616">
+</testcase>
+<testcase name="Public Pages and Reader › route protection - admin redirects unauthenticated users to login" classname="public.spec.ts" time="1.757">
+</testcase>
+</testsuite>
+<testsuite name="reader.spec.ts" timestamp="2026-08-04T05:55:02.111Z" hostname="Mobile Safari" tests="1" failures="1" skipped="0" time="61.358" errors="0">
+<testcase name="Reader Features › reader page loads when manga and chapter exist" classname="reader.spec.ts" time="61.358">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-Mobile-Safari\test-failed-1.png]]
+
+[[ATTACHMENT|..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-Mobile-Safari\video.webm]]
+
+[[ATTACHMENT|..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-Mobile-Safari\error-context.md]]
+
+[[ATTACHMENT|..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-Mobile-Safari\trace.zip]]
+
+[[ATTACHMENT|..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-Mobile-Safari-retry1\test-failed-1.png]]
+
+[[ATTACHMENT|..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-Mobile-Safari-retry1\video.webm]]
+
+[[ATTACHMENT|..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-Mobile-Safari-retry1\error-context.md]]
+
+[[ATTACHMENT|..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-Mobile-Safari-retry1\trace.zip]]
+]]>
+</system-out>
+<failure message="expect(locator).toBeVisible() failed" type="expect.toBeVisible">
+<![CDATA[  [Mobile Safari] › reader.spec.ts:5:7 › Reader Features › reader page loads when manga and chapter exist 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('img').first()
+    Expected: visible
+    Timeout: 20000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 20000ms
+      - waiting for locator('img').first()
+
+
+      38 |
+      39 |     // Reader page should have at least one image
+    > 40 |     await expect(page.locator('img').first()).toBeVisible({ timeout: 20000 });
+         |                                               ^
+      41 |   });
+      42 |
+      43 | });
+        at C:\Users\Sampad Chowdhury\OneDrive\Documents\website\hentography website\tests\e2e\reader.spec.ts:40:47
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-Mobile-Safari\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ..\..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-Mobile-Safari\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-Mobile-Safari\error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-Mobile-Safari\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-Mobile-Safari\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('img').first()
+    Expected: visible
+    Timeout: 20000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 20000ms
+      - waiting for locator('img').first()
+
+
+      38 |
+      39 |     // Reader page should have at least one image
+    > 40 |     await expect(page.locator('img').first()).toBeVisible({ timeout: 20000 });
+         |                                               ^
+      41 |   });
+      42 |
+      43 | });
+        at C:\Users\Sampad Chowdhury\OneDrive\Documents\website\hentography website\tests\e2e\reader.spec.ts:40:47
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-Mobile-Safari-retry1\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ..\..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-Mobile-Safari-retry1\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-Mobile-Safari-retry1\error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-Mobile-Safari-retry1\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\test-results\reader-Reader-Features-rea-65713-hen-manga-and-chapter-exist-Mobile-Safari-retry1\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</failure>
+</testcase>
+</testsuite>
+<testsuite name="system.spec.ts" timestamp="2026-08-04T05:55:02.111Z" hostname="Mobile Safari" tests="2" failures="0" skipped="0" time="20.061" errors="0">
+<testcase name="System and Accessibility › no console errors on homepage" classname="system.spec.ts" time="9.762">
+</testcase>
+<testcase name="System and Accessibility › navigation is accessible" classname="system.spec.ts" time="10.299">
+</testcase>
+</testsuite>
+<testsuite name="user.spec.ts" timestamp="2026-08-04T05:55:02.111Z" hostname="Mobile Safari" tests="7" failures="0" skipped="0" time="14.72" errors="0">
+<testcase name="User Auth and Features (Clerk) › sign in page loads Clerk widget" classname="user.spec.ts" time="5.164">
+</testcase>
+<testcase name="User Auth and Features (Clerk) › sign up page loads Clerk widget" classname="user.spec.ts" time="4.875">
+</testcase>
+<testcase name="User Auth and Features (Clerk) › protected dashboard redirects unauthenticated users" classname="user.spec.ts" time="4.234">
+</testcase>
+<testcase name="User Auth and Features (Clerk) › public user API: bookmarks require auth" classname="user.spec.ts" time="0.108">
+</testcase>
+<testcase name="User Auth and Features (Clerk) › public user API: ratings require auth" classname="user.spec.ts" time="0.031">
+</testcase>
+<testcase name="User Auth and Features (Clerk) › public user API: comments require auth" classname="user.spec.ts" time="0.067">
+</testcase>
+<testcase name="User Auth and Features (Clerk) › public user API: likes require auth" classname="user.spec.ts" time="0.241">
 </testcase>
 </testsuite>
 </testsuites>

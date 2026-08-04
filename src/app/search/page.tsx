@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { Suspense } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { BookOpen, Filter, Search, Star, Eye, TrendingUp } from "lucide-react";
+import { BookOpen, Filter, Search, Star, Eye } from "lucide-react";
 import prisma from "@/lib/prisma";
 
 export const dynamic = "force-dynamic";
@@ -74,7 +74,7 @@ async function searchManga(params: Record<string, string | string[] | undefined>
   // library (< 50k titles) but will show performance degradation above that.
   // ────────────────────────────────────────────────────────────────────────────
 
-  const where: any = {
+  const where: Record<string, unknown> = {
     isDraft: false,
     ...(q && {
       OR: [
@@ -91,7 +91,7 @@ async function searchManga(params: Record<string, string | string[] | undefined>
     ...(themes.length > 0 && { themes: { some: { theme: { slug: { in: themes } } } } }),
   };
 
-  let orderBy: any = { bookmarkCount: "desc" };
+  let orderBy: Record<string, "asc" | "desc"> = { bookmarkCount: "desc" };
   switch (sortBy) {
     case "newest": orderBy = { createdAt: "desc" }; break;
     case "oldest": orderBy = { createdAt: "asc" }; break;
@@ -135,7 +135,21 @@ async function searchManga(params: Record<string, string | string[] | undefined>
 
 // ─── MangaCard ────────────────────────────────────────────────────────────────
 
-function MangaCard({ manga }: { manga: any }) {
+interface GenreData { genre: { name: string } }
+interface MangaCardData {
+  id: string;
+  title: string;
+  slug: string;
+  coverImage: string | null;
+  status: string;
+  averageRating: number;
+  views: number;
+  isTrending?: boolean;
+  chapters?: { chapterNumber: number }[];
+  genres?: GenreData[];
+}
+
+function MangaCard({ manga }: { manga: MangaCardData }) {
   return (
     <Link href={`/manga/${manga.slug}`} className="group block">
       <div className="relative aspect-[2/3] rounded-xl overflow-hidden bg-slate-900 border border-slate-800 group-hover:border-indigo-500/40 transition-all duration-300 shadow-md group-hover:shadow-xl group-hover:shadow-indigo-900/20">
@@ -182,7 +196,7 @@ function MangaCard({ manga }: { manga: any }) {
         </h3>
         <div className="flex items-center justify-between mt-1">
           <p className="text-[11px] text-slate-500 truncate">
-            {manga.genres?.map((g: any) => g.genre.name).join(", ") || manga.status}
+            {manga.genres?.map((g: GenreData) => g.genre.name).join(", ") || manga.status}
           </p>
           {manga.views > 0 && (
             <span className="text-[11px] text-slate-600 flex items-center gap-0.5 shrink-0 ml-1">
@@ -301,7 +315,7 @@ function FilterSection({ label, children }: { label: string; children: React.Rea
 }
 
 async function FilterSidebar({ params }: { params: Record<string, string | string[] | undefined> }) {
-  const { genres, tags, themes } = await getFilterOptions();
+  const { genres, tags } = await getFilterOptions();
 
   const activeGenres = Array.isArray(params.genres) ? params.genres : params.genres ? [params.genres] : [];
   const activeTags = Array.isArray(params.tags) ? params.tags : params.tags ? [params.tags] : [];

@@ -14,10 +14,8 @@ export default async function AdminChaptersPage({
   const limit = 30;
   const skip = (page - 1) * limit;
 
-  const where = mangaId ? { mangaId } : undefined;
-
   const chapters = await prisma.chapter.findMany({
-    where,
+    where: mangaId ? { mangaId } : undefined,
     skip,
     take: limit,
     orderBy: [
@@ -31,7 +29,9 @@ export default async function AdminChaptersPage({
     }
   });
 
-  const total = await prisma.chapter.count({ where });
+  const total = await prisma.chapter.count({ 
+    where: mangaId ? { mangaId } : undefined 
+  });
   
   const mangaList = await prisma.manga.findMany({
     select: { id: true, title: true },

@@ -9,15 +9,24 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Search, Shield, Ban, CheckCircle, UserX, UserCheck } from "lucide-react";
 import toast from "react-hot-toast";
 
+interface AdminUser {
+  id: string;
+  name: string | null;
+  email: string | null;
+  image: string | null;
+  role: string;
+  status: string;
+  createdAt: string | Date;
+}
+interface UserUpdates {
+  role?: string;
+  status?: string;
+}
+
 export default function AdminUsersPage() {
-  const [users, setUsers] = useState<any[]>([]);
+  const [users, setUsers] = useState<AdminUser[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
-
-  useEffect(() => {
-    fetchUsers();
-  }, []);
-
   const fetchUsers = async () => {
     try {
       const res = await fetch(`/api/admin/users?search=${encodeURIComponent(search)}`);
@@ -25,14 +34,43 @@ export default function AdminUsersPage() {
         const data = await res.json();
         setUsers(data.data);
       }
-    } catch (error) {
+    } catch {
       toast.error("Failed to fetch users");
     } finally {
       setLoading(false);
     }
   };
 
-  const handleUpdate = async (id: string, updates: any) => {
+  useEffect(() => {
+    let mounted = true;
+
+    const loadUsers = async () => {
+      try {
+        const res = await fetch(`/api/admin/users?search=${encodeURIComponent(search)}`);
+        if (res.ok) {
+          const data = await res.json();
+          if (mounted) setUsers(data.data);
+        }
+      } catch {
+        toast.error("Failed to fetch users");
+      } finally {
+        if (mounted) setLoading(false);
+      }
+    };
+
+    void loadUsers();
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  const handleSearch = () => {
+    setLoading(true);
+    void fetchUsers();
+  };
+
+  const handleUpdate = async (id: string, updates: UserUpdates) => {
     try {
       const res = await fetch(`/api/admin/users/${id}`, {
         method: "PATCH",
@@ -68,7 +106,7 @@ export default function AdminUsersPage() {
               onChange={(e) => setSearch(e.target.value)} 
               className="w-64 bg-slate-900 border-slate-700" 
             />
-            <Button onClick={fetchUsers} variant="secondary"><Search className="w-4 h-4" /></Button>
+            <Button onClick={handleSearch} variant="secondary"><Search className="w-4 h-4" /></Button>
           </div>
         </CardHeader>
         <CardContent>
@@ -94,7 +132,7 @@ export default function AdminUsersPage() {
                       <td className="px-4 py-4">
                         <div className="flex items-center gap-3">
                           <Avatar className="w-8 h-8 border border-slate-700">
-                            <AvatarImage src={user.image} />
+                            <AvatarImage src={user.image || undefined} />
                             <AvatarFallback>{user.name?.charAt(0) || "U"}</AvatarFallback>
                           </Avatar>
                           <div>

@@ -1,13 +1,15 @@
 import { getCurrentUser } from "@/lib/auth-helpers";
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
+import { Prisma } from "@prisma/client";
+import { MangaStatus } from "@prisma/client";
 
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
     const query = searchParams.get("q") || "";
     const genres = searchParams.getAll("genres");
-    const status = searchParams.getAll("status");
+    const statusParams = searchParams.getAll("status");
     const type = searchParams.getAll("type");
     const year = searchParams.getAll("year");
     const rating = searchParams.get("rating");
@@ -17,7 +19,11 @@ export async function GET(request: Request) {
     const page = parseInt(searchParams.get("page") || "1");
     const limit = parseInt(searchParams.get("limit") || "24");
 
-    const where: any = {
+    const validStatuses = statusParams.filter((s): s is MangaStatus => 
+      Object.values(MangaStatus).includes(s as MangaStatus)
+    );
+
+    const where: Prisma.MangaWhereInput = {
       isDraft: false,
       OR: query
         ? [
@@ -26,25 +32,25 @@ export async function GET(request: Request) {
             { synopsis: { contains: query, mode: "insensitive" } },
           ]
         : undefined,
-      genres: {
+      genres: genres.length > 0 ? {
         some: {
           genre: {
-            slug: { in: genres.length > 0 ? genres : undefined },
+            slug: { in: genres },
           },
         },
-      },
-      status: status.length > 0 ? { in: status } : undefined,
-      tags: {
+      } : undefined,
+      status: validStatuses.length > 0 ? { in: validStatuses } : undefined,
+      tags: tags.length > 0 ? {
         some: {
           tag: {
-            name: { in: tags.length > 0 ? tags : undefined },
+            name: { in: tags },
           },
         },
-      },
+      } : undefined,
       ...(rating && { averageRating: { gte: parseFloat(rating) } }),
     };
 
-    let orderBy: any = {};
+    let orderBy: Prisma.MangaOrderByWithRelationInput = {};
     switch (sortBy) {
       case "newest":
         orderBy = { createdAt: "desc" };

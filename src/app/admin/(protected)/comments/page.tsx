@@ -7,17 +7,26 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { CheckCircle, XCircle, Trash2, MessageSquare, EyeOff } from "lucide-react";
 import toast from "react-hot-toast";
 
+interface AdminComment {
+  id: string;
+  content: string;
+  isApproved: boolean;
+  isHidden: boolean;
+  createdAt: string | Date;
+  user: { name: string | null; image: string | null; };
+  manga: { title: string; };
+}
+interface CommentUpdates {
+  isApproved?: boolean;
+  isHidden?: boolean;
+}
+
 export default function AdminCommentsPage() {
-  const [comments, setComments] = useState<any[]>([]);
+  const [comments, setComments] = useState<AdminComment[]>([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<"all" | "pending" | "hidden">("all");
 
-  useEffect(() => {
-    fetchComments();
-  }, [filter]);
-
   const fetchComments = async () => {
-    setLoading(true);
     let url = "/api/admin/comments";
     if (filter === "pending") url += "?isApproved=false";
     // For hidden we'd need another query param, keeping simple for now
@@ -27,7 +36,7 @@ export default function AdminCommentsPage() {
       if (res.ok) {
         const data = await res.json();
         if (filter === "hidden") {
-          setComments(data.data.filter((c: any) => c.isHidden));
+          setComments(data.data.filter((c: AdminComment) => c.isHidden));
         } else {
           setComments(data.data);
         }
@@ -39,7 +48,36 @@ export default function AdminCommentsPage() {
     }
   };
 
-  const handleUpdate = async (id: string, updates: any) => {
+  useEffect(() => {
+    let mounted = true;
+
+    const loadComments = async () => {
+      try {
+        const res = await fetch(`/api/admin/comments?filter=${filter}`);
+        if (res.ok) {
+          const data = await res.json();
+          if (mounted) setComments(data.data);
+        }
+      } catch {
+        toast.error("Failed to load comments");
+      } finally {
+        if (mounted) setLoading(false);
+      }
+    };
+
+    void loadComments();
+
+    return () => {
+      mounted = false;
+    };
+  }, [filter]);
+
+  const handleFilterChange = (newFilter: typeof filter) => {
+    setLoading(true);
+    setFilter(newFilter);
+  };
+
+  const handleUpdate = async (id: string, updates: CommentUpdates) => {
     try {
       const res = await fetch(`/api/admin/comments/${id}`, {
         method: "PATCH",
@@ -79,9 +117,9 @@ export default function AdminCommentsPage() {
           <p className="text-slate-400 mt-1">Review and manage user comments.</p>
         </div>
         <div className="flex gap-2">
-          <Button variant={filter === "all" ? "default" : "outline"} size="sm" onClick={() => setFilter("all")} className={filter !== "all" ? "border-slate-700 text-slate-300" : ""}>All</Button>
-          <Button variant={filter === "pending" ? "default" : "outline"} size="sm" onClick={() => setFilter("pending")} className={filter !== "pending" ? "border-slate-700 text-slate-300" : ""}>Pending Approval</Button>
-          <Button variant={filter === "hidden" ? "default" : "outline"} size="sm" onClick={() => setFilter("hidden")} className={filter !== "hidden" ? "border-slate-700 text-slate-300" : ""}>Hidden</Button>
+          <Button variant={filter === "all" ? "default" : "outline"} size="sm" onClick={() => handleFilterChange("all")} className={filter !== "all" ? "border-slate-700 text-slate-300" : ""}>All</Button>
+          <Button variant={filter === "pending" ? "default" : "outline"} size="sm" onClick={() => handleFilterChange("pending")} className={filter !== "pending" ? "border-slate-700 text-slate-300" : ""}>Pending Approval</Button>
+          <Button variant={filter === "hidden" ? "default" : "outline"} size="sm" onClick={() => handleFilterChange("hidden")} className={filter !== "hidden" ? "border-slate-700 text-slate-300" : ""}>Hidden</Button>
         </div>
       </div>
 
@@ -102,7 +140,7 @@ export default function AdminCommentsPage() {
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-2">
                         <Avatar className="w-6 h-6 border border-slate-700">
-                          <AvatarImage src={comment.user.image} />
+                          <AvatarImage src={comment.user.image || undefined} />
                           <AvatarFallback>{comment.user.name?.charAt(0) || "U"}</AvatarFallback>
                         </Avatar>
                         <span className="font-semibold text-slate-200 text-sm">{comment.user.name}</span>

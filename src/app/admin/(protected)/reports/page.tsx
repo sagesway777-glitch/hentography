@@ -8,17 +8,25 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Flag, CheckCircle, XCircle, AlertTriangle } from "lucide-react";
 import toast from "react-hot-toast";
 
+interface AdminReport {
+  id: string;
+  type: string;
+  reason: string;
+  details: string | null;
+  status: string;
+  createdAt: string | Date;
+  user: { name: string | null; image: string | null; };
+  manga: { title: string; } | null;
+  comment: { content: string; } | null;
+  review: { title: string | null; } | null;
+}
+
 export default function AdminReportsPage() {
-  const [reports, setReports] = useState<any[]>([]);
+  const [reports, setReports] = useState<AdminReport[]>([]);
   const [loading, setLoading] = useState(true);
   const [statusFilter, setStatusFilter] = useState("PENDING");
 
-  useEffect(() => {
-    fetchReports();
-  }, [statusFilter]);
-
   const fetchReports = async () => {
-    setLoading(true);
     try {
       const res = await fetch(`/api/admin/reports?status=${statusFilter}`);
       if (res.ok) {
@@ -30,6 +38,35 @@ export default function AdminReportsPage() {
     } finally {
       setLoading(false);
     }
+  };
+
+  useEffect(() => {
+    let mounted = true;
+
+    const loadReports = async () => {
+      try {
+        const res = await fetch(`/api/admin/reports?status=${statusFilter}`);
+        if (res.ok) {
+          const data = await res.json();
+          if (mounted) setReports(data.data);
+        }
+      } catch {
+        toast.error("Failed to fetch reports");
+      } finally {
+        if (mounted) setLoading(false);
+      }
+    };
+
+    void loadReports();
+
+    return () => {
+      mounted = false;
+    };
+  }, [statusFilter]);
+
+  const handleFilterChange = (status: string) => {
+    setLoading(true);
+    setStatusFilter(status);
   };
 
   const handleUpdateStatus = async (id: string, status: string) => {
@@ -64,7 +101,7 @@ export default function AdminReportsPage() {
               key={status}
               variant={statusFilter === status ? "default" : "outline"}
               size="sm"
-              onClick={() => setStatusFilter(status)}
+              onClick={() => handleFilterChange(status)}
               className={statusFilter !== status ? "border-slate-700 text-slate-300" : ""}
             >
               {status}
@@ -100,7 +137,7 @@ export default function AdminReportsPage() {
 
                     <div className="bg-slate-950/50 rounded-lg p-4 border border-slate-800/50 mb-4">
                       {report.details && (
-                        <p className="text-sm text-slate-400 mb-3 whitespace-pre-wrap">"{report.details}"</p>
+                        <p className="text-sm text-slate-400 mb-3 whitespace-pre-wrap">&quot;{report.details}&quot;</p>
                       )}
                       
                       <div className="text-sm border-t border-slate-800/50 pt-3 mt-3">
@@ -109,7 +146,7 @@ export default function AdminReportsPage() {
                           <div className="text-slate-300">Manga: <span className="font-semibold">{report.manga.title}</span></div>
                         )}
                         {report.comment && (
-                          <div className="text-slate-300">Comment: <span className="italic text-slate-400">"{report.comment.content}"</span></div>
+                          <div className="text-slate-300">Comment: <span className="italic text-slate-400">&quot;{report.comment.content}&quot;</span></div>
                         )}
                         {report.review && (
                           <div className="text-slate-300">Review: <span className="font-semibold">{report.review.title}</span></div>
@@ -120,7 +157,7 @@ export default function AdminReportsPage() {
                     <div className="flex items-center gap-2">
                       <span className="text-xs text-slate-500">Reported by:</span>
                       <Avatar className="w-5 h-5 border border-slate-700">
-                        <AvatarImage src={report.user.image} />
+                        <AvatarImage src={report.user.image || undefined} />
                         <AvatarFallback>{report.user.name?.charAt(0) || "U"}</AvatarFallback>
                       </Avatar>
                       <span className="text-xs text-slate-300">{report.user.name}</span>
