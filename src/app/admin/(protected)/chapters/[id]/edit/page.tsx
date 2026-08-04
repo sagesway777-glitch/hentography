@@ -90,7 +90,7 @@ export default function AdminEditChapterContent() {
         }
       } catch (error) {
         toast.error("Failed to load chapter data");
-        router.push("/admin/chapters");
+        window.location.href = "/admin/chapters";
       } finally {
         setIsFetching(false);
       }
@@ -223,7 +223,8 @@ export default function AdminEditChapterContent() {
       toast.loading("Saving chapter...", { id: "save" });
       const payload = {
         ...data,
-        isDraft: !data.isPublished,
+        isPublished: isPublished,
+        isDraft: !isPublished,
         pages: uploadedUrls.length,
         images: uploadedUrls, 
       };
@@ -238,7 +239,7 @@ export default function AdminEditChapterContent() {
       if (!res.ok) throw new Error(result.error || "Failed to update chapter");
 
       toast.success("Chapter updated successfully!", { id: "save" });
-      router.push("/admin/chapters");
+      window.location.href = "/admin/chapters";
     } catch (error) {
       console.error(error);
       toast.error(error instanceof Error ? error.message : "An unexpected error occurred", { id: "save" });
@@ -314,8 +315,12 @@ export default function AdminEditChapterContent() {
                 </div>
                 <input
                   type="checkbox"
+                  {...register("isPublished")}
                   checked={isPublished}
-                  onChange={(e) => setValue("isPublished", e.target.checked)}
+                  onChange={(e) => {
+                    register("isPublished").onChange(e); // Let react-hook-form handle it
+                    setValue("isPublished", e.target.checked);
+                  }}
                   disabled={isLoading}
                   className="w-5 h-5 accent-[var(--primary)] rounded cursor-pointer"
                 />

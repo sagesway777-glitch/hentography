@@ -47,6 +47,7 @@ export async function PATCH(
     }
 
     const body = await request.json();
+    console.log(`PATCH /api/admin/chapters/${id} payload:`, body);
 
     // Accept both simple metadata updates AND full page updates from the chapter editor
     const updateSchema = z.object({

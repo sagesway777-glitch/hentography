@@ -13,26 +13,36 @@ const isProtectedApiRoute = createRouteMatcher([
   "/api/ratings(.*)",
   "/api/reviews(.*)",
   "/api/playlists(.*)",
-  "/api/upload(.*)",
+  // NOTE: /api/upload is NOT here — it uses requireAdmin() (JWT), not Clerk auth
+]);
+
+// Routes that Clerk should NOT intercept (admin uses its own JWT cookie)
+const isPublicRoute = createRouteMatcher([
+  "/admin(.*)",
+  "/api/admin(.*)",
+  "/api/health",
 ]);
 
 // Next.js 16: exported as `proxy` (named export) per the new proxy.ts convention.
 // clerkMiddleware wraps our handler and returns a NextProxy-compatible function.
+// publicRoutes: routes where Clerk does NOT enforce its own auth/handshake
 export const proxy = clerkMiddleware(async (auth, request: NextRequest) => {
   const url = request.nextUrl.pathname;
 
-  // --- Admin route protection (via separate admin cookie, NOT Clerk) ---
-  if (isAdminRoute(request)) {
-    // Allow /admin/login through
+  // --- Let Clerk skip its handshake for admin routes entirely ---
+  if (isPublicRoute(request)) {
+    // Admin route protection (via separate admin cookie, NOT Clerk)
     if (url === "/admin/login") {
       return addSecurityHeaders(NextResponse.next());
     }
-
-    const adminToken = request.cookies.get("admin_token")?.value;
-    if (!adminToken) {
-      return NextResponse.redirect(new URL("/admin/login", request.url));
+    // Protect all other /admin/* pages: require admin_token cookie
+    if (url.startsWith("/admin")) {
+      const adminToken = request.cookies.get("admin_token")?.value;
+      if (!adminToken) {
+        return NextResponse.redirect(new URL("/admin/login", request.url));
+      }
     }
-    // Token validity is checked at the admin API level with JWT
+    // /api/admin/* routes pass through (they validate JWT in the handler)
     return addSecurityHeaders(NextResponse.next());
   }
 
@@ -66,9 +76,10 @@ function addSecurityHeaders(response: NextResponse): NextResponse {
 
 export const config = {
   matcher: [
-    // Skip Next.js internals and all static files unless found in search params
-    "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
-    // Always run for API routes
-    "/(api|trpc)(.*)",
+    // Skip Next.js internals, static files, admin routes (admin uses own JWT auth), and Clerk routes
+    "/((?!_next|admin|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
+    // Run for non-admin API routes only
+    "/api/((?!admin).*)",
+    "/(trpc)(.*)",
   ],
 };

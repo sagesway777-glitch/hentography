@@ -193,9 +193,12 @@ export default function AdminNewChapterContent() {
       toast.loading("Saving chapter...", { id: "save" });
       const payload = {
         ...data,
-        isDraft: !data.isPublished,
-        pages: uploadedUrls.length,
-        images: uploadedUrls, // Send directly to /api/admin/chapters as JSON
+        isPublished: isPublished,
+        isDraft: !isPublished,
+        pages: uploadedUrls.map((url, i) => ({
+          pageNumber: i + 1,
+          imageUrl: url,
+        })),
       };
 
       const res = await fetch("/api/admin/chapters", {
@@ -208,7 +211,7 @@ export default function AdminNewChapterContent() {
       if (!res.ok) throw new Error(result.error || "Failed to create chapter");
 
       toast.success("Chapter created successfully!", { id: "save" });
-      router.push("/admin/chapters");
+      window.location.href = "/admin/chapters";
     } catch (error) {
       console.error(error);
       toast.error(error instanceof Error ? error.message : "An unexpected error occurred", { id: "save" });
@@ -276,8 +279,12 @@ export default function AdminNewChapterContent() {
                 </div>
                 <input
                   type="checkbox"
+                  {...register("isPublished")}
                   checked={isPublished}
-                  onChange={(e) => setValue("isPublished", e.target.checked)}
+                  onChange={(e) => {
+                    register("isPublished").onChange(e);
+                    setValue("isPublished", e.target.checked);
+                  }}
                   disabled={isLoading}
                   className="w-5 h-5 accent-[var(--primary)] rounded cursor-pointer"
                 />

@@ -8,13 +8,7 @@ import { ShareButton } from "@/components/ui/share-button";
 import prisma from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
 import { cookies } from "next/headers";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { ChapterSelect } from "@/components/read/chapter-select";
 
 export const dynamic = "force-dynamic";
 
@@ -173,29 +167,33 @@ async function trackView(chapterId: string, mangaId: string) {
 }
 
 async function getReadingHistory(chapterId: string, mangaId: string) {
-  const { userId: clerkId } = await auth();
-  if (!clerkId) return null;
+  try {
+    const { userId: clerkId } = await auth();
+    if (!clerkId) return null;
 
-  const user = await prisma.user.findUnique({
-    where: { clerkId },
-    select: { id: true },
-  });
-  if (!user) return null;
+    const user = await prisma.user.findUnique({
+      where: { clerkId },
+      select: { id: true },
+    });
+    if (!user) return null;
 
-  return prisma.readingHistory.findUnique({
-    where: {
-      mangaId_chapterId_userId: {
-        mangaId,
-        chapterId,
-        userId: user.id,
+    return prisma.readingHistory.findUnique({
+      where: {
+        mangaId_chapterId_userId: {
+          mangaId,
+          chapterId,
+          userId: user.id,
+        },
       },
-    },
-    select: {
-      pageNumber: true,
-      readingMode: true,
-      readingDirection: true,
-    },
-  });
+      select: {
+        pageNumber: true,
+        readingMode: true,
+        readingDirection: true,
+      },
+    });
+  } catch {
+    return null;
+  }
 }
 
 // ─── JSON-LD ──────────────────────────────────────────────────────────────────
@@ -339,31 +337,11 @@ function ReaderHeader({
 
         {/* Center: Chapter selector */}
         <nav className="hidden md:block" aria-label="Chapter navigation">
-          <Select
-            defaultValue={`chapter-${chapter.chapterNumber}`}
-            onValueChange={(v) => {
-              window.location.href = `/read/${manga.slug}/${v}`;
-            }}
-          >
-            <SelectTrigger
-              className="h-8 w-48 bg-slate-800 border-slate-700 text-slate-200 text-xs"
-              aria-label="Select chapter"
-            >
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent className="max-h-64 overflow-y-auto">
-              {allChapters.map((ch: { chapterNumber: number; title: string | null }) => (
-                <SelectItem
-                  key={ch.chapterNumber}
-                  value={`chapter-${ch.chapterNumber}`}
-                  className="text-xs"
-                >
-                  Chapter {ch.chapterNumber}
-                  {ch.title ? ` — ${ch.title}` : ""}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <ChapterSelect
+            currentChapterNumber={chapter.chapterNumber}
+            mangaSlug={manga.slug}
+            allChapters={allChapters}
+          />
         </nav>
 
         {/* Right: Prev / Next / TOC */}

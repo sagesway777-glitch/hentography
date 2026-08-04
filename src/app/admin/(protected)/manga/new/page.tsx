@@ -209,7 +209,7 @@ export default function AdminMangaCreatePage() {
       }
 
       toast.success("Manga created successfully!", { id: "upload" });
-      router.push("/admin/manga");
+      window.location.href = "/admin/manga";
     } catch (error) {
       console.error(error);
       toast.error(error instanceof Error ? error.message : "An unexpected error occurred", { id: "upload" });

@@ -55,6 +55,7 @@ const createChapterSchema = z.object({
   chapterNumber: z.number(),
   title: z.string().optional().nullable(),
   isPublished: z.boolean().default(true),
+  isDraft: z.boolean().optional(),
   pages: z.array(z.object({
     pageNumber: z.number(),
     imageUrl: z.string().url(),
@@ -67,6 +68,7 @@ export async function POST(request: Request) {
     if (!adminUser) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
     const body = await request.json();
+    console.log("POST /api/admin/chapters payload:", body);
     const result = createChapterSchema.safeParse(body);
 
     if (!result.success) {
@@ -92,6 +94,7 @@ export async function POST(request: Request) {
         chapterNumber: data.chapterNumber,
         title: data.title,
         isPublished: data.isPublished,
+        isDraft: data.isDraft !== undefined ? data.isDraft : !data.isPublished,
         publishedAt: data.isPublished ? new Date() : null,
         pages: data.pages.length,
         images: data.pages.map(p => p.imageUrl),
